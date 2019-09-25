@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="flow_horizontalSeparator" />
+    <attr name="flow_verticalSeparator" />
+    <attr name="motionProgress" />
+    <attr name="waveDecay" />
+    <attr name="motionPathRotate" />
+    <attr name="duration" />
+
+    <declare-styleable name="BaseItemEditText">
+        <attr name="itemAndTextGap" format="dimension" />
+        <attr name="android:textAppearance" format="reference" />
+        <attr name="android:text" format="string" />
+        <attr name="android:hint" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="NumberEditText">
+        <attr name="numberActiveTextAppearance" format="reference" />
+        <attr name="numberInactiveTextAppearance" format="reference" />
+        <attr name="number" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="CheckBoxEditText">
+        <attr name="android:checked" format="boolean" />
+    </declare-styleable>
+</resources>

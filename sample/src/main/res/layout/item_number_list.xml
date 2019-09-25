@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="item"
+            type="kort.uikit.sample.numberlist.NumberItem" />
+
+        <variable
+            name="listener"
+            type="kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegate" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <kort.uikit.component.itemEditText.NumberEditText
+            style="@style/UIKit.Component.NumberEditText"
+            android:id="@+id/numberEditText"
+            onDelete="@{() -> listener.onDelete(position)}"
+            onTextChange="@{(changedText)-> listener.onTextChange(position, changedText, false)}"
+            onWrapLine="@{(beforeWrapLineText,afterWrapLineText)->listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{item.title}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:number="@{position +1}" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

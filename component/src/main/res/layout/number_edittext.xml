@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout_numberEdittext"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView_number_numberEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:text="1." />
+
+        <TextView
+            android:id="@+id/textView_text_numberEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:ignore="MissingConstraints"
+            tools:text="TextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextView" />
+
+        <EditText
+            android:id="@+id/editText_text_numberEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:inputType="textMultiLine|textImeMultiLine"
+            tools:ignore="MissingConstraints,TextFields"
+            tools:layout_editor_absoluteX="12dp" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow_numberEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="left"
+            app:constraint_referenced_ids="textView_number_numberEditText,textView_text_numberEditText,editText_text_numberEditText"
+            app:flow_horizontalAlign="start"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalStyle="packed"
+            app:flow_verticalAlign="baseline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

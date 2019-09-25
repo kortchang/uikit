@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="UIKit" />
+
+    <style name="UIKit.Component" />
+
+    <style name="UIKit.Component.BaseItemEditText">
+        <item name="itemAndTextGap">10dp</item>
+    </style>
+
+    <style name="UIKit.Component.NumberEditText">
+        <item name="itemAndTextGap">10dp</item>
+    </style>
+</resources>

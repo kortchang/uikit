@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/componentsFragment">
+
+    <fragment
+        android:id="@+id/numberListFragment"
+        android:name="kort.uikit.sample.numberlist.NumberListFragment"
+        android:label="number_list_fragment"
+        tools:layout="@layout/fragment_number_list" />
+    <fragment
+        android:id="@+id/componentsFragment"
+        android:name="kort.uikit.sample.ComponentsFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_components">
+        <action
+            android:id="@+id/components_to_numberListFragment"
+            app:destination="@id/numberListFragment" />
+        <action
+            android:id="@+id/action_componentsFragment_to_checkBoxFragment"
+            app:destination="@id/checkBoxFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkBoxFragment"
+        android:name="kort.uikit.sample.checkboxlist.CheckBoxFragment"
+        android:label="CheckBoxFragment" />
+</navigation>
