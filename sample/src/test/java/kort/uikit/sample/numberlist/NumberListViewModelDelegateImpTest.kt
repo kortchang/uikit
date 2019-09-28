@@ -16,7 +16,7 @@ import org.junit.jupiter.api.extension.Extensions
 @ExperimentalCoroutinesApi
 @Extensions(ExtendWith(TestArchExtension::class))
 internal class NumberListViewModelDelegateImpTest {
-    private val delegateImp = NumberListViewModelDelegateImp()
+    private val delegateImp = EditItemListViewModelDelegateImp()
     private val listInitSize get() = delegateImp.list.value?.size ?: 0
 
     @Nested

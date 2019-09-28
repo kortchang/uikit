@@ -1,12 +1,12 @@
 package kort.uikit.sample.checkboxlist
 
-import kort.uikit.component.edititemrecyclerview.DefaultNumberListViewModelDelegate
+import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegate
 
 /**
  * Created by Kort on 2019/9/25.
  */
 class CheckBoxListViewModelDelegateImp :
-    DefaultNumberListViewModelDelegate<CheckBoxItem>() {
+    EditItemListViewModelDelegate<CheckBoxItem>() {
     init {
         _list.value = mutableListOf(CheckBoxItem(generateId, "", 0))
     }

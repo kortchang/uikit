@@ -1,12 +1,11 @@
 package kort.uikit.sample.numberlist
 
-import kort.uikit.component.edititemrecyclerview.DefaultNumberListViewModelDelegate
+import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegate
 
 /**
  * Created by Kort on 2019/9/16.
  */
-class NumberListViewModelDelegateImp :
-    DefaultNumberListViewModelDelegate<NumberItem>() {
+class EditItemListViewModelDelegateImp : EditItemListViewModelDelegate<NumberItem>() {
     init {
         _list.value = mutableListOf(
             NumberItem(id = "0", title = "2", order = 0),

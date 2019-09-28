@@ -12,7 +12,7 @@ import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
  * Created by Kort on 2019/9/25.
  */
 class CheckBoxListAdapter(private val viewModel: CheckBoxViewModel) :
-    EditItemAdapter<CheckBoxItem, ItemCheckboxEdittextBinding, CheckBoxListAdapter.CheckBoxListViewHolder>() {
+    EditItemAdapter<CheckBoxItem, CheckBoxListAdapter.CheckBoxListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckBoxListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCheckboxEdittextBinding.inflate(inflater, parent, false).apply {
@@ -22,7 +22,7 @@ class CheckBoxListAdapter(private val viewModel: CheckBoxViewModel) :
     }
 
     inner class CheckBoxListViewHolder(private val binding: ItemCheckboxEdittextBinding) :
-        EditItemViewHolder<CheckBoxItem, ItemCheckboxEdittextBinding>(binding) {
+        EditItemViewHolder<CheckBoxItem>(binding.root) {
         override val itemEditText: BaseItemEditText = binding.checkboxEditText
 
         override fun bind(item: CheckBoxItem) {

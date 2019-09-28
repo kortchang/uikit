@@ -4,20 +4,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import kort.tool.toolbox.livedata.EventObserver
+import kort.tool.toolbox.view.recyclerview.BaseAdapter
+import kort.tool.toolbox.view.recyclerview.BaseViewHolder
 import timber.log.Timber
 
 /**
  * Created by Kort on 2019/9/24.
  */
-abstract class EditItemFragment<T : ItemModel, ITEM_VB : ViewBinding, ITEM_VH : EditItemViewHolder<T, ITEM_VB>> :
+abstract class EditItemFragment<T : ItemModel, ITEM_VH : BaseViewHolder> :
     Fragment() {
-    protected abstract val adapter: EditItemAdapter<T, ITEM_VB, ITEM_VH>
-    protected abstract val viewModel: EditItemListViewModelDelegate<T>
+    protected abstract val adapter: BaseAdapter<T, ITEM_VH>
+    protected abstract val delegate: EditItemListViewModelDelegateInterface<T>
     protected abstract val recyclerView: RecyclerView
 
     @CallSuper
@@ -35,30 +36,31 @@ abstract class EditItemFragment<T : ItemModel, ITEM_VB : ViewBinding, ITEM_VH : 
     }
 
     protected open fun bindViewModel() {
-        viewModel.list.observe(this, Observer {
+        delegate.list.observe(this, Observer {
             adapter.currentList = it
+            Timber.d("currentList : $it")
         })
 
-        viewModel.addItemAt.observe(this, EventObserver {
+        delegate.addItemAt.observe(this, EventObserver {
             adapter.notifyItemInserted(it)
             Timber.d("addItemAt $it")
         })
 
-        viewModel.changeItemAt.observe(this, EventObserver {
+        delegate.changeItemAt.observe(this, EventObserver {
             Timber.d("changeItemAt: ${it.first} to ${it.last}")
             adapter.notifyItemRangeChanged(it.first, it.count())
         })
 
-        viewModel.deleteItemAt.observe(this, EventObserver {
+        delegate.deleteItemAt.observe(this, EventObserver {
             Timber.d("deleteItemAt $it")
             adapter.notifyItemRemoved(it)
         })
 
-        viewModel.focusItemAt.observe(this, EventObserver {
+        delegate.focusItemAt.observe(this, EventObserver {
             Timber.d("focusItemAt $it")
-            adapter.focusAt = it.focusAt
-            adapter.notifyItemChanged(it.focusAt)
-            recyclerView.scrollToPosition(it.focusAt)
+            adapter.focusAt = it
+            adapter.notifyItemChanged(it)
+            recyclerView.scrollToPosition(it)
         })
     }
 }

@@ -21,9 +21,18 @@
         <action
             android:id="@+id/action_componentsFragment_to_checkBoxFragment"
             app:destination="@id/checkBoxFragment" />
+        <action
+            android:id="@+id/action_componentsFragment_to_nestedListFragment"
+            app:destination="@id/nestedListFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkBoxFragment"
         android:name="kort.uikit.sample.checkboxlist.CheckBoxFragment"
-        android:label="CheckBoxFragment" />
+        android:label="CheckBoxFragment"
+        tools:layout="@layout/check_box_fragment" />
+    <fragment
+        android:id="@+id/nestedListFragment"
+        android:name="kort.uikit.sample.nestedlist.NestedListFragment"
+        android:label="NestedListFragment"
+        tools:layout="@layout/nested_list_fragment" />
 </navigation>

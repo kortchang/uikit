@@ -1,11 +1,11 @@
-package kort.uikit.sample.numberlist
+package kort.uikit.sample.nestedlist
 
 import kort.uikit.component.edititemrecyclerview.ItemModel
 
 /**
- * Created by Kort on 2019/9/16.
+ * Created by Kort on 2019/9/28.
  */
-data class NumberItem(
+data class ParentItem(
     override var id: String = "",
     override var title: String = "",
     override var order: Int = 0

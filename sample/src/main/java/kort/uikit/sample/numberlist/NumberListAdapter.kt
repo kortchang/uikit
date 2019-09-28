@@ -5,26 +5,26 @@ import android.view.ViewGroup
 import kort.tool.toolbox.databinding.executeAfter
 import kort.uikit.component.edititemrecyclerview.EditItemAdapter
 import kort.uikit.component.edititemrecyclerview.EditItemViewHolder
-import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegate
+import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegateInterface
 import kort.uikit.component.itemEditText.BaseItemEditText
-import kort.uikit.sample.databinding.ItemNumberListBinding
+import kort.uikit.sample.databinding.ItemNumberEdittextBinding
 
 /**
  * Created by Kort on 2019/9/16.
  */
 class NumberListAdapter(
-    private val viewModel: EditItemListViewModelDelegate<NumberItem>
-) : EditItemAdapter<NumberItem, ItemNumberListBinding, NumberListAdapter.NumberListViewHolder>() {
+    private val viewModel: EditItemListViewModelDelegateInterface<NumberItem>
+) : EditItemAdapter<NumberItem, NumberListAdapter.NumberListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumberListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemNumberListBinding.inflate(inflater, parent, false).apply {
+        val binding = ItemNumberEdittextBinding.inflate(inflater, parent, false).apply {
             listener = viewModel
         }
         return NumberListViewHolder(binding)
     }
 
-    inner class NumberListViewHolder(private val binding: ItemNumberListBinding) :
-        EditItemViewHolder<NumberItem, ItemNumberListBinding>(binding) {
+    inner class NumberListViewHolder(private val binding: ItemNumberEdittextBinding) :
+        EditItemViewHolder<NumberItem>(binding.root) {
         override val itemEditText: BaseItemEditText = binding.numberEditText
         override fun bind(item: NumberItem) {
             binding.executeAfter {

@@ -23,11 +23,11 @@ import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.disposables.CompositeDisposable
 import kort.tool.toolbox.view.obtainStyleAndRecycle
 import kort.tool.toolbox.view.privateGet
-import kort.tool.toolbox.view.private_get_message
 import kort.uikit.component.R
-import kort.uikit.component.edititemrecyclerview.EditListItemListener
+import kort.uikit.component.edititemrecyclerview.EditItemListener
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import kort.tool.toolbox.view.private_get_message
 
 
 /**
@@ -43,9 +43,9 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     protected abstract val twoText: List<TextView>
     protected abstract val itemAndTextFlow: Flow
 
-    private var mOnWrapLineListener: EditListItemListener.OnWrapLineListener? = null
-    private var mOnDeleteListener: EditListItemListener.OnDeleteListener? = null
-    private var mOnTextChangeListener: EditListItemListener.OnTextChange? = null
+    private var mOnWrapLineListener: EditItemListener.OnWrapLineListener? = null
+    private var mOnDeleteListener: EditItemListener.OnDeleteListener? = null
+    private var mOnTextChangeListener: EditItemListener.OnTextChange? = null
 
     private val disposable = CompositeDisposable()
 
@@ -77,7 +77,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     var text: String
         get() = textEditText.text.toString()
         set(value) {
-            Timber.d("setText() $value")
             twoText.forEach { it.text = value }
         }
 
@@ -97,19 +96,19 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
 
     open var isActive: Boolean = false
 
-    var onWrapLineListener: EditListItemListener.OnWrapLineListener?
+    var onWrapLineListener: EditItemListener.OnWrapLineListener?
         @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
         set(value) {
             mOnWrapLineListener = value
         }
 
-    var onDeleteListener: EditListItemListener.OnDeleteListener?
+    var onDeleteListener: EditItemListener.OnDeleteListener?
         @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
         set(value) {
             mOnDeleteListener = value
         }
 
-    var onTextChangeListener: EditListItemListener.OnTextChange?
+    var onTextChangeListener: EditItemListener.OnTextChange?
         @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
         set(value) {
             mOnTextChangeListener = value

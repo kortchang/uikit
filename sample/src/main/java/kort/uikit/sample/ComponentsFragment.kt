@@ -17,7 +17,8 @@ class ComponentsFragment : Fragment() {
     private lateinit var binding: FragmentComponentsBinding
     private var componentList = listOf(
         Component("Number List", R.id.numberListFragment),
-        Component("CheckBox List", R.id.checkBoxFragment)
+        Component("CheckBox List", R.id.checkBoxFragment),
+        Component("Nested List", R.id.nestedListFragment)
     )
     private val adapter = ComponentsAdapter()
 
@@ -45,15 +46,20 @@ class ComponentsFragment : Fragment() {
 
 class ComponentsAdapter : BaseAdapter<Component, ComponentsAdapter.ComponentsViewHolder>() {
     var clickItemAction: ((Component) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComponentsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemComponentsBinding.inflate(inflater, parent, false)
         return ComponentsViewHolder(binding)
     }
 
+    override fun onBindViewHolder(holder: ComponentsViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
     inner class ComponentsViewHolder(private val binding: ItemComponentsBinding) :
-        BaseViewHolder<Component>(binding) {
-        override fun bind(item: Component) {
+        BaseViewHolder(binding.root) {
+        fun bind(item: Component) {
             binding.button.apply {
                 text = item.title
                 setOnClickListener { clickItemAction?.invoke(item) }

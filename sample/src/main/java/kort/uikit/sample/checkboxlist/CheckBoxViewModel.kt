@@ -1,7 +1,7 @@
 package kort.uikit.sample.checkboxlist
 
 import androidx.lifecycle.ViewModel
-import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegate
+import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegateInterface
 
-class CheckBoxViewModel(editItemListViewModelDelegate: EditItemListViewModelDelegate<CheckBoxItem>) :
-    ViewModel(), EditItemListViewModelDelegate<CheckBoxItem> by editItemListViewModelDelegate
+class CheckBoxViewModel(editItemListViewModelDelegate: EditItemListViewModelDelegateInterface<CheckBoxItem>) :
+    ViewModel(), EditItemListViewModelDelegateInterface<CheckBoxItem> by editItemListViewModelDelegate

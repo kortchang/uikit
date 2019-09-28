@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rootLayout_nestedList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".numberlist.NumberListFragment">
-
+        tools:context=".nestedlist.NestedListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_numberlist"
+            android:id="@+id/recyclerview_nestedList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="2"
-            tools:listitem="@layout/item_number_edittext" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

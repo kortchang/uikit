@@ -10,11 +10,11 @@
 
         <variable
             name="item"
-            type="kort.uikit.sample.checkboxlist.CheckBoxItem" />
+            type="kort.uikit.sample.checkboxlist.CheckableItemModel" />
 
         <variable
             name="listener"
-            type="kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegate" />
+            type="kort.uikit.component.edititemrecyclerview.EditItemListListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

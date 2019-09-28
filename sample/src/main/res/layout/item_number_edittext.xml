@@ -2,17 +2,18 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="position"
             type="Integer" />
 
         <variable
             name="item"
-            type="kort.uikit.sample.numberlist.NumberItem" />
+            type="kort.uikit.component.edititemrecyclerview.ItemModel" />
 
         <variable
             name="listener"
-            type="kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegate" />
+            type="kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegateInterface" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,8 +21,8 @@
         android:layout_height="wrap_content">
 
         <kort.uikit.component.itemEditText.NumberEditText
-            style="@style/UIKit.Component.NumberEditText"
             android:id="@+id/numberEditText"
+            style="@style/UIKit.Component.NumberEditText"
             onDelete="@{() -> listener.onDelete(position)}"
             onTextChange="@{(changedText)-> listener.onTextChange(position, changedText, false)}"
             onWrapLine="@{(beforeWrapLineText,afterWrapLineText)->listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"

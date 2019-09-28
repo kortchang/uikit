@@ -65,8 +65,9 @@ dependencies {
     testImplementation 'io.kotlintest:kotlintest-runner-junit5:3.3.2'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.0-M2'
+    testImplementation "io.mockk:mockk:1.9.3"
 
     // Kort Library
-    testImplementation 'com.github.KortChang:android-unit-test-extension:1.0.1'
-    implementation 'com.github.KortChang:toolbox:a9774d8874'
+    testImplementation 'com.github.KortChang:android-unit-test-extension:0045ddd4fc'
+    implementation 'com.github.KortChang:toolbox:97a0d50972'
 }
