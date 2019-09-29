@@ -9,7 +9,6 @@ import kort.uikit.component.edititemrecyclerview.ItemModel
 import kort.uikit.component.nestededititemrecyclerview.NestedListAdapter
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
-import timber.log.Timber
 
 /**
  * Created by Kort on 2019/9/25.
@@ -51,7 +50,7 @@ class NestedAdapter(private val viewModel: EditItemListListener) :
         fun bind(item: ParentItem) {
             binding.executeAfter {
                 this.item = item
-                position = adapterPosition
+                position = item.order
             }
         }
 

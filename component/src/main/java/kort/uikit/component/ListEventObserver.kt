@@ -3,7 +3,6 @@ package kort.uikit.component
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kort.tool.toolbox.livedata.Event
-import kort.uikit.component.edititemrecyclerview.ItemModel
 
 /**
  * Created by Kort on 2019/9/27.

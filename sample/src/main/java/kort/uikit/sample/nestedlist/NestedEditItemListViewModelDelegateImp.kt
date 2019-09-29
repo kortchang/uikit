@@ -26,8 +26,8 @@ class NestedEditItemListViewModelDelegateImp :
     init {
         _parentList.value =
             mutableListOf(
-                ParentItem(id = "1", title = "first parent"),
-                ParentItem(id = "2", title = "second parent")
+                ParentItem("1", "first parent", 0),
+                ParentItem("2", "second parent", 1)
             )
     }
 }
