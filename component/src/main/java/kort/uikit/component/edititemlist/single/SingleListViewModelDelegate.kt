@@ -1,11 +1,13 @@
-package kort.uikit.component.edititemrecyclerview
+package kort.uikit.component.edititemlist.single
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kort.tool.toolbox.livedata.aware
-import kort.uikit.component.ListEventObserver
-import kort.uikit.component.ListEventObserverInterface
+import kort.uikit.component.edititemlist.EditItemListListener
+import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.ListEventObserver
+import kort.uikit.component.edititemlist.ListEventObserverInterface
 import timber.log.Timber
 
 /**

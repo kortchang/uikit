@@ -5,14 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kort.uikit.component.ListEventObserverInterface
-import kort.uikit.component.edititemrecyclerview.EditItemFragment
+import kort.uikit.component.edititemlist.EditItemListFragment
 import kort.uikit.sample.databinding.FragmentNumberListBinding
-import kort.uikit.sample.databinding.ItemNumberEdittextBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NumberListFragment :
-    EditItemFragment<NumberItem, NumberListAdapter.NumberListViewHolder>() {
+    EditItemListFragment<NumberItem, NumberListAdapter.NumberListViewHolder>() {
     private lateinit var binding: FragmentNumberListBinding
 
     val viewModel by viewModel<NumberListViewModel>()

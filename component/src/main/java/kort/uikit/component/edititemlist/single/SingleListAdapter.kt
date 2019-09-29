@@ -1,10 +1,9 @@
-package kort.uikit.component.edititemrecyclerview
+package kort.uikit.component.edititemlist.single
 
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import kort.tool.toolbox.view.recyclerview.BaseAdapter
 import kort.tool.toolbox.view.recyclerview.BaseViewHolder
+import kort.uikit.component.edititemlist.ItemModel
 import kort.uikit.component.itemEditText.BaseItemEditText
 
 /**

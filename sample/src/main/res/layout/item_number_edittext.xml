@@ -9,11 +9,11 @@
 
         <variable
             name="item"
-            type="kort.uikit.component.edititemrecyclerview.ItemModel" />
+            type="kort.uikit.component.single.ItemModel" />
 
         <variable
             name="listener"
-            type="kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegateInterface" />
+            type="kort.uikit.component.single.EditItemListViewModelDelegateInterface" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,7 +1,7 @@
 package kort.uikit.sample
 
-import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegateInterface
-import kort.uikit.component.nestededititemrecyclerview.NestedEditItemListViewModelDelegateInterface
+import kort.uikit.component.edititemlist.single.EditItemListViewModelDelegateInterface
+import kort.uikit.component.edititemlist.nested.NestedEditItemListViewModelDelegateInterface
 import kort.uikit.sample.checkboxlist.CheckBoxItem
 import kort.uikit.sample.checkboxlist.CheckBoxListViewModelDelegateImp
 import kort.uikit.sample.checkboxlist.CheckBoxViewModel

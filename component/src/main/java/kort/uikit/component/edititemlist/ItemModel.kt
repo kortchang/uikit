@@ -1,4 +1,4 @@
-package kort.uikit.component.edititemrecyclerview
+package kort.uikit.component.edititemlist
 
 /**
  * Created by Kort on 2019/9/13.

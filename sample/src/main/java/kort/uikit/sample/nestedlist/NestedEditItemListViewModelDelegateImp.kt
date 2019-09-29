@@ -1,6 +1,6 @@
 package kort.uikit.sample.nestedlist
 
-import kort.uikit.component.nestededititemrecyclerview.NestedEditItemListViewModelDelegate
+import kort.uikit.component.edititemlist.nested.NestedEditItemListViewModelDelegate
 
 /**
  * Created by Kort on 2019/9/25.

@@ -1,6 +1,6 @@
-package kort.uikit.component.nestededititemrecyclerview
+package kort.uikit.component.edititemlist.nested
 
-import kort.uikit.component.edititemrecyclerview.ItemModel
+import kort.uikit.component.edititemlist.ItemModel
 
 /**
  * Created by Kort on 2019/9/28.

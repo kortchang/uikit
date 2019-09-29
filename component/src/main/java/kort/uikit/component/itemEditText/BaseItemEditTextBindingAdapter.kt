@@ -1,12 +1,11 @@
 package kort.uikit.component.itemEditText
 
 import androidx.databinding.BindingAdapter
-import kort.uikit.component.edititemrecyclerview.EditItemListener
 
 /**
  * Created by Kort on 2019/9/13.
  */
-object NumberEditTextBindingAdapter {
+object BaseItemEditTextBindingAdapter {
     @BindingAdapter("onWrapLine")
     @JvmStatic
     fun BaseItemEditText.onWrapLine(listener: EditItemListener.OnWrapLineListener) {

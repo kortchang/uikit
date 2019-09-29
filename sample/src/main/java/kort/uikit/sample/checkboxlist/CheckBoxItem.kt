@@ -1,6 +1,6 @@
 package kort.uikit.sample.checkboxlist
 
-import kort.uikit.component.edititemrecyclerview.ItemModel
+import kort.uikit.component.edititemlist.ItemModel
 
 /**
  * Created by Kort on 2019/9/25.

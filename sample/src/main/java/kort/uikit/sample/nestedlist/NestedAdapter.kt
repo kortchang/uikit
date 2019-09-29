@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import kort.tool.toolbox.databinding.executeAfter
 import kort.tool.toolbox.view.recyclerview.BaseViewHolder
-import kort.uikit.component.edititemrecyclerview.EditItemListListener
-import kort.uikit.component.edititemrecyclerview.ItemModel
-import kort.uikit.component.nestededititemrecyclerview.NestedListAdapter
+import kort.uikit.component.edititemlist.single.EditItemListListener
+import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.nested.NestedListAdapter
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
 

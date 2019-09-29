@@ -1,15 +1,13 @@
-package kort.uikit.component.nestededititemrecyclerview
+package kort.uikit.component.edititemlist.nested
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import kort.tool.toolbox.livedata.aware
-import kort.uikit.component.ListEventObserver
-import kort.uikit.component.ListEventObserverInterface
-import kort.uikit.component.edititemrecyclerview.EditItemListListener
-import kort.uikit.component.edititemrecyclerview.EditItemListViewModelDelegateInterface
-import kort.uikit.component.edititemrecyclerview.ItemModel
+import kort.uikit.component.edititemlist.ListEventObserver
+import kort.uikit.component.edititemlist.single.EditItemListViewModelDelegateInterface
+import kort.uikit.component.edititemlist.ItemModel
 import timber.log.Timber
 import java.lang.Exception
 import kotlin.reflect.KClass

@@ -3,8 +3,8 @@ package kort.uikit.sample.checkboxlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import kort.tool.toolbox.databinding.executeAfter
-import kort.uikit.component.edititemrecyclerview.EditItemAdapter
-import kort.uikit.component.edititemrecyclerview.EditItemViewHolder
+import kort.uikit.component.edititemlist.single.EditItemAdapter
+import kort.uikit.component.edititemlist.single.EditItemViewHolder
 import kort.uikit.component.itemEditText.BaseItemEditText
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 

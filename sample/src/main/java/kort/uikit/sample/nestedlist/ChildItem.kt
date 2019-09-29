@@ -1,8 +1,6 @@
 package kort.uikit.sample.nestedlist
 
-import android.widget.CheckBox
-import kort.uikit.component.nestededititemrecyclerview.ChildItemModel
-import kort.uikit.sample.checkboxlist.CheckBoxItem
+import kort.uikit.component.edititemlist.nested.ChildItemModel
 import kort.uikit.sample.checkboxlist.CheckableItemModel
 
 /**

@@ -1,11 +1,10 @@
-package kort.uikit.component.nestededititemrecyclerview
+package kort.uikit.component.edititemlist.nested
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import kort.tool.toolbox.view.recyclerview.BaseAdapter
 import kort.tool.toolbox.view.recyclerview.BaseViewHolder
-import kort.uikit.component.edititemrecyclerview.EditItemListListener
-import kort.uikit.component.edititemrecyclerview.ItemModel
+import kort.uikit.component.edititemlist.ItemModel
 import kotlin.reflect.KClass
 
 /**

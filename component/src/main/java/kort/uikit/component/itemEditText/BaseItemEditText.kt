@@ -24,7 +24,6 @@ import io.reactivex.disposables.CompositeDisposable
 import kort.tool.toolbox.view.obtainStyleAndRecycle
 import kort.tool.toolbox.view.privateGet
 import kort.uikit.component.R
-import kort.uikit.component.edititemrecyclerview.EditItemListener
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import kort.tool.toolbox.view.private_get_message
