@@ -1,12 +1,12 @@
 package kort.uikit.sample
 
-import kort.uikit.component.edititemlist.single.EditItemListViewModelDelegateInterface
-import kort.uikit.component.edititemlist.nested.NestedEditItemListViewModelDelegateInterface
+import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
+import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegateInterface
 import kort.uikit.sample.checkboxlist.CheckBoxItem
 import kort.uikit.sample.checkboxlist.CheckBoxListViewModelDelegateImp
 import kort.uikit.sample.checkboxlist.CheckBoxViewModel
 import kort.uikit.sample.nestedlist.ChildItem
-import kort.uikit.sample.nestedlist.NestedEditItemListViewModelDelegateImp
+import kort.uikit.sample.nestedlist.NestedListViewModelDelegateImp
 import kort.uikit.sample.nestedlist.NestedListViewModelInterface
 import kort.uikit.sample.nestedlist.ParentItem
 import kort.uikit.sample.numberlist.NumberItem
@@ -22,9 +22,9 @@ import org.koin.dsl.module
 val mainModule = module {
     val numberDelegate = "number"
     val checkBoxDelegate = "checkbox"
-    factory<EditItemListViewModelDelegateInterface<NumberItem>>(named(numberDelegate)) { EditItemListViewModelDelegateImp() }
-    factory<EditItemListViewModelDelegateInterface<CheckBoxItem>>(named(checkBoxDelegate)) { CheckBoxListViewModelDelegateImp() }
-    factory<NestedEditItemListViewModelDelegateInterface<ParentItem, ChildItem>> { NestedEditItemListViewModelDelegateImp() }
+    factory<SingleListViewModelDelegateInterface<NumberItem>>(named(numberDelegate)) { EditItemListViewModelDelegateImp() }
+    factory<SingleListViewModelDelegateInterface<CheckBoxItem>>(named(checkBoxDelegate)) { CheckBoxListViewModelDelegateImp() }
+    factory<NestedListViewModelDelegateInterface<ParentItem, ChildItem>> { NestedListViewModelDelegateImp() }
 
     viewModel { NumberListViewModel(get(named(numberDelegate))) }
     viewModel { CheckBoxViewModel(get(named(checkBoxDelegate))) }

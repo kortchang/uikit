@@ -5,7 +5,7 @@ import kort.tool.test.extension.TestArchExtension
 import kort.tool.test.extension.TestCoroutineExtension
 import kort.tool.test.extension.TimberConverter
 import kort.tool.test.testValue
-import kort.uikit.sample.nestedlist.NestedEditItemListViewModelDelegateImp
+import kort.uikit.sample.nestedlist.NestedListViewModelDelegateImp
 import kort.uikit.sample.nestedlist.ParentItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.Test
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.Extensions
     ExtendWith(TimberConverter::class)
 )
 internal class NestedListViewModelDelegateImpTest {
-    val delegateImp = NestedEditItemListViewModelDelegateImp()
+    val delegateImp = NestedListViewModelDelegateImp()
 
     private fun initParentList() {
         delegateImp.setParentList(

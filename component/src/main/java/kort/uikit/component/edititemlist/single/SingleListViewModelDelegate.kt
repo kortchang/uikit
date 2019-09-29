@@ -13,13 +13,13 @@ import timber.log.Timber
 /**
  * Created by Kort on 2019/9/13.
  */
-interface EditItemListViewModelDelegateInterface<T : ItemModel> : ListEventObserverInterface,
+interface SingleListViewModelDelegateInterface<T : ItemModel> : ListEventObserverInterface,
     EditItemListListener {
     val list: LiveData<MutableList<T>>
 }
 
-abstract class EditItemListViewModelDelegate<T : ItemModel> : ListEventObserver(),
-    EditItemListViewModelDelegateInterface<T> {
+abstract class SingleListViewModelDelegate<T : ItemModel> : ListEventObserver(),
+    SingleListViewModelDelegateInterface<T> {
     override val listLastIndex: Int? get() = _list.value?.lastIndex
     protected val _list: MutableLiveData<MutableList<T>> = MutableLiveData()
     override val list: LiveData<MutableList<T>> = _list

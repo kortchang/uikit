@@ -9,7 +9,7 @@ import kort.uikit.component.itemEditText.BaseItemEditText
 /**
  * Created by Kort on 2019/9/23.
  */
-abstract class EditItemAdapter<T : ItemModel, VH : EditItemViewHolder<T>> : BaseAdapter<T, VH>() {
+abstract class SingleListAdapter<T : ItemModel, VH : SingleListViewHolder<T>> : BaseAdapter<T, VH>() {
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(getItem(position))
         if (position == focusAt) focus(holder)
@@ -21,7 +21,7 @@ abstract class EditItemAdapter<T : ItemModel, VH : EditItemViewHolder<T>> : Base
     }
 }
 
-abstract class EditItemViewHolder<T : ItemModel>(view: View) : BaseViewHolder(view) {
+abstract class SingleListViewHolder<T : ItemModel>(view: View) : BaseViewHolder(view) {
     abstract val itemEditText: BaseItemEditText
     abstract fun bind(item: T)
     override fun focus() {

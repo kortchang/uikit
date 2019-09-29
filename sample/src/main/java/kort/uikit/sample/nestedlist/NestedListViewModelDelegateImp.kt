@@ -1,12 +1,12 @@
 package kort.uikit.sample.nestedlist
 
-import kort.uikit.component.edititemlist.nested.NestedEditItemListViewModelDelegate
+import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegate
 
 /**
  * Created by Kort on 2019/9/25.
  */
-class NestedEditItemListViewModelDelegateImp :
-    NestedEditItemListViewModelDelegate<ParentItem, ChildItem>(
+class NestedListViewModelDelegateImp :
+    NestedListViewModelDelegate<ParentItem, ChildItem>(
         ParentItem::class,
         ChildItem::class
     ) {

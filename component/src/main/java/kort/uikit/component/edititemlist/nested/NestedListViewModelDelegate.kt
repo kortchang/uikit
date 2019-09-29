@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import kort.tool.toolbox.livedata.aware
 import kort.uikit.component.edititemlist.ListEventObserver
-import kort.uikit.component.edititemlist.single.EditItemListViewModelDelegateInterface
+import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
 import kort.uikit.component.edititemlist.ItemModel
 import timber.log.Timber
 import java.lang.Exception
@@ -15,16 +15,16 @@ import kotlin.reflect.KClass
 /**
  * Created by Kort on 2019/9/25.
  */
-interface NestedEditItemListViewModelDelegateInterface<P : ItemModel, C : ItemModel> :
-    EditItemListViewModelDelegateInterface<ItemModel> {
+interface NestedListViewModelDelegateInterface<P : ItemModel, C : ItemModel> :
+    SingleListViewModelDelegateInterface<ItemModel> {
     val parentList: LiveData<List<P>>
     val childMap: LiveData<Map<String, List<C>>>
 }
 
-abstract class NestedEditItemListViewModelDelegate<P : ItemModel, C : ChildItemModel>(
+abstract class NestedListViewModelDelegate<P : ItemModel, C : ChildItemModel>(
     private val ParentClass: KClass<P>,
     private val childClass: KClass<C>
-) : ListEventObserver(), NestedEditItemListViewModelDelegateInterface<P, C> {
+) : ListEventObserver(), NestedListViewModelDelegateInterface<P, C> {
     override val listLastIndex: Int? get() = _list.value?.size
 
     private var _id = 0

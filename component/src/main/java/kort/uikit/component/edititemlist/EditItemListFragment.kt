@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.livedata.EventObserver
 import kort.tool.toolbox.view.recyclerview.BaseAdapter
 import kort.tool.toolbox.view.recyclerview.BaseViewHolder
-import kort.uikit.component.edititemlist.single.EditItemListViewModelDelegateInterface
+import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
 import timber.log.Timber
 
 /**
@@ -18,7 +18,7 @@ import timber.log.Timber
 abstract class EditItemListFragment<T : ItemModel, ITEM_VH : BaseViewHolder> :
     Fragment() {
     protected abstract val adapter: BaseAdapter<T, ITEM_VH>
-    protected abstract val delegate: EditItemListViewModelDelegateInterface<T>
+    protected abstract val delegate: SingleListViewModelDelegateInterface<T>
     protected abstract val recyclerView: RecyclerView
 
     @CallSuper
