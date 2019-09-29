@@ -6,7 +6,7 @@ import kort.tool.test.extension.TestCoroutineExtension
 import kort.tool.test.extension.TimberConverter
 import kort.tool.test.testValue
 import kort.uikit.sample.nestedlist.NestedListViewModelDelegateImp
-import kort.uikit.sample.nestedlist.ParentItem
+import kort.uikit.sample.nestedlist.ParentEditItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -27,8 +27,8 @@ internal class NestedListViewModelDelegateImpTest {
     private fun initParentList() {
         delegateImp.setParentList(
             mutableListOf(
-                ParentItem("0", "1", 0),
-                ParentItem("1", "2", 1)
+                ParentEditItem("0", "1", 0),
+                ParentEditItem("1", "2", 1)
             )
         )
         delegateImp.list.testValue
@@ -44,7 +44,7 @@ internal class NestedListViewModelDelegateImpTest {
         value?.size shouldBe 4
 
         // set parent list again
-        delegateImp.setParentList(mutableListOf(ParentItem("2", "3", 2)))
+        delegateImp.setParentList(mutableListOf(ParentEditItem("2", "3", 2)))
 
         value = delegateImp.list.testValue
         var child = delegateImp.childMap.testValue

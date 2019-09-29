@@ -15,7 +15,7 @@ import timber.log.Timber
 /**
  * Created by Kort on 2019/9/24.
  */
-abstract class EditItemListFragment<T : ItemModel, ITEM_VH : BaseViewHolder> :
+abstract class EditItemListFragment<T : EditItemModel, ITEM_VH : BaseViewHolder> :
     Fragment() {
     protected abstract val adapter: BaseAdapter<T, ITEM_VH>
     protected abstract val delegate: SingleListViewModelDelegateInterface<T>
@@ -38,7 +38,7 @@ abstract class EditItemListFragment<T : ItemModel, ITEM_VH : BaseViewHolder> :
     protected open fun bindViewModel() {
         delegate.list.observe(this, Observer {
             adapter.currentList = it
-            Timber.d("currentList : $it")
+            Timber.d("currentList")
         })
 
         delegate.addItemAt.observe(this, EventObserver {

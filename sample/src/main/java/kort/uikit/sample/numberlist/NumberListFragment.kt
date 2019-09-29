@@ -10,7 +10,7 @@ import kort.uikit.sample.databinding.FragmentNumberListBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NumberListFragment :
-    EditItemListFragment<NumberItem, NumberListAdapter.NumberListViewHolder>() {
+    EditItemListFragment<NumberEditItem, NumberListAdapter.NumberListViewHolder>() {
     private lateinit var binding: FragmentNumberListBinding
 
     val viewModel by viewModel<NumberListViewModel>()

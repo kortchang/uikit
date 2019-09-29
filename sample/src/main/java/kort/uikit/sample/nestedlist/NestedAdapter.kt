@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import kort.tool.toolbox.databinding.executeAfter
 import kort.tool.toolbox.view.recyclerview.BaseViewHolder
-import kort.uikit.component.edititemlist.single.EditItemListListener
-import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.EditItemListListener
+import kort.uikit.component.edititemlist.EditItemModel
 import kort.uikit.component.edititemlist.nested.NestedListAdapter
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
@@ -14,9 +14,9 @@ import kort.uikit.sample.databinding.ItemNumberEdittextBinding
  * Created by Kort on 2019/9/25.
  */
 class NestedAdapter(private val viewModel: EditItemListListener) :
-    NestedListAdapter<ParentItem, ChildItem, ItemModel, BaseViewHolder>(
-        ParentItem::class,
-        ChildItem::class
+    NestedListAdapter<ParentEditItem, ChildEditItem, EditItemModel, BaseViewHolder>(
+        ParentEditItem::class,
+        ChildEditItem::class
     ) {
     override fun buildParentViewHolder(
         inflater: LayoutInflater,
@@ -39,15 +39,15 @@ class NestedAdapter(private val viewModel: EditItemListListener) :
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val item = getItem(position)
         when (holder) {
-            is ParentViewHolder -> holder.bind(item as ParentItem)
-            is ChildViewHolder -> holder.bind(item as ChildItem)
+            is ParentViewHolder -> holder.bind(item as ParentEditItem)
+            is ChildViewHolder -> holder.bind(item as ChildEditItem)
         }
         focusAt(position, holder)
     }
 
     inner class ParentViewHolder(private val binding: ItemNumberEdittextBinding) :
         BaseViewHolder(binding.root) {
-        fun bind(item: ParentItem) {
+        fun bind(item: ParentEditItem) {
             binding.executeAfter {
                 this.item = item
                 position = item.order
@@ -61,7 +61,7 @@ class NestedAdapter(private val viewModel: EditItemListListener) :
 
     inner class ChildViewHolder(private val binding: ItemCheckboxEdittextBinding) :
         BaseViewHolder(binding.root) {
-        fun bind(item: ChildItem) {
+        fun bind(item: ChildEditItem) {
             binding.executeAfter {
                 this.item = item
                 position = adapterPosition

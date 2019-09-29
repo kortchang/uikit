@@ -1,17 +1,14 @@
 package kort.uikit.sample.checkboxlist
 
-import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.EditItemModel
+import kort.uikit.component.itemEditText.CheckableEditItemModel
 
 /**
  * Created by Kort on 2019/9/25.
  */
-interface CheckableItemModel : ItemModel {
-    var checked: Boolean
-}
-
-data class CheckBoxItem(
+data class CheckBoxEditItem(
     override var id: String = "",
     override var title: String = "",
     override var order: Int = 0,
     override var checked: Boolean = false
-) : CheckableItemModel
+) : CheckableEditItemModel

@@ -29,7 +29,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:inputType="textMultiLine|textImeMultiLine"
+            android:imeActionLabel="NextItem"
+            android:inputType="text|textMultiLine"
             tools:ignore="MissingConstraints,TextFields"
             tools:layout_editor_absoluteX="12dp" />
 

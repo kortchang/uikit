@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kort.tool.toolbox.livedata.aware
 import kort.uikit.component.edititemlist.EditItemListListener
-import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.EditItemModel
 import kort.uikit.component.edititemlist.ListEventObserver
 import kort.uikit.component.edititemlist.ListEventObserverInterface
 import timber.log.Timber
@@ -13,12 +13,12 @@ import timber.log.Timber
 /**
  * Created by Kort on 2019/9/13.
  */
-interface SingleListViewModelDelegateInterface<T : ItemModel> : ListEventObserverInterface,
-    EditItemListListener {
+interface SingleListViewModelDelegateInterface<T : EditItemModel> :
+    ListEventObserverInterface, EditItemListListener {
     val list: LiveData<MutableList<T>>
 }
 
-abstract class SingleListViewModelDelegate<T : ItemModel> : ListEventObserver(),
+abstract class SingleListViewModelDelegate<T : EditItemModel> : ListEventObserver(),
     SingleListViewModelDelegateInterface<T> {
     override val listLastIndex: Int? get() = _list.value?.lastIndex
     protected val _list: MutableLiveData<MutableList<T>> = MutableLiveData()

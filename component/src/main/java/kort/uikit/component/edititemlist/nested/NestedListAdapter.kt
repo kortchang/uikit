@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import kort.tool.toolbox.view.recyclerview.BaseAdapter
 import kort.tool.toolbox.view.recyclerview.BaseViewHolder
-import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.EditItemModel
 import kotlin.reflect.KClass
 
 /**
@@ -16,7 +16,7 @@ import kotlin.reflect.KClass
  * @param [TWO] Type that combine parent and child type.
  * @param [TWOVH] Parent viewHolder type.
  */
-abstract class NestedListAdapter<P : ItemModel, C : ChildItemModel, TWO : ItemModel, TWOVH : BaseViewHolder>(
+abstract class NestedListAdapter<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel, TWOVH : BaseViewHolder>(
     protected val parentClass: KClass<P>,
     protected val childClass: KClass<C>
 ) : BaseAdapter<TWO, TWOVH>() {

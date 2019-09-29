@@ -11,10 +11,10 @@ import kort.uikit.sample.databinding.CheckBoxFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class CheckBoxFragment :
-    EditItemListFragment<CheckBoxItem, CheckBoxListAdapter.CheckBoxListViewHolder>() {
+    EditItemListFragment<CheckBoxEditItem, CheckBoxListAdapter.CheckBoxListViewHolder>() {
     private lateinit var binding: CheckBoxFragmentBinding
     override val delegate: CheckBoxViewModel by viewModel()
-    override val adapter: BaseAdapter<CheckBoxItem, CheckBoxListAdapter.CheckBoxListViewHolder>
+    override val adapter: BaseAdapter<CheckBoxEditItem, CheckBoxListAdapter.CheckBoxListViewHolder>
             by lazy { CheckBoxListAdapter(delegate) }
     override val recyclerView: RecyclerView by lazy { binding.recyclerviewCheckBox }
 

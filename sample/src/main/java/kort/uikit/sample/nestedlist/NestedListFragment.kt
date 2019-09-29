@@ -9,15 +9,15 @@ import kort.tool.toolbox.view.recyclerview.BaseAdapter
 import kort.tool.toolbox.view.recyclerview.BaseViewHolder
 import kort.uikit.component.edititemlist.EditItemListFragment
 import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
-import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.EditItemModel
 import kort.uikit.sample.databinding.NestedListFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class NestedListFragment : EditItemListFragment<ItemModel, BaseViewHolder>() {
+class NestedListFragment : EditItemListFragment<EditItemModel, BaseViewHolder>() {
     private lateinit var binding: NestedListFragmentBinding
     private val viewModel: NestedListViewModelInterface by viewModel()
-    override val delegate: SingleListViewModelDelegateInterface<ItemModel> by lazy { viewModel }
-    override val adapter: BaseAdapter<ItemModel, BaseViewHolder> by lazy { NestedAdapter(viewModel) }
+    override val delegate: SingleListViewModelDelegateInterface<EditItemModel> by lazy { viewModel }
+    override val adapter: BaseAdapter<EditItemModel, BaseViewHolder> by lazy { NestedAdapter(viewModel) }
     override val recyclerView: RecyclerView by lazy { binding.recyclerviewNestedList }
 
 

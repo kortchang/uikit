@@ -6,13 +6,13 @@ import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegate
  * Created by Kort on 2019/9/25.
  */
 class NestedListViewModelDelegateImp :
-    NestedListViewModelDelegate<ParentItem, ChildItem>(
-        ParentItem::class,
-        ChildItem::class
+    NestedListViewModelDelegate<ParentEditItem, ChildEditItem>(
+        ParentEditItem::class,
+        ChildEditItem::class
     ) {
 
-    override fun generateParentItem(id: String, title: String, order: Int): ParentItem =
-        ParentItem(id, title, order)
+    override fun generateParentItem(id: String, title: String, order: Int): ParentEditItem =
+        ParentEditItem(id, title, order)
 
     override fun generateChildItem(
         id: String,
@@ -20,14 +20,14 @@ class NestedListViewModelDelegateImp :
         title: String,
         order: Int,
         childOrder: Int
-    ): ChildItem =
-        ChildItem(id, parentId, title, order, childOrder)
+    ): ChildEditItem =
+        ChildEditItem(id, parentId, title, order, childOrder)
 
     init {
         _parentList.value =
             mutableListOf(
-                ParentItem("1", "first parent", 0),
-                ParentItem("2", "second parent", 1)
+                ParentEditItem("1", "first parent", 0),
+                ParentEditItem("2", "second parent", 1)
             )
     }
 }

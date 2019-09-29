@@ -4,6 +4,6 @@ import androidx.lifecycle.ViewModel
 import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
 import kort.uikit.component.edititemlist.single.SingleListViewModelDelegate
 
-class NumberListViewModel(editItemListViewModelDelegate: SingleListViewModelDelegate<NumberItem>) :
+class NumberListViewModel(editItemListViewModelDelegate: SingleListViewModelDelegate<NumberEditItem>) :
     ViewModel(),
-    SingleListViewModelDelegateInterface<NumberItem> by editItemListViewModelDelegate
+    SingleListViewModelDelegateInterface<NumberEditItem> by editItemListViewModelDelegate

@@ -7,7 +7,7 @@ import androidx.lifecycle.map
 import kort.tool.toolbox.livedata.aware
 import kort.uikit.component.edititemlist.ListEventObserver
 import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
-import kort.uikit.component.edititemlist.ItemModel
+import kort.uikit.component.edititemlist.EditItemModel
 import timber.log.Timber
 import java.lang.Exception
 import kotlin.reflect.KClass
@@ -15,13 +15,13 @@ import kotlin.reflect.KClass
 /**
  * Created by Kort on 2019/9/25.
  */
-interface NestedListViewModelDelegateInterface<P : ItemModel, C : ItemModel> :
-    SingleListViewModelDelegateInterface<ItemModel> {
+interface NestedListViewModelDelegateInterface<P : EditItemModel, C : EditItemModel> :
+    SingleListViewModelDelegateInterface<EditItemModel> {
     val parentList: LiveData<List<P>>
     val childMap: LiveData<Map<String, List<C>>>
 }
 
-abstract class NestedListViewModelDelegate<P : ItemModel, C : ChildItemModel>(
+abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel>(
     private val ParentClass: KClass<P>,
     private val childClass: KClass<C>
 ) : ListEventObserver(), NestedListViewModelDelegateInterface<P, C> {
@@ -38,8 +38,8 @@ abstract class NestedListViewModelDelegate<P : ItemModel, C : ChildItemModel>(
     override val childMap: LiveData<Map<String, List<C>>> =
         _childMap.map { mutableMap -> mutableMap.mapValues { it.value.toList() } }
 
-    protected val _list: MediatorLiveData<MutableList<ItemModel>> =
-        MediatorLiveData<MutableList<ItemModel>>().apply {
+    protected val _list: MediatorLiveData<MutableList<EditItemModel>> =
+        MediatorLiveData<MutableList<EditItemModel>>().apply {
             var parent = _parentList.value!!
             var child = _childMap.value!!
             addSource(_parentList) {
@@ -56,9 +56,9 @@ abstract class NestedListViewModelDelegate<P : ItemModel, C : ChildItemModel>(
     private fun combineList(
         parentList: MutableList<P>,
         childMap: MutableMap<String, MutableList<C>>
-    ): MutableList<ItemModel> {
+    ): MutableList<EditItemModel> {
         val originChildMap = childMap
-        val currentList = mutableListOf<ItemModel>()
+        val currentList = mutableListOf<EditItemModel>()
         parentList.forEach {
             currentList.add(it)
             var childList = childMap[it.id]
@@ -77,16 +77,16 @@ abstract class NestedListViewModelDelegate<P : ItemModel, C : ChildItemModel>(
     }
 
     private fun addRestOfChildToCurrentList(
-        currentList: MutableList<ItemModel>,
+        currentList: MutableList<EditItemModel>,
         originChildMap: MutableMap<String, MutableList<C>>,
-        currentChildList: Set<ItemModel>
+        currentChildList: Set<EditItemModel>
     ) {
         val originChildList = originChildMap.values.flatten()
         val restOfChild = originChildList.subtract(currentChildList)
         if (restOfChild.isNotEmpty()) currentList.addAll(restOfChild)
     }
 
-    override val list: LiveData<MutableList<ItemModel>> = _list
+    override val list: LiveData<MutableList<EditItemModel>> = _list
 
     protected abstract fun generateParentItem(id: String, title: String, order: Int = 0): P
     protected abstract fun generateChildItem(

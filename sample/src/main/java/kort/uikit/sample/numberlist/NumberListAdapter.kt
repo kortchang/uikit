@@ -13,8 +13,8 @@ import kort.uikit.sample.databinding.ItemNumberEdittextBinding
  * Created by Kort on 2019/9/16.
  */
 class NumberListAdapter(
-    private val viewModel: SingleListViewModelDelegateInterface<NumberItem>
-) : SingleListAdapter<NumberItem, NumberListAdapter.NumberListViewHolder>() {
+    private val viewModel: SingleListViewModelDelegateInterface<NumberEditItem>
+) : SingleListAdapter<NumberEditItem, NumberListAdapter.NumberListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumberListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemNumberEdittextBinding.inflate(inflater, parent, false).apply {
@@ -24,9 +24,9 @@ class NumberListAdapter(
     }
 
     inner class NumberListViewHolder(private val binding: ItemNumberEdittextBinding) :
-        SingleListViewHolder<NumberItem>(binding.root) {
+        SingleListViewHolder<NumberEditItem>(binding.root) {
         override val itemEditText: BaseItemEditText = binding.numberEditText
-        override fun bind(item: NumberItem) {
+        override fun bind(item: NumberEditItem) {
             binding.executeAfter {
                 position = adapterPosition
                 this.item = item
