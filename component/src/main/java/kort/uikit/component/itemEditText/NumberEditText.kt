@@ -31,7 +31,7 @@ class NumberEditText(context: Context, attrs: AttributeSet) : BaseItemEditText(c
 
     var number: Int = 0
         set(value) {
-            numberTextView.text = value.toString()
+            numberTextView.text = "${value}."
             field = value
         }
 

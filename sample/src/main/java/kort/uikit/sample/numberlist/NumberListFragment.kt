@@ -13,7 +13,7 @@ class NumberListFragment :
     EditItemListFragment<NumberEditItem, NumberListAdapter.NumberListViewHolder>() {
     private lateinit var binding: FragmentNumberListBinding
 
-    val viewModel by viewModel<NumberListViewModel>()
+    private val viewModel by viewModel<NumberListViewModel>()
     override val delegate by lazy { viewModel }
     override val adapter by lazy { NumberListAdapter(delegate) }
     override val recyclerView: RecyclerView by lazy { binding.recyclerviewNumberlist }

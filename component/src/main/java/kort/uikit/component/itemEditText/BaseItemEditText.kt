@@ -23,7 +23,6 @@ import kort.tool.toolbox.view.privateGet
 import kort.tool.toolbox.view.private_get_message
 import kort.uikit.component.R
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -132,7 +131,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     }
 
     private fun setupListener() {
-        addWrapLineListener()
         addDeleteListener()
         addOnTextChangeListener()
     }
@@ -142,41 +140,17 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         disposable.add(
             textEditText
                 .textChangeEvents()
-                .skipInitialValue()
                 .subscribe {
-                    filterRepeatInShortTime(textChangeEventTime, System.currentTimeMillis(), 100) {
+                    filterRepeatInShortTime(textChangeEventTime, System.currentTimeMillis(), 50) {
                         textChangeEventTime = System.currentTimeMillis()
                         if (it.text.contains('\n')) {
                             Timber.d("text contain wrapline mark")
-                            whenClickEnter(false)
-
+                            whenClickEnter()
                         } else {
                             mOnTextChangeListener?.onTextChange(it.text.toString())
                         }
                     }
                 }
-        )
-    }
-
-    private fun addWrapLineListener() {
-        addWrapLineListenerByEditorAction()
-    }
-
-    private fun addWrapLineListenerByEditorAction() {
-        var eventTime: Long = 0
-        disposable.add(
-            textEditText.editorActionEvents {
-                Timber.d("actionId ${it.actionId}")
-                if (it.keyEvent?.keyCode == KeyEvent.KEYCODE_ENTER) {
-                    if (it.actionId == KeyEvent.ACTION_DOWN) {
-                        val itEventTime = it.keyEvent?.eventTime ?: 0
-                        filterRepeatInShortTime(eventTime, itEventTime, 5) {
-                            eventTime = itEventTime
-                            whenClickEnter(true)
-                        }
-                    } else true
-                } else false
-            }.throttleFirst(100, TimeUnit.MILLISECONDS).subscribe()
         )
     }
 
@@ -208,26 +182,16 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         disposable.add(textEditText.keys(handle).subscribe())
     }
 
-    private fun whenClickEnter(isCallByEditorAction: Boolean = true) {
-        val isCallByTextChange = !isCallByEditorAction
+    private fun whenClickEnter() {
         Timber.d("clickEnter")
 
         var beforeWrapLineText = ""
         var afterWrapLineText = ""
 
-        when {
-            isCallByEditorAction -> {
-                val wrapLineIndex = textEditText.selectionStart
-                beforeWrapLineText = text.substring(0 until wrapLineIndex)
-                afterWrapLineText = text.substring(wrapLineIndex..text.lastIndex)
-            }
-            isCallByTextChange -> {
-                val wrapLineIndexFirst = text.indexOfFirst { it == '\n' }
-                val wrapLineIndexLast = text.indexOfLast { it == '\n' }
-                beforeWrapLineText = text.substring(0 until wrapLineIndexFirst)
-                afterWrapLineText = text.substring((wrapLineIndexLast + 1)..text.lastIndex)
-            }
-        }
+        val wrapLineIndexFirst = text.indexOfFirst { it == '\n' }
+        val wrapLineIndexLast = text.indexOfLast { it == '\n' }
+        beforeWrapLineText = text.substring(0 until wrapLineIndexFirst)
+        afterWrapLineText = text.substring((wrapLineIndexLast + 1)..text.lastIndex)
         Timber.d("beforeWrapLineText: $beforeWrapLineText")
         Timber.d("afterWrapLineText: $afterWrapLineText")
 
