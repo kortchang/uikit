@@ -7,5 +7,4 @@ import kort.uikit.component.edititemlist.EditItemModel
  */
 interface ChildEditItemModel : EditItemModel {
     var parentId: String
-    var childOrder: Int
 }

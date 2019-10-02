@@ -11,6 +11,5 @@ data class ChildEditItem(
     override var parentId: String,
     override var title: String = "",
     override var order: Int = 0,
-    override var childOrder: Int = 0,
     override var checked: Boolean = false
 ) : ChildEditItemModel, CheckableEditItemModel

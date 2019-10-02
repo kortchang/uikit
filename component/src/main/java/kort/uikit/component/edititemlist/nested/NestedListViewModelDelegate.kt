@@ -93,8 +93,7 @@ abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemM
         id: String,
         parentId: String,
         title: String = "",
-        order: Int = 0,
-        childOrder: Int = 0
+        order: Int = 0
     ): C
 
     protected fun generateDefaultChildList(parentId: String): MutableList<C> =
@@ -133,8 +132,7 @@ abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemM
                     generateChildId,
                     item.parentId,
                     afterWrapLineText,
-                    newItemPosition,
-                    childPosition + 1
+                    newItemPosition
                 )
                 addItemToChildList(item.parentId, newItem)
             }

@@ -18,10 +18,9 @@ class NestedListViewModelDelegateImp :
         id: String,
         parentId: String,
         title: String,
-        order: Int,
-        childOrder: Int
+        order: Int
     ): ChildEditItem =
-        ChildEditItem(id, parentId, title, order, childOrder)
+        ChildEditItem(id, parentId, title, order)
 
     init {
         _parentList.value =
