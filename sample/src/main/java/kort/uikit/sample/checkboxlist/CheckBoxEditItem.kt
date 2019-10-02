@@ -10,5 +10,5 @@ data class CheckBoxEditItem(
     override var id: String = "",
     override var title: String = "",
     override var order: Int = 0,
-    override var checked: Boolean = false
+    override var isChecked: Boolean = false
 ) : CheckableEditItemModel
