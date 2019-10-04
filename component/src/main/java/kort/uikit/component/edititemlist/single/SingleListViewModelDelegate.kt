@@ -12,8 +12,6 @@ import kotlin.reflect.KClass
  */
 interface SingleListViewModelDelegateInterface<T : EditItemModel> : SingleEditItemListListener<T>,
     EditItemViewModelDelegate, ListEventObserverInterface {
-    fun setList(list: MutableList<T>)
-    val generateId: String
     val list: LiveData<MutableList<T>>
     val listEventSenderObserver: ListEventSenderObserverInterface
 }
@@ -24,14 +22,11 @@ open class SingleListViewModelDelegate<T : EditItemModel>(
 ) : SingleListViewModelDelegateInterface<T>,
     ListEventSenderObserverInterface by listEventSenderObserver {
 
+    var _id: Int = 0
+    val generateId get() = (_id++).toString()
+
     protected open var _list: MutableLiveData<MutableList<T>> = MutableLiveData()
     override val list: LiveData<MutableList<T>> get() = _list
-    var _id: Int = 0
-    override val generateId get() = (_id++).toString()
-
-    override fun setList(list: MutableList<T>) {
-        _list.value = list
-    }
 
     @CallSuper
     override fun onDelete(position: Int) = listOnDelete(_list, this, position)

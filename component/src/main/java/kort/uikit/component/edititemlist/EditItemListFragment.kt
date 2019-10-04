@@ -3,6 +3,7 @@ package kort.uikit.component.edititemlist
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.CallSuper
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -15,8 +16,7 @@ import timber.log.Timber
 /**
  * Created by Kort on 2019/9/24.
  */
-abstract class EditItemListFragment<T : EditItemModel> :
-    Fragment() {
+abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
     protected abstract val adapter: BaseAdapter<T, out BaseViewHolder>
     protected abstract val listObserver: ListEventObserverInterface
     protected abstract val recyclerView: RecyclerView
@@ -25,30 +25,32 @@ abstract class EditItemListFragment<T : EditItemModel> :
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+        setupRecyclerView(recyclerView)
         bindViewModel()
     }
 
-    protected open fun setupRecyclerView() {
+    protected open fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.also {
+            it.isVisible = false
+            it.isVisible = true
             it.adapter = adapter
             it.itemAnimator = null
         }
     }
 
     protected open fun bindViewModel() {
-        bindMainList()
-        bindListObserver()
+        bindMainList(listLiveData)
+        bindListObserver(listObserver)
     }
 
-    protected open fun bindMainList() {
+    protected open fun bindMainList(listLiveData: LiveData<MutableList<T>>) {
         listLiveData.observe(this, Observer {
             adapter.currentList = it
             Timber.d("currentList: $it")
         })
     }
 
-    protected open fun bindListObserver() {
+    protected open fun bindListObserver(listObserver: ListEventObserverInterface) {
         listObserver.addItemAt.observe(this, EventObserver {
             adapter.notifyItemInserted(it)
             Timber.d("addItemAt $it")
