@@ -3,91 +3,47 @@ package kort.uikit.component.edititemlist.single
 import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kort.tool.toolbox.livedata.aware
-import kort.uikit.component.edititemlist.EditItemListListener
-import kort.uikit.component.edititemlist.EditItemModel
-import kort.uikit.component.edititemlist.ListEventObserver
-import kort.uikit.component.edititemlist.ListEventObserverInterface
+import kort.uikit.component.edititemlist.*
 import timber.log.Timber
+import kotlin.reflect.KClass
 
 /**
  * Created by Kort on 2019/9/13.
  */
-interface SingleListViewModelDelegateInterface<T : EditItemModel> :
-    ListEventObserverInterface, EditItemListListener {
+interface SingleListViewModelDelegateInterface<T : EditItemModel> : SingleEditItemListListener<T>,
+    EditItemViewModelDelegate, ListEventObserverInterface {
+    fun setList(list: MutableList<T>)
+    val generateId: String
     val list: LiveData<MutableList<T>>
+    val listEventSenderObserver: ListEventSenderObserverInterface
 }
 
-abstract class SingleListViewModelDelegate<T : EditItemModel> : ListEventObserver(),
-    SingleListViewModelDelegateInterface<T> {
-    override val listLastIndex: Int? get() = _list.value?.lastIndex
-    protected val _list: MutableLiveData<MutableList<T>> = MutableLiveData()
-    override val list: LiveData<MutableList<T>> = _list
+open class SingleListViewModelDelegate<T : EditItemModel>(
+    override var itemClass: KClass<T>,
+    override val listEventSenderObserver: ListEventSenderObserverInterface = ListEventSenderObserver()
+) : SingleListViewModelDelegateInterface<T>,
+    ListEventSenderObserverInterface by listEventSenderObserver {
 
-    protected val itemCount get() = _list.value?.size ?: 0
+    protected open var _list: MutableLiveData<MutableList<T>> = MutableLiveData()
+    override val list: LiveData<MutableList<T>> get() = _list
+    var _id: Int = 0
+    override val generateId get() = (_id++).toString()
 
-    protected var _id = 0
-    protected val generateId get() = (_id++).toString()
-
-    @CallSuper
-    override fun requestFocus(position: Int) {
-        sendFocusEventAt(position)
+    override fun setList(list: MutableList<T>) {
+        _list.value = list
     }
 
     @CallSuper
-    override fun onDelete(position: Int) {
-        Timber.d("call at $position")
+    override fun onDelete(position: Int) = listOnDelete(_list, this, position)
 
-        if (itemCount > 1) {
-            Timber.d("at $position")
-            _list.value?.removeAt(position)
-            _list.aware()
-            sendDeleteEventAt(position)
-
-            if (itemCount != position) {
-                sendChangeEventToLastIndex(position)
-            }
-
-            val focusAt = if (position == 0) {
-                position
-            } else {
-                position - 1
-            }
-            requestFocus(focusAt)
+    @CallSuper
+    override fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String) =
+        kotlin.run {
+            Timber.d("Delegate onWrapLine()")
+            listOnWrapLine(_list, this, position, beforeWrapLineText, afterWrapLineText, generateId)
         }
-    }
-
 
     @CallSuper
-    override fun onWrapLine(
-        position: Int,
-        beforeWrapLineText: String,
-        afterWrapLineText: String
-    ) {
-        Timber.d("wrapLine at $position")
-        onTextChange(position, beforeWrapLineText, true)
-        val newItemPosition = position + 1
-        val newItem = generateNewItem(newItemPosition, afterWrapLineText, generateId)
-        Timber.d("createNewItemAdd() newItem: $newItem position: $newItemPosition")
-        _list.value?.add(newItemPosition, newItem)
-        _list.aware()
-
-        sendAddEventAt(newItemPosition)
-        sendChangeEventToLastIndex(newItemPosition + 1)
-        requestFocus(newItemPosition)
-    }
-
-    abstract fun generateNewItem(position: Int, title: String, id: String): T
-
-    @CallSuper
-    override fun onTextChange(position: Int, changedText: String, aware: Boolean) {
-        Timber.d("onTextChange at $position: $changedText")
-        _list.value?.let {
-            it[position].title = changedText
-            if (aware) {
-                _list.aware()
-                sendChangeEventAt(position)
-            }
-        }
-    }
+    override fun onTextChange(position: Int, changedText: String, aware: Boolean) =
+        listOnTextChange(_list, this, position, changedText, aware)
 }

@@ -160,7 +160,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         range: Int,
         block: () -> Unit
     ): Boolean = kotlin.run {
-        Timber.d("eventTime: $eventTime, range:${(newEventTime - range)..(newEventTime + range)}")
         if (eventTime !in (newEventTime - range)..(newEventTime + range)) {
             block()
             true
@@ -194,8 +193,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         afterWrapLineText = text.substring((wrapLineIndexLast + 1)..text.lastIndex)
         Timber.d("beforeWrapLineText: $beforeWrapLineText")
         Timber.d("afterWrapLineText: $afterWrapLineText")
-
-        Timber.d("onWrapLineListener is null: ${mOnWrapLineListener == null}")
         mOnWrapLineListener?.onWrapLine(beforeWrapLineText, afterWrapLineText)
     }
 

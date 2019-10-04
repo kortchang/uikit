@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/numberListFragment"
-        android:name="kort.uikit.sample.numberlist.NumberListFragment"
+        android:name="kort.uikit.sample.list.numberlist.NumberListFragment"
         android:label="number_list_fragment"
         tools:layout="@layout/fragment_number_list" />
     <fragment
@@ -24,15 +24,24 @@
         <action
             android:id="@+id/action_componentsFragment_to_nestedListFragment"
             app:destination="@id/nestedListFragment" />
+        <action
+            android:id="@+id/action_componentsFragment_to_twoPageNestedListFragment"
+            app:destination="@id/twoPageNestedListFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkBoxFragment"
-        android:name="kort.uikit.sample.checkboxlist.CheckBoxFragment"
+        android:name="kort.uikit.sample.list.checkboxlist.CheckBoxFragment"
         android:label="CheckBoxFragment"
         tools:layout="@layout/check_box_fragment" />
     <fragment
         android:id="@+id/nestedListFragment"
-        android:name="kort.uikit.sample.nestedlist.NestedListFragment"
+        android:name="kort.uikit.sample.list.nestedlist.NestedListFragment"
         android:label="NestedListFragment"
         tools:layout="@layout/nested_list_fragment" />
+    <fragment
+        android:id="@+id/twoPageNestedListFragment"
+        android:name="kort.uikit.sample.list.twopagenestedlist.TwoPageNestedListFragment"
+        android:label="TwoPageNestedListFragment"
+        tools:layout="@layout/fragment_two_page_nested_list"
+        />
 </navigation>

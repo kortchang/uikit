@@ -1,6 +1,7 @@
 package kort.uikit.component.itemEditText
 
 import androidx.databinding.BindingAdapter
+import timber.log.Timber
 
 /**
  * Created by Kort on 2019/9/13.

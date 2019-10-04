@@ -3,43 +3,49 @@ package kort.uikit.component.edititemlist.nested
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
 import kort.tool.toolbox.livedata.aware
-import kort.uikit.component.edititemlist.ListEventObserver
-import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
-import kort.uikit.component.edititemlist.EditItemModel
+import kort.uikit.component.edititemlist.*
 import timber.log.Timber
 import java.lang.Exception
 import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 
 /**
  * Created by Kort on 2019/9/25.
  */
-interface NestedListViewModelDelegateInterface<P : EditItemModel, C : EditItemModel> :
-    SingleListViewModelDelegateInterface<EditItemModel> {
-    val parentList: LiveData<List<P>>
-    val childMap: LiveData<Map<String, List<C>>>
+interface NestedListViewModelDelegateInterface<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel> :
+    EditItemViewModelDelegate, ListEventSenderObserverInterface {
+    val list: LiveData<MutableList<TWO>>
+    val parentList: LiveData<MutableList<P>>
+    val childMap: LiveData<MutableMap<String, MutableList<C>>>
+    val parentClass: KClass<P>
+    val childClass: KClass<C>
+    fun setParentList(list: MutableList<P>)
 }
 
-abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel>(
-    private val ParentClass: KClass<P>,
-    private val childClass: KClass<C>
-) : ListEventObserver(), NestedListViewModelDelegateInterface<P, C> {
-    override val listLastIndex: Int? get() = _list.value?.size
+open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel>(
+    override val parentClass: KClass<P>,
+    override val childClass: KClass<C>
+) : NestedListViewModelDelegateInterface<P, C, TWO>,
+    ListEventSenderObserverInterface by ListEventSenderObserver() {
+    val listLastIndex: Int? get() = _list.value?.size
 
-    private var _id = 0
-    protected val generateChildId get() = (_id++).toString()
+    protected open var _parentId = 0
+    protected open val generateParentId get() = (_parentId++).toString()
 
-    protected var _parentList: MutableLiveData<MutableList<P>> = MutableLiveData(mutableListOf())
-    override val parentList: LiveData<List<P>> = _parentList.map { it.toList() }
+    protected open var _childId = 0
+    protected open val generateChildId get() = (_childId++).toString()
 
-    protected var _childMap: MutableLiveData<MutableMap<String, MutableList<C>>> =
+    var _parentList: MutableLiveData<MutableList<P>> =
+        MutableLiveData(mutableListOf())
+    override val parentList: LiveData<MutableList<P>> get() = _parentList
+
+    protected open var _childMap: MutableLiveData<MutableMap<String, MutableList<C>>> =
         MutableLiveData(mutableMapOf())
-    override val childMap: LiveData<Map<String, List<C>>> =
-        _childMap.map { mutableMap -> mutableMap.mapValues { it.value.toList() } }
+    override val childMap: LiveData<MutableMap<String, MutableList<C>>> get() = _childMap
 
-    protected val _list: MediatorLiveData<MutableList<EditItemModel>> =
-        MediatorLiveData<MutableList<EditItemModel>>().apply {
+    protected open val _list: MediatorLiveData<MutableList<TWO>> =
+        MediatorLiveData<MutableList<TWO>>().apply {
             var parent = _parentList.value!!
             var child = _childMap.value!!
             addSource(_parentList) {
@@ -52,59 +58,71 @@ abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemM
                 value = combineList(parent, it)
             }
         }
+    override val list: LiveData<MutableList<TWO>> get() = _list
 
     private fun combineList(
         parentList: MutableList<P>,
         childMap: MutableMap<String, MutableList<C>>
-    ): MutableList<EditItemModel> {
-        val originChildMap = childMap
-        val currentList = mutableListOf<EditItemModel>()
+    ): MutableList<TWO> {
+//        val originChildMap = childMap
+        val currentList = mutableListOf<TWO>()
         parentList.forEach {
-            currentList.add(it)
+            currentList.add(it as TWO)
             var childList = childMap[it.id]
             if (childList.isNullOrEmpty()) {
                 childList = generateDefaultChildList(it.id)
                 childMap[it.id] = childList
                 _childMap.value?.put(it.id, childList)
             }
-            currentList.addAll(childList)
+            currentList.addAll(childList as Collection<TWO>)
         }
 
-        val currentChild = currentList.subtract(parentList)
-        addRestOfChildToCurrentList(currentList, originChildMap, currentChild)
+//        val currentChild = currentList.subtract(parentList) as Set<C>
+//        addRestOfChildToCurrentList(parentList.last().id, currentList, originChildMap, currentChild)
 
         return currentList
     }
 
     private fun addRestOfChildToCurrentList(
-        currentList: MutableList<EditItemModel>,
+        lastParentId: String,
+        currentList: MutableList<TWO>,
         originChildMap: MutableMap<String, MutableList<C>>,
-        currentChildList: Set<EditItemModel>
+        currentChildList: Set<C>
     ) {
         val originChildList = originChildMap.values.flatten()
         val restOfChild = originChildList.subtract(currentChildList)
-        if (restOfChild.isNotEmpty()) currentList.addAll(restOfChild)
+        Timber.d("restOfChild: $restOfChild")
+        if (restOfChild.isNotEmpty()) currentList.addAll(restOfChild as Collection<TWO>)
     }
 
-    override val list: LiveData<MutableList<EditItemModel>> = _list
+    protected fun generateParentItem(id: String, title: String, order: Int = 0): P =
+        parentClass.createInstance().apply {
+            this.id = id
+            this.title = title
+            this.order = order
+        }
 
-    protected abstract fun generateParentItem(id: String, title: String, order: Int = 0): P
-    protected abstract fun generateChildItem(
+    protected fun generateChildItem(
         id: String,
         parentId: String,
         title: String = "",
         order: Int = 0
-    ): C
+    ): C = childClass.createInstance().apply {
+        this.id = id
+        this.parentId = parentId
+        this.title = title
+        this.order = order
+    }
 
     protected fun generateDefaultChildList(parentId: String): MutableList<C> =
         mutableListOf(generateChildItem(generateChildId, parentId))
 
-    fun setParentList(list: MutableList<P>) {
+    override fun setParentList(list: MutableList<P>) {
         _parentList.value = list
         _parentList.aware()
     }
 
-    override fun onDelete(position: Int) {
+    fun onDelete(_childMap: MutableLiveData<MutableMap<String, MutableList<C>>>, position: Int) {
         Timber.d("onDelete at $position")
         getChildItem(position) { item ->
             Timber.d("onDelete item is childItem")
@@ -115,13 +133,15 @@ abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemM
                         childList.remove(item)
                         _childMap.aware()
                         val focusAt = if (childPosition == 0) position else position - 1
-                        requestFocus(focusAt)
+                        sendFocusEventAt(focusAt)
                     }
                 } else
                     Timber.d("Rest of one item in childList")
             }
         }
     }
+
+    override fun onDelete(position: Int) = onDelete(_childMap, position)
 
     override fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String) {
         val newItemPosition = position + 1
@@ -139,8 +159,8 @@ abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemM
         }
 
         sendAddEventAt(newItemPosition)
-        sendChangeEventToLastIndex(newItemPosition + 1)
-        requestFocus(newItemPosition)
+        sendChangeEventToLastIndex(newItemPosition + 1, listLastIndex)
+        sendFocusEventAt(newItemPosition)
     }
 
     protected fun getChildItem(position: Int, block: (C) -> Unit) {
@@ -189,9 +209,5 @@ abstract class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemM
                 }
             }
         }
-    }
-
-    override fun requestFocus(position: Int) {
-        sendFocusEventAt(position)
     }
 }

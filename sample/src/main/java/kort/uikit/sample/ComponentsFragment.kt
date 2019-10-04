@@ -18,7 +18,8 @@ class ComponentsFragment : Fragment() {
     private var componentList = listOf(
         Component("Number List", R.id.numberListFragment),
         Component("CheckBox List", R.id.checkBoxFragment),
-        Component("Nested List", R.id.nestedListFragment)
+        Component("Nested List", R.id.nestedListFragment),
+        Component("Two Page Nested List", R.id.twoPageNestedListFragment)
     )
     private val adapter = ComponentsAdapter()
 
