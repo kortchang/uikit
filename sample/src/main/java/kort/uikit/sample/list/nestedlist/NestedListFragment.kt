@@ -22,7 +22,7 @@ class NestedListFragment : EditItemListFragment<EditItemModel>() {
         NestedAdapter(viewModel)
     }
     override val recyclerView: RecyclerView by lazy { binding.recyclerviewNestedList }
-    override val listObserver: ListEventObserverInterface get() = ListEventSenderObserver()
+    override val listObserver: ListEventObserverInterface get() = viewModel
     override val listLiveData: LiveData<MutableList<EditItemModel>> get() = viewModel.list
 
     override fun onCreateView(

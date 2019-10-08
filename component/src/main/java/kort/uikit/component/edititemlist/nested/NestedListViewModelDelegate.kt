@@ -64,7 +64,6 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
         parentList: MutableList<P>,
         childMap: MutableMap<String, MutableList<C>>
     ): MutableList<TWO> {
-//        val originChildMap = childMap
         val currentList = mutableListOf<TWO>()
         parentList.forEach {
             currentList.add(it as TWO)
@@ -77,22 +76,7 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
             currentList.addAll(childList as Collection<TWO>)
         }
 
-//        val currentChild = currentList.subtract(parentList) as Set<C>
-//        addRestOfChildToCurrentList(parentList.last().id, currentList, originChildMap, currentChild)
-
         return currentList
-    }
-
-    private fun addRestOfChildToCurrentList(
-        lastParentId: String,
-        currentList: MutableList<TWO>,
-        originChildMap: MutableMap<String, MutableList<C>>,
-        currentChildList: Set<C>
-    ) {
-        val originChildList = originChildMap.values.flatten()
-        val restOfChild = originChildList.subtract(currentChildList)
-        Timber.d("restOfChild: $restOfChild")
-        if (restOfChild.isNotEmpty()) currentList.addAll(restOfChild as Collection<TWO>)
     }
 
     protected fun generateParentItem(id: String, title: String, order: Int = 0): P =
