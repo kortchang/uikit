@@ -8,6 +8,10 @@
             type="Integer" />
 
         <variable
+            name="number"
+            type="Integer" />
+
+        <variable
             name="item"
             type="kort.uikit.component.edititemlist.EditItemModel" />
 
@@ -28,10 +32,11 @@
             onWrapLine="@{(beforeWrapLineText,afterWrapLineText)->listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{item.title}"
+            android:text='@{item.title ?? ""}'
+            android:hint="輸入行動清單"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:number="@{position +1}" />
+            app:number="@{number}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

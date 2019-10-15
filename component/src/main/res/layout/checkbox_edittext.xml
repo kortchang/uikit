@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rootLayout_checkboxEdittext"
+        android:id="@+id/rootLayout_checkboxEditText"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <CheckBox
-            android:id="@+id/checkBox_checkboxEdittext"
+            android:id="@+id/checkBox_checkboxEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints"
-            />
+            tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/editText_checkboxEdittext"
+            android:id="@+id/editText_checkboxEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -25,7 +24,7 @@
             tools:layout_editor_absoluteX="88dp" />
 
         <TextView
-            android:id="@+id/textView_checkboxEdittext"
+            android:id="@+id/textView_checkboxEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -33,12 +32,24 @@
             tools:layout_editor_absoluteX="354dp"
             tools:layout_editor_absoluteY="13dp" />
 
+        <ImageButton
+            android:id="@+id/imageButton_delete_checkboxEditText"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@null"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_close"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="387dp"
+            tools:layout_editor_absoluteY="4dp"
+            tools:visibility="visible" />
+
         <androidx.constraintlayout.helper.widget.Flow
-            android:id="@+id/flow_checkboxEdittext"
+            android:id="@+id/flow_checkboxEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:foregroundGravity="left"
-            app:constraint_referenced_ids="checkBox_checkboxEdittext,editText_checkboxEdittext,textView_checkboxEdittext"
+            app:constraint_referenced_ids="checkBox_checkboxEditText,editText_checkboxEditText,textView_checkboxEditText,imageButton_delete_checkboxEditText"
             app:flow_horizontalAlign="start"
             app:flow_horizontalBias="0"
             app:flow_horizontalStyle="packed"

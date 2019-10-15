@@ -10,4 +10,5 @@ interface EditItemViewModelDelegate {
     fun onDelete(position: Int)
     fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String)
     fun onTextChange(position: Int, changedText: String, aware: Boolean = false)
+    fun addNewItemAtLast()
 }

@@ -3,6 +3,7 @@ package kort.uikit.component.edititemlist
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kort.tool.toolbox.livedata.Event
+import timber.log.Timber
 import kotlin.math.min
 
 /**
@@ -44,6 +45,7 @@ interface ListEventSenderInterface {
     ) {
         val end = listLastIndex ?: 0
         val start = min(startPosition, end)
+        Timber.d("sendChangeEventToLastIndex() start: $start, end: $end")
         _changeItemAt.value = Event(start..end)
     }
 

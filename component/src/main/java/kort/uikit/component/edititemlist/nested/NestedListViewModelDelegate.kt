@@ -128,7 +128,31 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
     override fun onDelete(position: Int) = onDelete(_childMap, position)
 
     override fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String) {
+        Timber.d("list: ${_list.value}")
+        Timber.d("position: $position")
+        val onWrapLineItem = _list.value?.get(position)
+        Timber.d("wrapLineItem: $onWrapLineItem")
+
         val newItemPosition = position + 1
+        if (childClass.isInstance(onWrapLineItem)) {
+            onWrapLineOnChildItem(position, newItemPosition, beforeWrapLineText, afterWrapLineText)
+        } else if (parentClass.isInstance(onWrapLineItem)) {
+            onWrapLineItem as P
+            Timber.d("onWrapLineItem title: ${onWrapLineItem.title}")
+            onTextChange(position, onWrapLineItem.title, true)
+            Timber.d("onWrapLineOnParentItem()")
+        }
+
+        sendFocusEventAt(newItemPosition)
+    }
+
+    open fun onWrapLineOnChildItem(
+        position: Int,
+        newItemPosition: Int,
+        beforeWrapLineText: String,
+        afterWrapLineText: String
+    ) {
+        Timber.d("onWrapLineOnChildItem()")
         onTextChange(position, beforeWrapLineText, true)
         getChildItem(position) { item ->
             getChildPosition(item) { childPosition ->
@@ -136,15 +160,13 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
                     generateChildId,
                     item.parentId,
                     afterWrapLineText,
-                    newItemPosition
+                    childPosition
                 )
                 addItemToChildList(item.parentId, newItem)
             }
         }
-
         sendAddEventAt(newItemPosition)
         sendChangeEventToLastIndex(newItemPosition + 1, listLastIndex)
-        sendFocusEventAt(newItemPosition)
     }
 
     protected fun getChildItem(position: Int, block: (C) -> Unit) {
@@ -165,7 +187,6 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
         }
     }
 
-
     private fun addItemToChildList(
         parentId: String,
         item: C
@@ -182,16 +203,39 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
         changedText: String,
         aware: Boolean
     ) {
-        getChildItem(position) { item ->
-            getChildPosition(item) { childPosition ->
-                _childMap.value?.let {
-                    it[item.parentId]?.get(childPosition)?.title = changedText
-                    if (aware) {
-                        _childMap.aware()
-                        sendChangeEventAt(position)
+        val onTextChangeItem = _list.value?.get(position)
+        if (childClass.isInstance(onTextChangeItem))
+            getChildItem(position) { item ->
+                getChildPosition(item) { childPosition ->
+                    _childMap.value?.let {
+                        it[item.parentId]?.get(childPosition)?.title = changedText
+                        if (aware) {
+                            _childMap.aware()
+                            sendChangeEventAt(position)
+                        }
                     }
                 }
             }
+        else if (parentClass.isInstance(onTextChangeItem)) {
+            onTextChangeItem as P
+            _parentList.value?.get(onTextChangeItem.order)?.title = changedText
+            if (aware) {
+                _parentList.aware()
+                sendChangeEventAt(position)
+            }
+        }
+    }
+
+    override fun addNewItemAtLast() {
+        _parentList.value?.let {
+            val newPositionInList = (_list.value?.size ?: 0)
+            Timber.d("newPositionInList is $newPositionInList")
+            val parent = generateParentItem(generateParentId, "", it.size)
+            it.add(parent)
+            _parentList.aware()
+
+            sendAddEventAt(newPositionInList)
+            sendFocusEventAt(newPositionInList)
         }
     }
 }

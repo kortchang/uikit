@@ -13,4 +13,21 @@
     <style name="Sample.ComponentButton">
         <item name="android:backgroundTint">#FAFAFA</item>
     </style>
+
+    <style name="Sample.List" />
+
+    <style name="Sample.List.AddTextView">
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:text">This is the card text content…</item>
+        <item name="android:textAppearance">@style/Sample.TextAppearance.AddTextView</item>
+        <item name="android:drawableTint">#a8a8a8</item>
+    </style>
+
+    <style name="Sample.TextAppearance">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Sample.TextAppearance.AddTextView">
+        <item name="android:textColor">#a8a8a8</item>
+    </style>
 </resources>

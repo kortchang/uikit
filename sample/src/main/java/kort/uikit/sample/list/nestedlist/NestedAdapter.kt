@@ -2,11 +2,16 @@ package kort.uikit.sample.list.nestedlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.databinding.executeAfter
-import kort.tool.toolbox.view.recyclerview.BaseViewHolder
+import kort.uikit.component.databinding.AddTextviewBinding
 import kort.uikit.component.edititemlist.EditItemViewModelDelegate
 import kort.uikit.component.edititemlist.EditItemModel
+import kort.uikit.component.edititemlist.EditItemViewHolder
+import kort.uikit.component.edititemlist.ItemAddViewHolder
 import kort.uikit.component.edititemlist.nested.NestedListAdapter
+import kort.uikit.component.edititemlist.nested.NestedListWithAddAdapter
+import kort.uikit.sample.databinding.ItemAddTextViewBinding
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
 
@@ -14,44 +19,65 @@ import kort.uikit.sample.databinding.ItemNumberEdittextBinding
  * Created by Kort on 2019/9/25.
  */
 class NestedAdapter(private val viewModel: EditItemViewModelDelegate) :
-    NestedListAdapter<ParentEditItem, ChildEditItem, EditItemModel, BaseViewHolder>(
+    NestedListWithAddAdapter<ParentEditItem, ChildEditItem, EditItemModel, RecyclerView.ViewHolder>(
         ParentEditItem::class,
         ChildEditItem::class
     ) {
-    override fun buildParentViewHolder(
+    override fun createParentViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup
-    ): BaseViewHolder {
-        val binding = ItemNumberEdittextBinding.inflate(inflater, parent, false)
+    ): EditItemViewHolder {
+        val binding = ItemNumberEdittextBinding.inflate(inflater, parent, false).apply {
+            listener = viewModel
+        }
         return ParentViewHolder(binding)
     }
 
-    override fun buildChildViewHolder(
+    override fun createChildViewHolder(
         inflater: LayoutInflater,
         parent: ViewGroup
-    ): BaseViewHolder {
+    ): EditItemViewHolder {
         val binding = ItemCheckboxEdittextBinding.inflate(inflater, parent, false).apply {
             listener = viewModel
         }
         return ChildViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        val item = getItem(position)
-        when (holder) {
-            is ParentViewHolder -> holder.bind(item as ParentEditItem)
-            is ChildViewHolder -> holder.bind(item as ChildEditItem)
+    override fun createAddViewHolder(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder {
+        val binding = ItemAddTextViewBinding.inflate(inflater, parent, false).apply {
+            text = "新增行動清單"
         }
-        focusAt(position, holder)
+        return ItemAddViewHolder(binding.root) { viewModel.addNewItemAtLast() }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is ParentViewHolder -> {
+                val item = getItem(position)
+                holder.bind(item as ParentEditItem)
+                focusAt(position, holder)
+            }
+            is ChildViewHolder -> {
+                val item = getItem(position)
+                holder.bind(item as ChildEditItem)
+                focusAt(position, holder)
+            }
+            is ItemAddViewHolder -> {
+                holder.bind()
+            }
+        }
     }
 
     inner class ParentViewHolder(private val binding: ItemNumberEdittextBinding) :
-        BaseViewHolder(binding.root) {
+        EditItemViewHolder(binding.root) {
         fun bind(item: ParentEditItem) {
-            binding.numberEditText.isEditable = false
             binding.executeAfter {
                 this.item = item
-                position = item.order
+                position = adapterPosition
+                number = item.order + 1
             }
         }
 
@@ -61,7 +87,7 @@ class NestedAdapter(private val viewModel: EditItemViewModelDelegate) :
     }
 
     inner class ChildViewHolder(private val binding: ItemCheckboxEdittextBinding) :
-        BaseViewHolder(binding.root) {
+        EditItemViewHolder(binding.root) {
         fun bind(item: ChildEditItem) {
             binding.executeAfter {
                 this.item = item

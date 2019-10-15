@@ -9,13 +9,13 @@ import androidx.annotation.IdRes
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.view.recyclerview.BaseAdapter
-import kort.tool.toolbox.view.recyclerview.BaseViewHolder
 import kort.uikit.sample.databinding.*
 
 data class Component(val title: String, @IdRes val directionId: Int)
 class ComponentsFragment : Fragment() {
     private lateinit var binding: FragmentComponentsBinding
     private var componentList = listOf(
+        Component("Add TextView", R.id.addTextViewFragment),
         Component("Number List", R.id.numberListFragment),
         Component("CheckBox List", R.id.checkBoxFragment),
         Component("Nested List", R.id.nestedListFragment),
@@ -59,7 +59,7 @@ class ComponentsAdapter : BaseAdapter<Component, ComponentsAdapter.ComponentsVie
     }
 
     inner class ComponentsViewHolder(private val binding: ItemComponentsBinding) :
-        BaseViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Component) {
             binding.button.apply {
                 text = item.title

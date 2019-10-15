@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.Dimension
@@ -14,15 +16,20 @@ import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
 import androidx.constraintlayout.helper.widget.Flow
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
+import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.keys
 import com.jakewharton.rxbinding3.widget.*
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kort.tool.toolbox.view.obtainStyleAndRecycle
 import kort.tool.toolbox.view.privateGet
 import kort.tool.toolbox.view.private_get_message
 import kort.uikit.component.R
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -37,6 +44,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     protected abstract val textTextView: TextView
     protected abstract val twoText: List<TextView>
     protected abstract val itemAndTextFlow: Flow
+    protected abstract val deleteButton: ImageButton
 
     private var mOnWrapLineListener: EditItemListener.OnWrapLineListener? = null
     private var mOnDeleteListener: EditItemListener.OnDeleteListener? = null
@@ -76,12 +84,15 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             field = value
         }
 
-    var hint: String
-        get() = textEditText.hint.toString()
+    var hint: String = ""
         set(value) {
-            textEditText.hint = value
+            Timber.d("setHint() :$value")
+            field = value
         }
 
+    open var isShowDeleteButton: Boolean = true
+
+    open var isChildCannotBeTouch: Boolean = false
 
     open var isActive: Boolean = false
 
@@ -117,6 +128,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     open fun initView() {
         obtainStyle(attrs)
         setupListener()
+        textEditText.hint = hint
     }
 
     @CallSuper
@@ -127,28 +139,65 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             textAppearanceRes =
                 getResourceId(R.styleable.BaseItemEditText_android_textAppearance, 0)
             hint = getString(R.styleable.BaseItemEditText_android_hint) ?: ""
+            isShowDeleteButton = getBoolean(R.styleable.BaseItemEditText_showDeleteButton, true)
         }
     }
 
     private fun setupListener() {
+        addOnFocusListener()
         addDeleteListener()
         addOnTextChangeListener()
+        addOnDeleteButtonClickListener()
     }
 
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean =
+        if (isChildCannotBeTouch) true else super.onInterceptTouchEvent(ev)
+
+    private fun addOnFocusListener() {
+        textEditText.setOnFocusChangeListener { _, isOnFocus ->
+            //            setupDeleteButton(isOnFocus)
+//            setupHint(isOnFocus)
+        }
+    }
+
+    private fun setupDeleteButton(isOnFocus: Boolean) {
+        if (isShowDeleteButton) {
+            deleteButton.isInvisible = !isOnFocus
+        }
+    }
+
+    private fun setupHint(isOnFocus: Boolean) {
+        textEditText.hint = if (isOnFocus) hint else "onFocus"
+        Timber.d("text:$text isOnFocus: $isOnFocus")
+        Timber.d("hint: $hint")
+        Timber.d("editText hint:${textEditText.hint}")
+    }
+
+    private fun addOnDeleteButtonClickListener() {
+        disposable.add(deleteButton.clicks().throttleFirst(100, TimeUnit.MILLISECONDS).subscribe {
+            mOnDeleteListener?.onDelete()
+        })
+    }
+
+    private var onWrapLineEventTime = 0L
     private var textChangeEventTime = 0L
     private fun addOnTextChangeListener() {
         disposable.add(
             textEditText
                 .textChangeEvents()
                 .subscribe {
-                    filterRepeatInShortTime(textChangeEventTime, System.currentTimeMillis(), 50) {
-                        textChangeEventTime = System.currentTimeMillis()
-                        if (it.text.contains('\n')) {
+                    if (it.text.contains('\n')) {
+                        filterRepeatInShortTime(
+                            onWrapLineEventTime,
+                            System.currentTimeMillis(),
+                            100
+                        ) {
+                            onWrapLineEventTime = System.currentTimeMillis()
                             Timber.d("text contain wrapline mark")
                             whenClickEnter()
-                        } else {
-                            mOnTextChangeListener?.onTextChange(it.text.toString())
                         }
+                    } else {
+                        mOnTextChangeListener?.onTextChange(it.text.toString())
                     }
                 }
         )
@@ -160,7 +209,9 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         range: Int,
         block: () -> Unit
     ): Boolean = kotlin.run {
+        Timber.d("eventTime: $eventTime start: ${newEventTime - range} end: ${newEventTime + range}")
         if (eventTime !in (newEventTime - range)..(newEventTime + range)) {
+            Timber.d("filter: block()")
             block()
             true
         } else false
@@ -183,14 +234,10 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
 
     private fun whenClickEnter() {
         Timber.d("clickEnter")
-
-        var beforeWrapLineText = ""
-        var afterWrapLineText = ""
-
         val wrapLineIndexFirst = text.indexOfFirst { it == '\n' }
         val wrapLineIndexLast = text.indexOfLast { it == '\n' }
-        beforeWrapLineText = text.substring(0 until wrapLineIndexFirst)
-        afterWrapLineText = text.substring((wrapLineIndexLast + 1)..text.lastIndex)
+        val beforeWrapLineText = text.substring(0 until wrapLineIndexFirst)
+        val afterWrapLineText = text.substring((wrapLineIndexLast + 1)..text.lastIndex)
         Timber.d("beforeWrapLineText: $beforeWrapLineText")
         Timber.d("afterWrapLineText: $afterWrapLineText")
         mOnWrapLineListener?.onWrapLine(beforeWrapLineText, afterWrapLineText)

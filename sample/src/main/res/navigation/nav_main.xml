@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_componentsFragment_to_twoPageNestedListFragment"
             app:destination="@id/twoPageNestedListFragment" />
+        <action
+            android:id="@+id/action_componentsFragment_to_addTextViewFragment"
+            app:destination="@id/addTextViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkBoxFragment"
@@ -43,5 +46,11 @@
         android:name="kort.uikit.sample.list.twopagenestedlist.TwoPageNestedListFragment"
         android:label="TwoPageNestedListFragment"
         tools:layout="@layout/fragment_two_page_nested_list"
+        />
+    <fragment
+        android:id="@+id/addTextViewFragment"
+        android:name="kort.uikit.sample.list.addtextview.AddTextViewFragment"
+        android:label="AddTextViewFragment"
+        tools:layout="fragment_add_text_view"
         />
 </navigation>

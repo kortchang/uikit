@@ -12,6 +12,7 @@
         <attr name="android:textAppearance" format="reference" />
         <attr name="android:text" format="string" />
         <attr name="android:hint" format="string" />
+        <attr name="showDeleteButton" format="boolean" />
     </declare-styleable>
 
     <declare-styleable name="NumberEditText">
@@ -22,5 +23,12 @@
 
     <declare-styleable name="CheckBoxEditText">
         <attr name="android:checked" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="AddTextView">
+        <attr name="android:drawablePadding" format="dimension" />
+        <attr name="android:textAppearance" format="reference" />
+        <attr name="android:text" format="string" />
+        <attr name="android:drawableTint" format="color" />
     </declare-styleable>
 </resources>

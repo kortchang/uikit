@@ -65,5 +65,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     // Kort Library
-    implementation 'com.github.KortChang:toolbox:97a0d50972'
+    implementation 'com.github.KortChang:toolbox:057b734075'
 }

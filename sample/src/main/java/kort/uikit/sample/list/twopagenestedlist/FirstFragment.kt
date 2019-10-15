@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import kort.tool.toolbox.view.recyclerview.BaseAdapter
-import kort.tool.toolbox.view.recyclerview.BaseViewHolder
 import kort.uikit.component.edititemlist.EditItemListFragment
 import kort.uikit.component.edititemlist.ListEventObserverInterface
 import kort.uikit.sample.R
@@ -23,13 +21,10 @@ class FirstFragment : EditItemListFragment<ParentEditItem>() {
     lateinit var binding: FragmentFirstBinding
     private val hostFragment by lazy { requireParentFragment().requireParentFragment() }
     private val viewModel: FirstViewModel by viewModel()
-    private val sharedViewModel: TwoPageNestedListViewModel by sharedViewModel(
-        from = { hostFragment },
-        parameters = { parametersOf(viewModel) }
-    )
-    override val adapter: BaseAdapter<ParentEditItem, out BaseViewHolder> by lazy {
-        ParentAdapter(viewModel)
-    }
+    private val sharedViewModel: TwoPageNestedListViewModel
+            by sharedViewModel(from = { hostFragment }, parameters = { parametersOf(viewModel) })
+
+    override val adapter by lazy { FirstAdapter(viewModel) }
     override val recyclerView: RecyclerView get() = binding.recyclerviewFirst
     override val listObserver: ListEventObserverInterface get() = viewModel
     override val listLiveData: LiveData<MutableList<ParentEditItem>> get() = viewModel.list

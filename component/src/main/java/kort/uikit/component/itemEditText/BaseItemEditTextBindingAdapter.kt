@@ -9,19 +9,19 @@ import timber.log.Timber
 object BaseItemEditTextBindingAdapter {
     @BindingAdapter("onWrapLine")
     @JvmStatic
-    fun BaseItemEditText.onWrapLine(listener: EditItemListener.OnWrapLineListener) {
+    fun BaseItemEditText.onWrapLine(listener: EditItemListener.OnWrapLineListener?) {
         onWrapLineListener = listener
     }
 
     @BindingAdapter("onDelete")
     @JvmStatic
-    fun BaseItemEditText.onDelete(listener: EditItemListener.OnDeleteListener) {
+    fun BaseItemEditText.onDelete(listener: EditItemListener.OnDeleteListener?) {
         onDeleteListener = listener
     }
 
     @BindingAdapter("onTextChange")
     @JvmStatic
-    fun BaseItemEditText.onTextChange(listener: EditItemListener.OnTextChange) {
+    fun BaseItemEditText.onTextChange(listener: EditItemListener.OnTextChange?) {
         onTextChangeListener = listener
     }
 }

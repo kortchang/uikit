@@ -34,12 +34,23 @@
             tools:ignore="MissingConstraints,TextFields"
             tools:layout_editor_absoluteX="12dp" />
 
+        <ImageButton
+            android:id="@+id/imageButton_delete_numberEditText"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@null"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/ic_close"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="387dp"
+            tools:visibility="visible" />
+
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flow_numberEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:foregroundGravity="left"
-            app:constraint_referenced_ids="textView_number_numberEditText,textView_text_numberEditText,editText_text_numberEditText"
+            app:constraint_referenced_ids="textView_number_numberEditText,textView_text_numberEditText,editText_text_numberEditText,imageButton_delete_numberEditText"
             app:flow_horizontalAlign="start"
             app:flow_horizontalBias="0"
             app:flow_horizontalStyle="packed"

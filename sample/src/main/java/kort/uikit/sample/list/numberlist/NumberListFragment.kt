@@ -11,8 +11,7 @@ import kort.uikit.component.edititemlist.ListEventObserverInterface
 import kort.uikit.sample.databinding.FragmentNumberListBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class NumberListFragment :
-    EditItemListFragment<NumberEditItem>() {
+class NumberListFragment : EditItemListFragment<NumberEditItem>() {
     private lateinit var binding: FragmentNumberListBinding
 
     private val viewModel by viewModel<NumberListViewModel>()

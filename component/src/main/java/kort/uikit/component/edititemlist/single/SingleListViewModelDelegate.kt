@@ -21,13 +21,12 @@ open class SingleListViewModelDelegate<T : EditItemModel>(
     override val listEventSenderObserver: ListEventSenderObserverInterface = ListEventSenderObserver()
 ) : SingleListViewModelDelegateInterface<T>,
     ListEventSenderObserverInterface by listEventSenderObserver {
-
     var _id: Int = 0
+
     val generateId get() = (_id++).toString()
-
     protected open var _list: MutableLiveData<MutableList<T>> = MutableLiveData()
-    override val list: LiveData<MutableList<T>> get() = _list
 
+    override val list: LiveData<MutableList<T>> get() = _list
     @CallSuper
     override fun onDelete(position: Int) = listOnDelete(_list, this, position)
 
@@ -41,4 +40,7 @@ open class SingleListViewModelDelegate<T : EditItemModel>(
     @CallSuper
     override fun onTextChange(position: Int, changedText: String, aware: Boolean) =
         listOnTextChange(_list, this, position, changedText, aware)
+
+    @CallSuper
+    override fun addNewItemAtLast() = listAddNewItemAtLast(_list, this, generateId)
 }

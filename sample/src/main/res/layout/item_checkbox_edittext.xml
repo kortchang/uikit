@@ -23,13 +23,13 @@
 
         <kort.uikit.component.itemEditText.CheckBoxEditText
             android:id="@+id/checkboxEditText"
-            onDelete="@{() -> listener.onDelete(position)}"
+            onDelete="@{()-> listener.onDelete(position)}"
             onTextChange="@{(changedText)-> listener.onTextChange(position, changedText, false)}"
-            onWrapLine="@{(beforeWrapLineText,afterWrapLineText)->listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"
+            onWrapLine="@{(beforeWrapLineText,afterWrapLineText)-> listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="@{item.checked}"
-            android:text="@{item.title}"
+            android:checked="@{item != null ? item.checked : false}"
+            android:text='@{item.title ?? ""}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

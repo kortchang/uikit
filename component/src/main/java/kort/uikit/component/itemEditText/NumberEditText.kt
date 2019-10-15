@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.StyleRes
 import androidx.constraintlayout.helper.widget.Flow
@@ -16,6 +17,8 @@ import kort.uikit.component.databinding.NumberEdittextBinding
  * Created by Kort on 2019-09-09.
  */
 class NumberEditText(context: Context, attrs: AttributeSet) : BaseItemEditText(context, attrs) {
+    override val deleteButton: ImageButton
+        get() = binding.imageButtonDeleteNumberEditText
     private val binding = NumberEdittextBinding.inflate(inflater, this, true)
 
     override val textEditText: EditText by lazy { binding.editTextTextNumberEditText }

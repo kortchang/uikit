@@ -9,18 +9,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.livedata.EventObserver
-import kort.tool.toolbox.view.recyclerview.BaseAdapter
-import kort.tool.toolbox.view.recyclerview.BaseViewHolder
 import timber.log.Timber
 
 /**
  * Created by Kort on 2019/9/24.
  */
 abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
-    protected abstract val adapter: BaseAdapter<T, out BaseViewHolder>
+    protected abstract val adapter: EditItemAdapter<T, out RecyclerView.ViewHolder>
     protected abstract val listObserver: ListEventObserverInterface
     protected abstract val recyclerView: RecyclerView
     protected abstract val listLiveData: LiveData<MutableList<T>>
+    protected open val isShowAddViewAtLast: Boolean = true
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,6 +58,9 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
         listObserver.changeItemAt.observe(this, EventObserver {
             Timber.d("changeItemAt: ${it.first} to ${it.last}")
             adapter.notifyItemRangeChanged(it.first, it.count())
+            if (isShowAddViewAtLast) {
+                adapter.notifyItemChanged(adapter.itemCount - 1)
+            }
         })
 
         listObserver.deleteItemAt.observe(this, EventObserver {

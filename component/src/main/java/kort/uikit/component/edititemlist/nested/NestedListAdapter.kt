@@ -2,8 +2,8 @@ package kort.uikit.component.edititemlist.nested
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import kort.tool.toolbox.view.recyclerview.BaseAdapter
-import kort.tool.toolbox.view.recyclerview.BaseViewHolder
+import androidx.recyclerview.widget.RecyclerView
+import kort.uikit.component.edititemlist.EditItemAdapter
 import kort.uikit.component.edititemlist.EditItemModel
 import kotlin.reflect.KClass
 
@@ -16,10 +16,10 @@ import kotlin.reflect.KClass
  * @param [TWO] Type that combine parent and child type.
  * @param [TWOVH] Parent viewHolder type.
  */
-abstract class NestedListAdapter<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel, TWOVH : BaseViewHolder>(
-    protected val parentClass: KClass<P>,
-    protected val childClass: KClass<C>
-) : BaseAdapter<TWO, TWOVH>() {
+abstract class NestedListAdapter<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel, TWOVH : RecyclerView.ViewHolder>(
+    protected open val parentClass: KClass<P>,
+    protected open val childClass: KClass<C>
+) : EditItemAdapter<TWO, TWOVH>() {
     protected val parentViewType = 1
     protected val childViewType = 2
     override fun getItemViewType(position: Int): Int {
@@ -35,16 +35,57 @@ abstract class NestedListAdapter<P : EditItemModel, C : ChildEditItemModel, TWO 
         }
     }
 
-    abstract fun buildParentViewHolder(inflater: LayoutInflater, parent: ViewGroup): TWOVH
-    abstract fun buildChildViewHolder(inflater: LayoutInflater, parent: ViewGroup): TWOVH
+    abstract fun createParentViewHolder(inflater: LayoutInflater, parent: ViewGroup): TWOVH
+    abstract fun createChildViewHolder(inflater: LayoutInflater, parent: ViewGroup): TWOVH
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TWOVH {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            parentViewType -> buildParentViewHolder(inflater, parent)
-            childViewType -> buildChildViewHolder(inflater, parent)
+            parentViewType -> createParentViewHolder(inflater, parent)
+            childViewType -> createChildViewHolder(inflater, parent)
             else -> throw IllegalArgumentException("There is no matched type")
         }
     }
 }
 
+abstract class NestedListWithAddAdapter<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel, TWOVH : RecyclerView.ViewHolder>(
+    override val parentClass: KClass<P>,
+    override val childClass: KClass<C>
+) : NestedListAdapter<P, C, TWO, TWOVH>(parentClass, childClass) {
+    protected val addViewType = 3
+    override fun getItemCount(): Int = super.getItemCount() + 1
+    override fun getItemViewType(position: Int): Int {
+        var isParent = false
+        var isChild = false
+        var isAdd = false
+
+        if (position != itemCount - 1) {
+            isParent = parentClass.isInstance(getItem(position))
+            isChild = childClass.isInstance(getItem(position))
+        } else {
+            isAdd = position == itemCount - 1
+        }
+
+        return when {
+            isParent -> parentViewType
+            isChild -> childViewType
+            isAdd -> addViewType
+            else ->
+                throw IllegalArgumentException(
+                    "There is not match type of list. Item Type is ${getItem(position)::class.simpleName}"
+                )
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TWOVH {
+        val inflater = LayoutInflater.from(parent.context)
+        return when (viewType) {
+            parentViewType -> createParentViewHolder(inflater, parent)
+            childViewType -> createChildViewHolder(inflater, parent)
+            addViewType -> createAddViewHolder(inflater, parent)
+            else -> throw IllegalArgumentException("There is no matched type")
+        }
+    }
+
+    abstract fun createAddViewHolder(inflater: LayoutInflater, parent: ViewGroup): TWOVH
+}

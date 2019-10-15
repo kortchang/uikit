@@ -69,5 +69,5 @@ dependencies {
 
     // Kort Library
     testImplementation 'com.github.KortChang:android-unit-test-extension:0045ddd4fc'
-    implementation 'com.github.KortChang:toolbox:97a0d50972'
+    implementation 'com.github.KortChang:toolbox:057b734075'
 }

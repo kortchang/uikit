@@ -28,22 +28,21 @@ interface SingleEditItemListListener<T : EditItemModel> {
         listEventSender: ListEventSenderInterface,
         position: Int
     ) {
-        val list = _list.value ?: mutableListOf()
-        Timber.d("delete()")
-        Timber.d("beforeDelete list: $list")
-        if (list.size > 1) {
-            Timber.d("delete at $position")
-            list.removeAt(position)
-            reOrderList(list, position)
-            _list.aware()
+        _list.value?.let { list ->
+            if (list.size > 0) {
+                Timber.d("delete at $position")
+                list.removeAt(position)
+                reOrderList(list, position)
+                _list.aware()
 
-            listEventSender.run {
-                sendDeleteEventAt(position)
-                if (list.lastIndex != position) {
-                    sendChangeEventToLastIndex(position, list.lastIndex)
+                listEventSender.run {
+                    sendDeleteEventAt(position)
+                    if (list.isNotEmpty()) {
+                        sendChangeEventToLastIndex(position, list.lastIndex)
+                        val focusAt = if (position == 0) position else position - 1
+                        sendFocusEventAt(focusAt)
+                    }
                 }
-                val focusAt = if (position == 0) position else position - 1
-                sendFocusEventAt(focusAt)
             }
         }
     }
@@ -62,22 +61,40 @@ interface SingleEditItemListListener<T : EditItemModel> {
         afterWrapLineText: String,
         newItemId: String
     ) {
-        val list = _list.value ?: mutableListOf()
-        Timber.d("wrapLine at $position")
-        listOnTextChange(_list, listEventSender, position, beforeWrapLineText, true)
-        val newItemPosition = position + 1
-        val newItem = generateNewItem(newItemPosition, afterWrapLineText, newItemId)
-        Timber.d("createNewItemAdd() newItem: $newItem position: $newItemPosition")
-        list.add(newItemPosition, newItem)
-        reOrderList(list, newItemPosition + 1)
+        _list.value?.let { list ->
+            Timber.d("wrapLine at $position")
+            listOnTextChange(_list, listEventSender, position, beforeWrapLineText, true)
+            val newItemPosition = position + 1
+            val newItem = generateNewItem(newItemPosition, afterWrapLineText, newItemId)
+            list.add(newItemPosition, newItem)
+            reOrderList(list, newItemPosition + 1)
 
-        _list.aware()
-        Timber.d("afterWrapLine list: ${_list.value}")
+            _list.aware()
+            Timber.d("afterWrapLine list: ${_list.value}")
 
-        listEventSender.run {
-            sendAddEventAt(newItemPosition)
-            sendChangeEventToLastIndex(newItemPosition + 1, list.lastIndex)
-            sendFocusEventAt(newItemPosition)
+            listEventSender.run {
+                sendAddEventAt(newItemPosition)
+                sendChangeEventToLastIndex(newItemPosition + 1, list.lastIndex)
+                sendFocusEventAt(newItemPosition)
+            }
+        }
+    }
+
+    fun listAddNewItemAtLast(
+        _list: MutableLiveData<MutableList<T>>,
+        listEventSender: ListEventSenderInterface,
+        newItemId: String
+    ) {
+        _list.value?.let {
+            val newItemPosition = it.size
+            it.add(generateNewItem(newItemPosition, "", newItemId))
+            _list.aware()
+
+            listEventSender.run {
+                sendAddEventAt(newItemPosition)
+                sendFocusEventAt(newItemPosition)
+                sendChangeEventAt(newItemPosition + 1)
+            }
         }
     }
 
