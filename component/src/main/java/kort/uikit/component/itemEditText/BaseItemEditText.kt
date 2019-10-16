@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.*
 import androidx.constraintlayout.helper.widget.Flow
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.getColorOrThrow
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -144,7 +145,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             textAppearanceRes =
                 getResourceId(R.styleable.BaseItemEditText_android_textAppearance, 0)
             hint = getString(R.styleable.BaseItemEditText_android_hint) ?: ""
-            hintTextColor = getColor(R.styleable.BaseItemEditText_android_textColorHint)
+            hintTextColor = getColorOrThrow(R.styleable.BaseItemEditText_android_textColorHint)
             isShowDeleteButton = getBoolean(R.styleable.BaseItemEditText_showDeleteButton, true)
         }
     }
