@@ -84,10 +84,11 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             field = value
         }
 
-    var hint: String = ""
+    var hint: String
+        get() = textEditText.hint.toString()
         set(value) {
             Timber.d("setHint() :$value")
-            field = value
+            textEditText.hint = value
         }
 
     open var isShowDeleteButton: Boolean = true
@@ -120,7 +121,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         Timber.d("focus length: $length")
         textEditText.setSelection(length)
         val imm = context.getSystemService(InputMethodManager::class.java)
-        if (imm?.isActive == false) {
+        if (imm?.isActive(textEditText) == false) {
             imm.showSoftInput(textEditText, SHOW_IMPLICIT)
         }
     }
@@ -128,7 +129,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     open fun initView() {
         obtainStyle(attrs)
         setupListener()
-        textEditText.hint = hint
     }
 
     @CallSuper
