@@ -10,10 +10,7 @@ import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.annotation.CallSuper
-import androidx.annotation.Dimension
-import androidx.annotation.StringRes
-import androidx.annotation.StyleRes
+import androidx.annotation.*
 import androidx.constraintlayout.helper.widget.Flow
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isInvisible
@@ -91,6 +88,14 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             textEditText.hint = value
         }
 
+    @ColorInt
+    var hintTextColor: Int = 0
+        get() = textEditText.hintTextColors.defaultColor
+        set(@ColorInt value) {
+            textEditText.setHintTextColor(value)
+            field = value
+        }
+
     open var isShowDeleteButton: Boolean = true
 
     open var isChildCannotBeTouch: Boolean = false
@@ -139,6 +144,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             textAppearanceRes =
                 getResourceId(R.styleable.BaseItemEditText_android_textAppearance, 0)
             hint = getString(R.styleable.BaseItemEditText_android_hint) ?: ""
+            hintTextColor = getColor(R.styleable.BaseItemEditText_android_textColorHint)
             isShowDeleteButton = getBoolean(R.styleable.BaseItemEditText_showDeleteButton, true)
         }
     }
