@@ -24,6 +24,7 @@
 
     <declare-styleable name="CheckBoxEditText">
         <attr name="android:checked" format="boolean" />
+        <attr name="android:buttonTint" format="color" />
     </declare-styleable>
 
     <declare-styleable name="AddTextView">

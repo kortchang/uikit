@@ -1,13 +1,18 @@
 package kort.uikit.component.itemEditText
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.constraintlayout.helper.widget.Flow
+import androidx.core.content.res.getColorOrThrow
 import kort.tool.toolbox.view.obtainStyleAndRecycle
+import kort.tool.toolbox.view.privateGet
+import kort.tool.toolbox.view.private_get_message
 import kort.uikit.component.R
 import kort.uikit.component.databinding.CheckboxEdittextBinding
 
@@ -30,6 +35,14 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
             checkbox.isChecked = value
         }
 
+    @ColorInt
+    var buttonTint: Int = 0
+        @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
+        set(@ColorInt value) {
+            checkbox.buttonTintList = ColorStateList.valueOf(value)
+            field = value
+        }
+
     init {
         initView()
     }
@@ -38,6 +51,7 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
         super.obtainStyle(attrs)
         context.obtainStyleAndRecycle(attrs, R.styleable.CheckBoxEditText) {
             isChecked = getBoolean(R.styleable.CheckBoxEditText_android_checked, false)
+            buttonTint = getColorOrThrow(R.styleable.CheckBoxEditText_android_buttonTint)
         }
     }
 }
