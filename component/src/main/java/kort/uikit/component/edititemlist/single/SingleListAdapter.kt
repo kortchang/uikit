@@ -17,8 +17,6 @@ import kotlin.reflect.KClass
  */
 abstract class SingleListAdapter<T : EditItemModel, VH : SingleListViewHolder<T>> :
     EditItemAdapter<T, VH>() {
-    override fun getItemCount(): Int = super.getItemCount() + 1
-
     override fun onBindViewHolder(holder: VH, position: Int) {
         bindEditItem(position, holder)
     }
