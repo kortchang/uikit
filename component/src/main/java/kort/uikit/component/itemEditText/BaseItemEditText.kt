@@ -90,11 +90,13 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         }
 
     @ColorInt
-    var hintTextColor: Int = 0
+    var hintTextColor: Int = -1
         get() = textEditText.hintTextColors.defaultColor
         set(@ColorInt value) {
-            textEditText.setHintTextColor(value)
-            field = value
+            if(value != -1) {
+                textEditText.setHintTextColor(value)
+                field = value
+            }
         }
 
     open var isShowDeleteButton: Boolean = true
@@ -145,7 +147,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             textAppearanceRes =
                 getResourceId(R.styleable.BaseItemEditText_android_textAppearance, 0)
             hint = getString(R.styleable.BaseItemEditText_android_hint) ?: ""
-            hintTextColor = getColorOrThrow(R.styleable.BaseItemEditText_android_textColorHint)
+            hintTextColor = getColor(R.styleable.BaseItemEditText_android_textColorHint, -1)
             isShowDeleteButton = getBoolean(R.styleable.BaseItemEditText_showDeleteButton, true)
         }
     }

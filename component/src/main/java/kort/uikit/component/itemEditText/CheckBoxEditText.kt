@@ -36,11 +36,13 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
         }
 
     @ColorInt
-    var buttonTint: Int = 0
+    var buttonTint: Int = -1
         @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
         set(@ColorInt value) {
-            checkbox.buttonTintList = ColorStateList.valueOf(value)
-            field = value
+            if (value != -1) {
+                checkbox.buttonTintList = ColorStateList.valueOf(value)
+                field = value
+            }
         }
 
     init {
@@ -51,7 +53,7 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
         super.obtainStyle(attrs)
         context.obtainStyleAndRecycle(attrs, R.styleable.CheckBoxEditText) {
             isChecked = getBoolean(R.styleable.CheckBoxEditText_android_checked, false)
-            buttonTint = getColorOrThrow(R.styleable.CheckBoxEditText_android_buttonTint)
+            buttonTint = getColor(R.styleable.CheckBoxEditText_android_buttonTint, -1)
         }
     }
 }
