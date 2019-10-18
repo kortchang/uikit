@@ -45,6 +45,12 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
             }
         }
 
+    var isCheckable: Boolean = true
+        set(value) {
+            checkbox.isClickable = value
+            field = value
+        }
+
     init {
         initView()
     }
@@ -54,6 +60,7 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
         context.obtainStyleAndRecycle(attrs, R.styleable.CheckBoxEditText) {
             isChecked = getBoolean(R.styleable.CheckBoxEditText_android_checked, false)
             buttonTint = getColor(R.styleable.CheckBoxEditText_android_buttonTint, -1)
+            isCheckable = getBoolean(R.styleable.CheckBoxEditText_android_checkable, true)
         }
     }
 }

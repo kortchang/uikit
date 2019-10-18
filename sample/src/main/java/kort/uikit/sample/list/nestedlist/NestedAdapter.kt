@@ -38,6 +38,7 @@ class NestedAdapter(private val viewModel: EditItemViewModelDelegate) :
         parent: ViewGroup
     ): EditItemViewHolder {
         val binding = ItemCheckboxEdittextBinding.inflate(inflater, parent, false).apply {
+            checkboxEditText.isCheckable = false
             listener = viewModel
         }
         return ChildViewHolder(binding)
