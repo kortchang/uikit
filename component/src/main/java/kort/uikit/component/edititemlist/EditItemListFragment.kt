@@ -21,6 +21,11 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
     protected abstract val recyclerView: RecyclerView
     protected abstract val listLiveData: LiveData<MutableList<T>>
     protected open val isShowAddViewAtLast: Boolean = true
+    protected val inputMethodManager: InputMethodManager by lazy {
+        requireContext().getSystemService(
+            InputMethodManager::class.java
+        )
+    }
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,19 +84,17 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
     }
 
     private fun showKeyboard() {
-        val imm = requireContext().getSystemService(InputMethodManager::class.java)
         val focusedView = requireActivity().currentFocus
-        if (imm != null && focusedView != null) {
-            imm.showSoftInput(focusedView, 0)
+        if (inputMethodManager != null && focusedView != null) {
+            inputMethodManager.showSoftInput(focusedView, 0)
         }
     }
 
     private fun closeKeyboard() {
-        val imm = requireContext().getSystemService(InputMethodManager::class.java)
         val focusedView = requireActivity().currentFocus
-        if (imm?.isActive == true && focusedView != null) {
+        if (inputMethodManager.isActive && focusedView != null) {
             Timber.d("imm isActive")
-            imm.hideSoftInputFromWindow(
+            inputMethodManager.hideSoftInputFromWindow(
                 focusedView.windowToken,
                 0
             )
