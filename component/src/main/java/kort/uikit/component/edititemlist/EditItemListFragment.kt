@@ -2,6 +2,7 @@ package kort.uikit.component.edititemlist
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.CallSuper
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,6 +27,7 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView(recyclerView)
         bindViewModel()
+        showKeyboard()
     }
 
     protected open fun setupRecyclerView(recyclerView: RecyclerView) {
@@ -74,5 +76,25 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
             adapter.notifyItemChanged(it)
             recyclerView.scrollToPosition(it)
         })
+    }
+
+    private fun showKeyboard() {
+        val imm = requireContext().getSystemService(InputMethodManager::class.java)
+        val focusedView = requireActivity().currentFocus
+        if (imm != null && focusedView != null) {
+            imm.showSoftInput(focusedView, 0)
+        }
+    }
+
+    private fun closeKeyboard() {
+        val imm = requireContext().getSystemService(InputMethodManager::class.java)
+        val focusedView = requireActivity().currentFocus
+        if (imm?.isActive == true && focusedView != null) {
+            Timber.d("imm isActive")
+            imm.hideSoftInputFromWindow(
+                focusedView.windowToken,
+                0
+            )
+        }
     }
 }
