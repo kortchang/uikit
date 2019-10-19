@@ -83,14 +83,14 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
         })
     }
 
-    private fun showKeyboard() {
+    protected fun showKeyboard() {
         val focusedView = requireActivity().currentFocus
-        if (inputMethodManager != null && focusedView != null) {
+        if (focusedView != null) {
             inputMethodManager.showSoftInput(focusedView, 0)
         }
     }
 
-    private fun closeKeyboard() {
+    protected fun closeKeyboard() {
         val focusedView = requireActivity().currentFocus
         if (inputMethodManager.isActive && focusedView != null) {
             Timber.d("imm isActive")
