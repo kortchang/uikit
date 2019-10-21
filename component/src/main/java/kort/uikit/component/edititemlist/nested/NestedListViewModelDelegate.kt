@@ -20,6 +20,8 @@ interface NestedListViewModelDelegateInterface<P : EditItemModel, C : ChildEditI
     val childMap: LiveData<MutableMap<String, MutableList<C>>>
     val parentClass: KClass<P>
     val childClass: KClass<C>
+    fun setParentLiveData(liveData: MutableLiveData<MutableList<P>>)
+    fun setChildLiveData(liveData: MutableLiveData<MutableMap<String, MutableList<C>>>)
     fun setParentList(list: MutableList<P>)
     fun setChildMap(map: MutableMap<String, MutableList<C>>)
 }
@@ -37,9 +39,17 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
     protected open var _childId = 0
     protected open val generateChildId get() = (_childId++).toString()
 
+    override fun setParentLiveData(liveData: MutableLiveData<MutableList<P>>) {
+        _parentList = liveData
+    }
+
     var _parentList: MutableLiveData<MutableList<P>> =
         MutableLiveData(mutableListOf())
     override val parentList: LiveData<MutableList<P>> get() = _parentList
+
+    override fun setChildLiveData(liveData: MutableLiveData<MutableMap<String, MutableList<C>>>) {
+        _childMap = liveData
+    }
 
     protected open var _childMap: MutableLiveData<MutableMap<String, MutableList<C>>> =
         MutableLiveData(mutableMapOf())
