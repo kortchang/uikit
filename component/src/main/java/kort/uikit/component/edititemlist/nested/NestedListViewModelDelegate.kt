@@ -21,6 +21,7 @@ interface NestedListViewModelDelegateInterface<P : EditItemModel, C : ChildEditI
     val parentClass: KClass<P>
     val childClass: KClass<C>
     fun setParentList(list: MutableList<P>)
+    fun setChildMap(map: MutableMap<String, MutableList<C>>)
 }
 
 open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel>(
@@ -102,8 +103,11 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
         mutableListOf(generateChildItem(generateChildId, parentId))
 
     override fun setParentList(list: MutableList<P>) {
-        _parentList.value = list
-        _parentList.aware()
+        _parentList.postValue(list)
+    }
+
+    override fun setChildMap(map: MutableMap<String, MutableList<C>>) {
+        _childMap.postValue(map)
     }
 
     fun onDelete(_childMap: MutableLiveData<MutableMap<String, MutableList<C>>>, position: Int) {

@@ -22,9 +22,7 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
     protected abstract val listLiveData: LiveData<MutableList<T>>
     protected open val isShowAddViewAtLast: Boolean = true
     protected val inputMethodManager: InputMethodManager by lazy {
-        requireContext().getSystemService(
-            InputMethodManager::class.java
-        )
+        requireContext().getSystemService(InputMethodManager::class.java)
     }
 
     @CallSuper
