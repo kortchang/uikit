@@ -49,7 +49,7 @@ open class NestedListDataStatusViewModelDelegate<P : EditItemModel, C : ChildEdi
     }
 
     var _parentList: MutableLiveData<DataStatus<MutableList<P>>> =
-        MutableLiveData(DataStatus.Loading())
+        MutableLiveData(DataStatus.Success(mutableListOf()))
     override val parentList: LiveData<DataStatus<MutableList<P>>> get() = _parentList
 
     override fun setChildLiveData(liveData: MutableLiveData<DataStatus<MutableMap<String, MutableList<C>>>>) {
@@ -57,7 +57,7 @@ open class NestedListDataStatusViewModelDelegate<P : EditItemModel, C : ChildEdi
     }
 
     protected open var _childMap: MutableLiveData<DataStatus<MutableMap<String, MutableList<C>>>> =
-        MutableLiveData(DataStatus.Loading())
+        MutableLiveData(DataStatus.Success(mutableMapOf()))
     override val childMap: LiveData<DataStatus<MutableMap<String, MutableList<C>>>> get() = _childMap
 
     protected open val _list: MediatorLiveData<DataStatus<MutableList<TWO>>> =
