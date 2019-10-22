@@ -40,12 +40,12 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@null"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_close"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteX="387dp"
             tools:layout_editor_absoluteY="4dp"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flow_checkboxEditText"
