@@ -6,10 +6,15 @@
         <variable
             name="text"
             type="String" />
+
+        <variable
+            name="viewModel"
+            type="kort.uikit.component.edititemlist.EditItemViewModelDelegate" />
     </data>
 
     <kort.uikit.component.edititemlist.AddTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> viewModel.addNewItemAtLast()}"
         android:text="@{text}" />
 </layout>

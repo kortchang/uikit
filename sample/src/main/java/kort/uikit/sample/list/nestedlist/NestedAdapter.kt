@@ -4,16 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.databinding.executeAfter
-import kort.uikit.component.databinding.AddTextviewBinding
 import kort.uikit.component.edititemlist.EditItemViewModelDelegate
 import kort.uikit.component.edititemlist.EditItemModel
 import kort.uikit.component.edititemlist.EditItemViewHolder
-import kort.uikit.component.edititemlist.ItemAddViewHolder
-import kort.uikit.component.edititemlist.nested.NestedListAdapter
 import kort.uikit.component.edititemlist.nested.NestedListWithAddAdapter
 import kort.uikit.sample.databinding.ItemAddTextViewBinding
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
+import kort.uikit.sample.list.addtextview.AddTextViewHolder
 
 /**
  * Created by Kort on 2019/9/25.
@@ -51,7 +49,7 @@ class NestedAdapter(private val viewModel: EditItemViewModelDelegate) :
         val binding = ItemAddTextViewBinding.inflate(inflater, parent, false).apply {
             text = "新增行動清單"
         }
-        return ItemAddViewHolder(binding.root) { viewModel.addNewItemAtLast() }
+        return AddTextViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -65,9 +63,6 @@ class NestedAdapter(private val viewModel: EditItemViewModelDelegate) :
                 val item = getItem(position)
                 holder.bind(item as ChildEditItem)
                 focusAt(position, holder)
-            }
-            is ItemAddViewHolder -> {
-                holder.bind()
             }
         }
     }

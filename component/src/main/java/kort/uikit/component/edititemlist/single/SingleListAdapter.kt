@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kort.uikit.component.edititemlist.ItemAddViewHolder
 import kort.uikit.component.edititemlist.EditItemAdapter
 import kort.uikit.component.edititemlist.EditItemModel
 import kort.uikit.component.edititemlist.EditItemViewHolder
@@ -35,7 +34,7 @@ abstract class SingleListViewHolder<T : EditItemModel>(view: View) : EditItemVie
     }
 }
 
-abstract class SingleListWithAddAdapter<T : EditItemModel, VH : SingleListViewHolder<T>, ADDVH : ItemAddViewHolder>(
+abstract class SingleListWithAddAdapter<T : EditItemModel, VH : SingleListViewHolder<T>, ADDVH : RecyclerView.ViewHolder>(
     private val viewHolderClass: KClass<VH>,
     private val addViewHolderClass: KClass<ADDVH>
 ) : EditItemAdapter<T, RecyclerView.ViewHolder>() {
@@ -73,7 +72,5 @@ abstract class SingleListWithAddAdapter<T : EditItemModel, VH : SingleListViewHo
         focusAt(position, holder)
     }
 
-    protected open fun bindAddTextView(holder: ADDVH) {
-        holder.bind()
-    }
+    protected open fun bindAddTextView(holder: ADDVH) {}
 }
