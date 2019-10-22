@@ -54,11 +54,13 @@ abstract class EditItemDataStatusListFragment<T : EditItemModel> : Fragment() {
 
     protected open fun bindMainList(listLiveData: LiveData<DataStatus<MutableList<T>>>) {
         listLiveData.observe(this, Observer {
-            when(it){
+            when (it) {
                 is DataStatus.Loading -> loadingDialog.show()
                 is DataStatus.Success -> {
                     Timber.d("currentList: ${it.result}")
+                    val originListSize = adapter.currentList.size
                     adapter.currentList = it.result
+                    if (originListSize == 0) adapter.notifyDataSetChanged()
                     loadingDialog.dismiss()
                 }
             }

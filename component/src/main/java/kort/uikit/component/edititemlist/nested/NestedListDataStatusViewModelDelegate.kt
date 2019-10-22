@@ -224,8 +224,9 @@ open class NestedListDataStatusViewModelDelegate<P : EditItemModel, C : ChildEdi
         _childMap.value?.isSuccess { childMap ->
             Timber.d("getChildPosition childMap: $childMap")
             Timber.d("item: $item")
-            val childPosition = childMap[item.parentId]?.indexOfFirst { it.id == item.id }
-                ?: throw Exception("Cannot find the item in childList")
+            val childPosition = (childMap[item.parentId]
+                ?: throw Exception("Cannot fin the parentId:${item.parentId} in childMap"))
+                .indexOfFirst { it.id == item.id }
             block(childPosition)
         }
     }
