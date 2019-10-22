@@ -24,7 +24,7 @@ class DataStatusListViewModel(
         val childLiveData:MutableLiveData<DataStatus<MutableMap<String, MutableList<ChildEditItem>>>> = MutableLiveData(
             DataStatus.Success(
                 mutableMapOf(
-                    "1" to mutableListOf(ChildEditItem(title = "first"))
+                    "1" to mutableListOf(ChildEditItem(title = "first", parentId = "1"))
                 )
             )
         )

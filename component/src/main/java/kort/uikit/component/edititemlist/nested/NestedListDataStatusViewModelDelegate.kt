@@ -223,6 +223,7 @@ open class NestedListDataStatusViewModelDelegate<P : EditItemModel, C : ChildEdi
     protected fun getChildPosition(item: C, block: (Int) -> Unit) {
         _childMap.value?.isSuccess { childMap ->
             Timber.d("getChildPosition childMap: $childMap")
+            Timber.d("item: $item")
             val childPosition = childMap[item.parentId]?.indexOfFirst { it.id == item.id }
                 ?: throw Exception("Cannot find the item in childList")
             block(childPosition)

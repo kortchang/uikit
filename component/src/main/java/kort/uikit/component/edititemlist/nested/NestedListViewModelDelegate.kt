@@ -113,11 +113,11 @@ open class NestedListViewModelDelegate<P : EditItemModel, C : ChildEditItemModel
         mutableListOf(generateChildItem(generateChildId, parentId))
 
     override fun setParentList(list: MutableList<P>) {
-        _parentList.postValue(list)
+        _parentList.value = list
     }
 
     override fun setChildMap(map: MutableMap<String, MutableList<C>>) {
-        _childMap.postValue(map)
+        _childMap.value = map
     }
 
     fun onDelete(_childMap: MutableLiveData<MutableMap<String, MutableList<C>>>, position: Int) {

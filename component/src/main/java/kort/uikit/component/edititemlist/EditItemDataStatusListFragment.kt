@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.DataStatus
 import kort.tool.toolbox.livedata.EventObserver
@@ -38,10 +39,11 @@ abstract class EditItemDataStatusListFragment<T : EditItemModel> : Fragment() {
 
     protected open fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.also {
+            it.adapter = adapter
+            it.layoutManager = LinearLayoutManager(requireContext())
+            it.itemAnimator = null
             it.isVisible = false
             it.isVisible = true
-            it.adapter = adapter
-            it.itemAnimator = null
         }
     }
 
@@ -55,7 +57,7 @@ abstract class EditItemDataStatusListFragment<T : EditItemModel> : Fragment() {
             when(it){
                 is DataStatus.Loading -> loadingDialog.show()
                 is DataStatus.Success -> {
-                    Timber.d("currentList: $it")
+                    Timber.d("currentList: ${it.result}")
                     adapter.currentList = it.result
                     loadingDialog.dismiss()
                 }
