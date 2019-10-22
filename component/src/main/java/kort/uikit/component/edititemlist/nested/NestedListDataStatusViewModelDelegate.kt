@@ -64,8 +64,8 @@ open class NestedListDataStatusViewModelDelegate<P : EditItemModel, C : ChildEdi
 
     protected open val _list: MediatorLiveData<DataStatus<MutableList<TWO>>> by lazy {
         MediatorLiveData<DataStatus<MutableList<TWO>>>().apply {
-            _childMap.value?.let { child ->
-                addSource(_parentList) {
+            addSource(_parentList) {
+                _childMap.value?.let { child ->
                     //                    parent = it
                     value = it.combine(child) { p, c ->
                         val list = combineList(p, c)
@@ -76,8 +76,8 @@ open class NestedListDataStatusViewModelDelegate<P : EditItemModel, C : ChildEdi
                 }
             }
 
-            _parentList.value?.let { parent ->
-                addSource(_childMap) {
+            addSource(_childMap) {
+                _parentList.value?.let { parent ->
                     //                    child = it
                     value = it.combine(parent) { c, p ->
                         combineList(p, c)
