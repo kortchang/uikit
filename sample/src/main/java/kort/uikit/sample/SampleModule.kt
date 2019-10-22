@@ -1,6 +1,7 @@
 package kort.uikit.sample
 
 import kort.uikit.component.edititemlist.EditItemModel
+import kort.uikit.component.edititemlist.nested.NestedListDataStatusViewModelDelegateInterface
 import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegate
 import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
 import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegateInterface
@@ -8,6 +9,8 @@ import kort.uikit.component.edititemlist.single.SingleListViewModelDelegate
 import kort.uikit.sample.list.checkboxlist.CheckBoxEditItem
 import kort.uikit.sample.list.checkboxlist.CheckBoxListViewModelDelegateImp
 import kort.uikit.sample.list.checkboxlist.CheckBoxViewModel
+import kort.uikit.sample.list.datastatuslist.DataStatusListDelegateImpl
+import kort.uikit.sample.list.datastatuslist.DataStatusListViewModel
 import kort.uikit.sample.list.nestedlist.ChildEditItem
 import kort.uikit.sample.list.nestedlist.NestedListViewModelDelegateImp
 import kort.uikit.sample.list.nestedlist.NestedListViewModel
@@ -32,6 +35,7 @@ val mainModule = module {
     factory<SingleListViewModelDelegateInterface<CheckBoxEditItem>>(named(checkBoxDelegate)) { CheckBoxListViewModelDelegateImp() }
     factory<NestedListViewModelDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { NestedListViewModelDelegateImp() }
     factory<SingleListViewModelDelegateInterface<ParentEditItem>> { FirstDelegateImpl() }
+    factory<NestedListDataStatusViewModelDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { DataStatusListDelegateImpl() }
 
     viewModel { NumberListViewModel(get(named(numberDelegate))) }
     viewModel { CheckBoxViewModel(get(named(checkBoxDelegate))) }
@@ -42,4 +46,5 @@ val mainModule = module {
             NestedListViewModelDelegate(ParentEditItem::class, ChildEditItem::class), singleDelegate
         )
     }
+    viewModel { DataStatusListViewModel(get()) }
 }

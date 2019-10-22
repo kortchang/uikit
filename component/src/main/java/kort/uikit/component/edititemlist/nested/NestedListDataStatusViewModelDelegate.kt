@@ -46,40 +46,48 @@ open class NestedListDataStatusViewModelDelegate<P : EditItemModel, C : ChildEdi
 
     override fun setParentLiveData(liveData: MutableLiveData<DataStatus<MutableList<P>>>) {
         _parentList = liveData
+        _parentList.aware()
     }
 
-    var _parentList: MutableLiveData<DataStatus<MutableList<P>>> =
+    protected open var _parentList: MutableLiveData<DataStatus<MutableList<P>>> =
         MutableLiveData(DataStatus.Success(mutableListOf()))
     override val parentList: LiveData<DataStatus<MutableList<P>>> get() = _parentList
 
     override fun setChildLiveData(liveData: MutableLiveData<DataStatus<MutableMap<String, MutableList<C>>>>) {
         _childMap = liveData
+        _childMap.aware()
     }
 
     protected open var _childMap: MutableLiveData<DataStatus<MutableMap<String, MutableList<C>>>> =
         MutableLiveData(DataStatus.Success(mutableMapOf()))
     override val childMap: LiveData<DataStatus<MutableMap<String, MutableList<C>>>> get() = _childMap
 
-    protected open val _list: MediatorLiveData<DataStatus<MutableList<TWO>>> =
+    protected open val _list: MediatorLiveData<DataStatus<MutableList<TWO>>> by lazy {
         MediatorLiveData<DataStatus<MutableList<TWO>>>().apply {
-            var parent = _parentList.value!!
-            var child = _childMap.value!!
-            addSource(_parentList) {
-                parent = it
-                value = parent.combine(child) { p, c ->
-                    combineList(p, c)
+            _childMap.value?.let { child ->
+                addSource(_parentList) {
+                    //                    parent = it
+                    value = it.combine(child) { p, c ->
+                        val list = combineList(p, c)
+                        Timber.d("parent: $it, child: $child")
+                        Timber.d("parent combineList: $list")
+                        return@combine list
+                    }
                 }
             }
 
-            addSource(_childMap) {
-                child = it
-                value = child.combine(parent) { c, p ->
-                    combineList(p, c)
+            _parentList.value?.let { parent ->
+                addSource(_childMap) {
+                    //                    child = it
+                    value = it.combine(parent) { c, p ->
+                        combineList(p, c)
+                    }
                 }
             }
         }
+    }
 
-    override val list: LiveData<DataStatus<MutableList<TWO>>> get() = _list
+    override val list: LiveData<DataStatus<MutableList<TWO>>> by lazy { _list }
 
     private fun combineList(
         parentList: MutableList<P>,

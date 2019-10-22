@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_componentsFragment_to_addTextViewFragment"
             app:destination="@id/addTextViewFragment" />
+        <action
+            android:id="@+id/action_componentsFragment_to_dataStatusListFragment"
+            app:destination="@id/dataStatusListFragment" />
     </fragment>
     <fragment
         android:id="@+id/checkBoxFragment"
@@ -53,4 +56,8 @@
         android:label="AddTextViewFragment"
         tools:layout="fragment_add_text_view"
         />
+    <fragment
+        android:id="@+id/dataStatusListFragment"
+        android:name="kort.uikit.sample.list.datastatuslist.DataStatusListFragment"
+        android:label="DataStatusListFragment" />
 </navigation>
