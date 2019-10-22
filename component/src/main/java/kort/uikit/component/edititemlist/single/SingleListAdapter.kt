@@ -8,7 +8,6 @@ import kort.uikit.component.edititemlist.EditItemAdapter
 import kort.uikit.component.edititemlist.EditItemModel
 import kort.uikit.component.edititemlist.EditItemViewHolder
 import kort.uikit.component.itemEditText.BaseItemEditText
-import kotlin.Exception
 import kotlin.reflect.KClass
 
 /**
@@ -72,5 +71,7 @@ abstract class SingleListWithAddAdapter<T : EditItemModel, VH : SingleListViewHo
         focusAt(position, holder)
     }
 
-    protected open fun bindAddTextView(holder: ADDVH) {}
+    protected open fun bindAddTextView(holder: ADDVH) {
+
+    }
 }

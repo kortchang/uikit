@@ -34,9 +34,8 @@ class CheckBoxListAdapter(private val viewModel: EditItemViewModelDelegate) :
     ): AddTextViewHolder {
         val binding = ItemAddTextViewBinding.inflate(inflater, parent, false).apply {
             text = "新增待辦事項"
-            this.viewModel = viewModel
         }
-        return AddTextViewHolder(binding)
+        return AddTextViewHolder(binding, viewModel)
     }
 
     inner class CheckBoxListViewHolder(private val binding: ItemCheckboxEdittextBinding) :

@@ -35,9 +35,8 @@ class NumberListAdapter(
     ): AddTextViewHolder {
         val binding = ItemAddTextViewBinding.inflate(inflater, parent, false).apply {
             text = "新增行動清單"
-            this.viewModel = viewModel
         }
-        return AddTextViewHolder(binding)
+        return AddTextViewHolder(binding, viewModel)
     }
 
     inner class NumberListViewHolder(private val binding: ItemNumberEdittextBinding) :
