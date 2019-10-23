@@ -1,4 +1,4 @@
-package kort.uikit.component.edittextlist.nested
+package kort.uikit.component.itemEditText
 
 import kort.uikit.component.edittextlist.EditItemModel
 

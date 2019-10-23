@@ -1,7 +1,7 @@
 package kort.uikit.sample
 
 import kort.uikit.component.edittextlist.EditItemModel
-import kort.uikit.component.edittextlist.nested.NestedListDataStatusDelegateInterface
+import kort.uikit.component.edittextlist.nested.NestedListStatusDelegateInterface
 import kort.uikit.component.edittextlist.nested.NestedListDelegate
 import kort.uikit.component.edittextlist.single.SingleListDelegateInterface
 import kort.uikit.component.edittextlist.nested.NestedListDelegateInterface
@@ -34,7 +34,7 @@ val mainModule = module {
     factory<SingleListDelegateInterface<CheckBoxEditItem>>(named(checkBoxDelegate)) { CheckBoxListDelegateImp() }
     factory<NestedListDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { NestedListDelegateImp() }
     factory<SingleListDelegateInterface<ParentEditItem>> { FirstDelegateImpl() }
-    factory<NestedListDataStatusDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { DataStatusListDelegateImpl() }
+    factory<NestedListStatusDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { DataStatusListDelegateImpl() }
 
     viewModel { NumberList(get(named(numberDelegate))) }
     viewModel { CheckBox(get(named(checkBoxDelegate))) }

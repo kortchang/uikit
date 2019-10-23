@@ -1,7 +1,7 @@
 package kort.uikit.sample.list.datastatuslist
 
 import kort.uikit.component.edittextlist.EditItemModel
-import kort.uikit.component.edittextlist.nested.NestedListDataStatusDelegate
+import kort.uikit.component.edittextlist.nested.NestedListStatusDelegate
 import kort.uikit.sample.list.nestedlist.ChildEditItem
 import kort.uikit.sample.list.nestedlist.ParentEditItem
 
@@ -9,7 +9,7 @@ import kort.uikit.sample.list.nestedlist.ParentEditItem
  * Created by Kort on 2019/10/22.
  */
 class DataStatusListDelegateImpl :
-    NestedListDataStatusDelegate<ParentEditItem, ChildEditItem, EditItemModel>(
+    NestedListStatusDelegate<ParentEditItem, ChildEditItem, EditItemModel>(
         ParentEditItem::class,
         ChildEditItem::class
     ) {

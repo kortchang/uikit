@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import kort.tool.toolbox.DataStatus
 import kort.tool.toolbox.livedata.aware
 import kort.uikit.component.edittextlist.*
+import kort.uikit.component.itemEditText.ChildEditItemModel
 import timber.log.Timber
 import java.lang.Exception
 import kotlin.reflect.KClass
@@ -14,7 +15,7 @@ import kotlin.reflect.full.createInstance
 /**
  * Created by Kort on 2019/9/25.
  */
-interface NestedListDataStatusDelegateInterface<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel> :
+interface NestedListStatusDelegateInterface<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel> :
     EditItemDelegate, ListEventSenderObserverInterface {
     val list: LiveData<DataStatus<MutableList<TWO>>>
     val parentList: LiveData<DataStatus<MutableList<P>>>
@@ -27,10 +28,10 @@ interface NestedListDataStatusDelegateInterface<P : EditItemModel, C : ChildEdit
     fun setChildMap(map: MutableMap<String, MutableList<C>>)
 }
 
-open class NestedListDataStatusDelegate<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel>(
+open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel>(
     override val parentClass: KClass<P>,
     override val childClass: KClass<C>
-) : NestedListDataStatusDelegateInterface<P, C, TWO>,
+) : NestedListStatusDelegateInterface<P, C, TWO>,
     ListEventSenderObserverInterface by ListEventSenderObserver() {
     val listLastIndex: Int?
         get() {
@@ -183,7 +184,6 @@ open class NestedListDataStatusDelegate<P : EditItemModel, C : ChildEditItemMode
                 onTextChange(position, onWrapLineItem.title, true)
                 Timber.d("onWrapLineOnParentItem()")
             }
-
             sendFocusEventAt(newItemPosition)
         }
     }

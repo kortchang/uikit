@@ -9,3 +9,7 @@ interface EditItemDelegate {
     fun onTextChange(position: Int, changedText: String, aware: Boolean = false)
     fun addNewItemAtLast()
 }
+
+interface CheckableEditItemDelegate : EditItemDelegate {
+    fun onCheckedChange(position: Int, checked: Boolean)
+}

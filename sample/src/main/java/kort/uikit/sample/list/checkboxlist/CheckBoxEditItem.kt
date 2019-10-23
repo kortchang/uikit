@@ -1,6 +1,6 @@
 package kort.uikit.sample.list.checkboxlist
 
-import kort.uikit.component.edittextlist.nested.ChildEditItemModel
+import kort.uikit.component.itemEditText.ChildEditItemModel
 import kort.uikit.component.itemEditText.CheckableEditItemModel
 
 /**

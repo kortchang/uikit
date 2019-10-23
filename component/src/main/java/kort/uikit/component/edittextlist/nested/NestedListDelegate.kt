@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import kort.tool.toolbox.livedata.aware
 import kort.uikit.component.edittextlist.*
+import kort.uikit.component.itemEditText.ChildEditItemModel
 import timber.log.Timber
 import java.lang.Exception
 import kotlin.reflect.KClass

@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kort.uikit.component.edittextlist.EditItemAdapter
 import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.itemEditText.ChildEditItemModel
 import kotlin.reflect.KClass
 
 /**
