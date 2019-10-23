@@ -65,4 +65,11 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
             isCheckable = getBoolean(R.styleable.CheckBoxEditText_android_checkable, true)
         }
     }
+
+    override fun setupListener() {
+        super.setupListener()
+        checkbox.setOnCheckedChangeListener { compoundButton, checked ->
+            onCheckedChangeListener?.onCheckedChange(checked)
+        }
+    }
 }

@@ -131,7 +131,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         }
     }
 
-    private fun setupListener() {
+    protected open fun setupListener() {
         addOnFocusListener()
         addDeleteListener()
         addOnTextChangeListener()
