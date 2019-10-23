@@ -9,10 +9,10 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kort.tool.toolbox.DataStatus
-import kort.uikit.component.edititemlist.EditItemAdapter
-import kort.uikit.component.edititemlist.EditItemDataStatusListFragment
-import kort.uikit.component.edititemlist.EditItemModel
-import kort.uikit.component.edititemlist.ListEventObserverInterface
+import kort.uikit.component.edittextlist.EditItemAdapter
+import kort.uikit.component.edittextlist.EditItemDataStatusListFragment
+import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.edittextlist.ListEventObserverInterface
 import kort.uikit.sample.databinding.DataStatusListFragmentBinding
 import kort.uikit.sample.list.nestedlist.NestedAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -28,7 +28,7 @@ class DataStatusListFragment : EditItemDataStatusListFragment<EditItemModel>() {
         get() = viewModel.list
     override val loadingDialog: AlertDialog by lazy { MaterialAlertDialogBuilder(requireContext()).create() }
 
-    private val viewModel: DataStatusListViewModel by viewModel()
+    private val viewModel: DataStatusList by viewModel()
     private lateinit var binding: DataStatusListFragmentBinding
 
     override fun onCreateView(

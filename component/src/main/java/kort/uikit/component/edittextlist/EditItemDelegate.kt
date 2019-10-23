@@ -1,12 +1,9 @@
-package kort.uikit.component.edititemlist
-
-import androidx.lifecycle.LiveData
-import kort.tool.toolbox.livedata.Event
+package kort.uikit.component.edittextlist
 
 /**
  * Created by Kort on 2019/9/29.
  */
-interface EditItemViewModelDelegate {
+interface EditItemDelegate {
     fun onDelete(position: Int)
     fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String)
     fun onTextChange(position: Int, changedText: String, aware: Boolean = false)

@@ -1,4 +1,4 @@
-package kort.uikit.component.edititemlist
+package kort.uikit.component.edittextlist
 
 /**
  * Created by Kort on 2019/9/13.

@@ -1,4 +1,4 @@
-package kort.uikit.component.edititemlist
+package kort.uikit.component.edittextlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

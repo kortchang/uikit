@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import kort.uikit.component.edititemlist.EditItemListFragment
-import kort.uikit.component.edititemlist.ListEventObserverInterface
+import kort.uikit.component.edittextlist.EditItemListFragment
+import kort.uikit.component.edittextlist.ListEventObserverInterface
 import kort.uikit.sample.databinding.FragmentNumberListBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NumberListFragment : EditItemListFragment<NumberEditItem>() {
     private lateinit var binding: FragmentNumberListBinding
 
-    private val viewModel by viewModel<NumberListViewModel>()
+    private val viewModel by viewModel<NumberList>()
     override val adapter by lazy { NumberListAdapter(viewModel) }
     override val recyclerView: RecyclerView get() = binding.recyclerviewNumberlist
     override val listObserver: ListEventObserverInterface get() = viewModel

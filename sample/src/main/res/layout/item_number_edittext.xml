@@ -13,11 +13,11 @@
 
         <variable
             name="item"
-            type="kort.uikit.component.edititemlist.EditItemModel" />
+            type="kort.uikit.component.edittextlist.EditItemModel" />
 
         <variable
             name="listener"
-            type="kort.uikit.component.edititemlist.EditItemViewModelDelegate" />
+            type="kort.uikit.component.edittextlist.EditItemDelegate" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

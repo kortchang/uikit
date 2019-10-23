@@ -6,8 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import kort.tool.toolbox.view.recyclerview.BaseAdapter
-import kort.uikit.component.edititemlist.*
+import kort.uikit.component.edittextlist.*
 import kort.uikit.sample.databinding.FragmentSecondBinding
 import kort.uikit.sample.list.nestedlist.NestedAdapter
 import org.koin.android.viewmodel.ext.android.sharedViewModel
@@ -18,7 +17,7 @@ import org.koin.android.viewmodel.ext.android.sharedViewModel
 class SecondFragment : EditItemListFragment<EditItemModel>() {
     lateinit var binding: FragmentSecondBinding
     private val trueParentFragment by lazy { requireParentFragment().requireParentFragment() }
-    private val viewModel: TwoPageNestedListViewModel by sharedViewModel(from = { trueParentFragment })
+    private val viewModel: TwoPageNestedList by sharedViewModel(from = { trueParentFragment })
     override val adapter by lazy { NestedAdapter(viewModel) }
     override val listObserver: ListEventObserverInterface get() = viewModel
     override val listLiveData: LiveData<MutableList<EditItemModel>> get() = viewModel.list

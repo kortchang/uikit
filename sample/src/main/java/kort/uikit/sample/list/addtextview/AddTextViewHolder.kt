@@ -1,7 +1,7 @@
 package kort.uikit.sample.list.addtextview
 
 import androidx.recyclerview.widget.RecyclerView
-import kort.uikit.component.edititemlist.EditItemViewModelDelegate
+import kort.uikit.component.edittextlist.EditItemDelegate
 import kort.uikit.sample.databinding.ItemAddTextViewBinding
 
 /**
@@ -9,7 +9,7 @@ import kort.uikit.sample.databinding.ItemAddTextViewBinding
  */
 class AddTextViewHolder(
     binding: ItemAddTextViewBinding,
-    viewModel: EditItemViewModelDelegate
+    viewModel: EditItemDelegate
 ) :
     RecyclerView.ViewHolder(binding.root) {
     init {

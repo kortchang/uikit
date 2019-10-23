@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import kort.uikit.component.edititemlist.*
+import kort.uikit.component.edittextlist.*
 import kort.uikit.sample.databinding.NestedListFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NestedListFragment : EditItemListFragment<EditItemModel>() {
     private lateinit var binding: NestedListFragmentBinding
-    private val viewModel: NestedListViewModel by viewModel()
+    private val viewModel: NestedList by viewModel()
 
     override val adapter by lazy { NestedAdapter(viewModel) }
     override val recyclerView: RecyclerView by lazy { binding.recyclerviewNestedList }

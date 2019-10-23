@@ -8,7 +8,7 @@
             type="String" />
     </data>
 
-    <kort.uikit.component.edititemlist.AddTextView
+    <kort.uikit.component.edittextlist.AddTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@{text}" />

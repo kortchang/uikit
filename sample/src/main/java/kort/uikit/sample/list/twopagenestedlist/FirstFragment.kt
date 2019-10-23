@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import kort.uikit.component.edititemlist.EditItemListFragment
-import kort.uikit.component.edititemlist.ListEventObserverInterface
+import kort.uikit.component.edittextlist.EditItemListFragment
+import kort.uikit.component.edittextlist.ListEventObserverInterface
 import kort.uikit.sample.R
 
 import kort.uikit.sample.databinding.FragmentFirstBinding
@@ -20,8 +20,8 @@ import org.koin.core.parameter.parametersOf
 class FirstFragment : EditItemListFragment<ParentEditItem>() {
     lateinit var binding: FragmentFirstBinding
     private val hostFragment by lazy { requireParentFragment().requireParentFragment() }
-    private val viewModel: FirstViewModel by viewModel()
-    private val sharedViewModel: TwoPageNestedListViewModel
+    private val viewModel: First by viewModel()
+    private val sharedViewModel: TwoPageNestedList
             by sharedViewModel(from = { hostFragment }, parameters = { parametersOf(viewModel) })
 
     override val adapter by lazy { FirstAdapter(viewModel) }

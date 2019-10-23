@@ -1,25 +1,25 @@
-package kort.uikit.component.edititemlist.single
+package kort.uikit.component.edittextlist.single
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kort.uikit.component.edititemlist.*
+import kort.uikit.component.edittextlist.*
 import timber.log.Timber
 import kotlin.reflect.KClass
 
 /**
  * Created by Kort on 2019/9/13.
  */
-interface SingleListViewModelDelegateInterface<T : EditItemModel> : SingleEditItemListListener<T>,
-    EditItemViewModelDelegate, ListEventObserverInterface {
+interface SingleListDelegateInterface<T : EditItemModel> : SingleEditItemListListener<T>,
+    EditItemDelegate, ListEventObserverInterface {
     val list: LiveData<MutableList<T>>
     val listEventSenderObserver: ListEventSenderObserverInterface
 }
 
-open class SingleListViewModelDelegate<T : EditItemModel>(
+open class SingleListDelegate<T : EditItemModel>(
     override var itemClass: KClass<T>,
     override val listEventSenderObserver: ListEventSenderObserverInterface = ListEventSenderObserver()
-) : SingleListViewModelDelegateInterface<T>,
+) : SingleListDelegateInterface<T>,
     ListEventSenderObserverInterface by listEventSenderObserver {
     var _id: Int = 0
 

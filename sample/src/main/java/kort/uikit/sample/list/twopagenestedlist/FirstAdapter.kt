@@ -3,9 +3,9 @@ package kort.uikit.sample.list.twopagenestedlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import kort.tool.toolbox.databinding.executeAfter
-import kort.uikit.component.edititemlist.EditItemViewModelDelegate
-import kort.uikit.component.edititemlist.single.SingleListViewHolder
-import kort.uikit.component.edititemlist.single.SingleListWithAddAdapter
+import kort.uikit.component.edittextlist.EditItemDelegate
+import kort.uikit.component.edittextlist.single.SingleListViewHolder
+import kort.uikit.component.edittextlist.single.SingleListWithAddAdapter
 import kort.uikit.component.itemEditText.BaseItemEditText
 import kort.uikit.sample.databinding.ItemAddTextViewBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
@@ -15,7 +15,7 @@ import kort.uikit.sample.list.nestedlist.ParentEditItem
 /**
  * Created by Kort on 2019/10/3.
  */
-class FirstAdapter(private val viewModel: EditItemViewModelDelegate) :
+class FirstAdapter(private val viewModel: EditItemDelegate) :
     SingleListWithAddAdapter<ParentEditItem, FirstAdapter.ParentListViewHolder, AddTextViewHolder>(
         ParentListViewHolder::class, AddTextViewHolder::class
     ) {

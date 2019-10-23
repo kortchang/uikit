@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.databinding.executeAfter
-import kort.uikit.component.edititemlist.EditItemViewModelDelegate
-import kort.uikit.component.edititemlist.EditItemModel
-import kort.uikit.component.edititemlist.EditItemViewHolder
-import kort.uikit.component.edititemlist.nested.NestedListWithAddAdapter
+import kort.uikit.component.edittextlist.EditItemDelegate
+import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.edittextlist.EditItemViewHolder
+import kort.uikit.component.edittextlist.nested.NestedListWithAddAdapter
 import kort.uikit.sample.databinding.ItemAddTextViewBinding
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
@@ -16,7 +16,7 @@ import kort.uikit.sample.list.addtextview.AddTextViewHolder
 /**
  * Created by Kort on 2019/9/25.
  */
-class NestedAdapter(private val viewModel: EditItemViewModelDelegate) :
+class NestedAdapter(private val viewModel: EditItemDelegate) :
     NestedListWithAddAdapter<ParentEditItem, ChildEditItem, EditItemModel, RecyclerView.ViewHolder>(
         ParentEditItem::class,
         ChildEditItem::class

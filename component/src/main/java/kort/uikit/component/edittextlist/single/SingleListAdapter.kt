@@ -1,12 +1,12 @@
-package kort.uikit.component.edititemlist.single
+package kort.uikit.component.edittextlist.single
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kort.uikit.component.edititemlist.EditItemAdapter
-import kort.uikit.component.edititemlist.EditItemModel
-import kort.uikit.component.edititemlist.EditItemViewHolder
+import kort.uikit.component.edittextlist.EditItemAdapter
+import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.edittextlist.EditItemViewHolder
 import kort.uikit.component.itemEditText.BaseItemEditText
 import kotlin.reflect.KClass
 

@@ -1,26 +1,25 @@
 package kort.uikit.sample
 
-import kort.uikit.component.edititemlist.EditItemModel
-import kort.uikit.component.edititemlist.nested.NestedListDataStatusViewModelDelegateInterface
-import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegate
-import kort.uikit.component.edititemlist.single.SingleListViewModelDelegateInterface
-import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegateInterface
-import kort.uikit.component.edititemlist.single.SingleListViewModelDelegate
+import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.edittextlist.nested.NestedListDataStatusDelegateInterface
+import kort.uikit.component.edittextlist.nested.NestedListDelegate
+import kort.uikit.component.edittextlist.single.SingleListDelegateInterface
+import kort.uikit.component.edittextlist.nested.NestedListDelegateInterface
 import kort.uikit.sample.list.checkboxlist.CheckBoxEditItem
-import kort.uikit.sample.list.checkboxlist.CheckBoxListViewModelDelegateImp
-import kort.uikit.sample.list.checkboxlist.CheckBoxViewModel
+import kort.uikit.sample.list.checkboxlist.CheckBoxListDelegateImp
+import kort.uikit.sample.list.checkboxlist.CheckBox
 import kort.uikit.sample.list.datastatuslist.DataStatusListDelegateImpl
-import kort.uikit.sample.list.datastatuslist.DataStatusListViewModel
+import kort.uikit.sample.list.datastatuslist.DataStatusList
 import kort.uikit.sample.list.nestedlist.ChildEditItem
-import kort.uikit.sample.list.nestedlist.NestedListViewModelDelegateImp
-import kort.uikit.sample.list.nestedlist.NestedListViewModel
+import kort.uikit.sample.list.nestedlist.NestedListDelegateImp
+import kort.uikit.sample.list.nestedlist.NestedList
 import kort.uikit.sample.list.nestedlist.ParentEditItem
 import kort.uikit.sample.list.numberlist.NumberEditItem
-import kort.uikit.sample.list.numberlist.NumberListViewModel
-import kort.uikit.sample.list.numberlist.EditItemListViewModelDelegateImp
+import kort.uikit.sample.list.numberlist.NumberList
+import kort.uikit.sample.list.numberlist.EditItemListDelegateImp
 import kort.uikit.sample.list.twopagenestedlist.FirstDelegateImpl
-import kort.uikit.sample.list.twopagenestedlist.FirstViewModel
-import kort.uikit.sample.list.twopagenestedlist.TwoPageNestedListViewModel
+import kort.uikit.sample.list.twopagenestedlist.First
+import kort.uikit.sample.list.twopagenestedlist.TwoPageNestedList
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -31,20 +30,20 @@ import org.koin.dsl.module
 val mainModule = module {
     val numberDelegate = "number"
     val checkBoxDelegate = "checkbox"
-    factory<SingleListViewModelDelegateInterface<NumberEditItem>>(named(numberDelegate)) { EditItemListViewModelDelegateImp() }
-    factory<SingleListViewModelDelegateInterface<CheckBoxEditItem>>(named(checkBoxDelegate)) { CheckBoxListViewModelDelegateImp() }
-    factory<NestedListViewModelDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { NestedListViewModelDelegateImp() }
-    factory<SingleListViewModelDelegateInterface<ParentEditItem>> { FirstDelegateImpl() }
-    factory<NestedListDataStatusViewModelDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { DataStatusListDelegateImpl() }
+    factory<SingleListDelegateInterface<NumberEditItem>>(named(numberDelegate)) { EditItemListDelegateImp() }
+    factory<SingleListDelegateInterface<CheckBoxEditItem>>(named(checkBoxDelegate)) { CheckBoxListDelegateImp() }
+    factory<NestedListDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { NestedListDelegateImp() }
+    factory<SingleListDelegateInterface<ParentEditItem>> { FirstDelegateImpl() }
+    factory<NestedListDataStatusDelegateInterface<ParentEditItem, ChildEditItem, EditItemModel>> { DataStatusListDelegateImpl() }
 
-    viewModel { NumberListViewModel(get(named(numberDelegate))) }
-    viewModel { CheckBoxViewModel(get(named(checkBoxDelegate))) }
-    viewModel { NestedListViewModel(get()) }
-    viewModel { FirstViewModel(get()) }
-    viewModel { (singleDelegate: SingleListViewModelDelegateInterface<ParentEditItem>) ->
-        TwoPageNestedListViewModel(
-            NestedListViewModelDelegate(ParentEditItem::class, ChildEditItem::class), singleDelegate
+    viewModel { NumberList(get(named(numberDelegate))) }
+    viewModel { CheckBox(get(named(checkBoxDelegate))) }
+    viewModel { NestedList(get()) }
+    viewModel { First(get()) }
+    viewModel { (singleDelegate: SingleListDelegateInterface<ParentEditItem>) ->
+        TwoPageNestedList(
+            NestedListDelegate(ParentEditItem::class, ChildEditItem::class), singleDelegate
         )
     }
-    viewModel { DataStatusListViewModel(get()) }
+    viewModel { DataStatusList(get()) }
 }

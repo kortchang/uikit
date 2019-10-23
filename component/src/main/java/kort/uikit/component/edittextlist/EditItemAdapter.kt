@@ -1,4 +1,4 @@
-package kort.uikit.component.edititemlist
+package kort.uikit.component.edittextlist
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

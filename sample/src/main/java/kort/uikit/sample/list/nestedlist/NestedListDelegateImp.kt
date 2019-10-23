@@ -1,14 +1,13 @@
 package kort.uikit.sample.list.nestedlist
 
-import androidx.lifecycle.MutableLiveData
-import kort.uikit.component.edititemlist.EditItemModel
-import kort.uikit.component.edititemlist.nested.NestedListViewModelDelegate
+import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.edittextlist.nested.NestedListDelegate
 
 /**
  * Created by Kort on 2019/9/25.
  */
-class NestedListViewModelDelegateImp :
-    NestedListViewModelDelegate<ParentEditItem, ChildEditItem, EditItemModel>(
+class NestedListDelegateImp :
+    NestedListDelegate<ParentEditItem, ChildEditItem, EditItemModel>(
         ParentEditItem::class,
         ChildEditItem::class
     ) {

@@ -1,6 +1,6 @@
 package kort.uikit.sample.list.nestedlist
 
-import kort.uikit.component.edititemlist.nested.ChildEditItemModel
+import kort.uikit.component.edittextlist.nested.ChildEditItemModel
 import kort.uikit.component.itemEditText.CheckableEditItemModel
 
 /**

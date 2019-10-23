@@ -6,17 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import kort.tool.toolbox.view.recyclerview.BaseAdapter
-import kort.uikit.component.edititemlist.EditItemAdapter
-import kort.uikit.component.edititemlist.EditItemListFragment
-import kort.uikit.component.edititemlist.ListEventObserverInterface
+import kort.uikit.component.edittextlist.EditItemListFragment
+import kort.uikit.component.edittextlist.ListEventObserverInterface
 import kort.uikit.sample.databinding.CheckBoxFragmentBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class CheckBoxFragment :
     EditItemListFragment<CheckBoxEditItem>() {
     private lateinit var binding: CheckBoxFragmentBinding
-    private val viewModel: CheckBoxViewModel by viewModel()
+    private val viewModel: CheckBox by viewModel()
 
     override val adapter by lazy { CheckBoxListAdapter(viewModel) }
     override val recyclerView: RecyclerView by lazy { binding.recyclerviewCheckBox }

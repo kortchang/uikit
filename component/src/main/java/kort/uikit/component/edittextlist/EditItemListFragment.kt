@@ -1,4 +1,4 @@
-package kort.uikit.component.edititemlist
+package kort.uikit.component.edittextlist
 
 import android.os.Bundle
 import android.view.View

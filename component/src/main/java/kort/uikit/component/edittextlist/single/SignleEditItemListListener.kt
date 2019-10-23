@@ -1,13 +1,10 @@
-package kort.uikit.component.edititemlist.single
+package kort.uikit.component.edittextlist.single
 
-import android.icu.text.Transliterator
 import androidx.lifecycle.MutableLiveData
 import kort.tool.toolbox.livedata.aware
-import kort.uikit.component.edititemlist.EditItemModel
-import kort.uikit.component.edititemlist.EditItemViewModelDelegate
-import kort.uikit.component.edititemlist.ListEventSenderInterface
+import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.edittextlist.ListEventSenderInterface
 import timber.log.Timber
-import java.lang.Exception
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 

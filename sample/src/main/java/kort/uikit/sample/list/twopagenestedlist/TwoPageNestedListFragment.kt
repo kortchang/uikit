@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 
 import kort.uikit.sample.R
-import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class TwoPageNestedListFragment : Fragment() {
-    val viewModel: TwoPageNestedListViewModel by viewModel()
+    val viewModel: TwoPageNestedList by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

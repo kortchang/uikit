@@ -1,6 +1,6 @@
 package kort.uikit.sample.list.nestedlist
 
-import kort.uikit.component.edititemlist.EditItemModel
+import kort.uikit.component.edittextlist.EditItemModel
 
 /**
  * Created by Kort on 2019/9/28.

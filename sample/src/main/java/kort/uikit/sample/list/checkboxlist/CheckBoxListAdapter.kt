@@ -3,9 +3,9 @@ package kort.uikit.sample.list.checkboxlist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import kort.tool.toolbox.databinding.executeAfter
-import kort.uikit.component.edititemlist.EditItemViewModelDelegate
-import kort.uikit.component.edititemlist.single.SingleListViewHolder
-import kort.uikit.component.edititemlist.single.SingleListWithAddAdapter
+import kort.uikit.component.edittextlist.EditItemDelegate
+import kort.uikit.component.edittextlist.single.SingleListViewHolder
+import kort.uikit.component.edittextlist.single.SingleListWithAddAdapter
 import kort.uikit.component.itemEditText.BaseItemEditText
 import kort.uikit.sample.databinding.ItemAddTextViewBinding
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
@@ -14,7 +14,7 @@ import kort.uikit.sample.list.addtextview.AddTextViewHolder
 /**
  * Created by Kort on 2019/9/25.
  */
-class CheckBoxListAdapter(private val viewModel: EditItemViewModelDelegate) :
+class CheckBoxListAdapter(private val viewModel: EditItemDelegate) :
     SingleListWithAddAdapter<CheckBoxEditItem, CheckBoxListAdapter.CheckBoxListViewHolder, AddTextViewHolder>(
         CheckBoxListViewHolder::class, AddTextViewHolder::class
     ) {

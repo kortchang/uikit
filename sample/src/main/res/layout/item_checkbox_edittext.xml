@@ -14,7 +14,7 @@
 
         <variable
             name="listener"
-            type="kort.uikit.component.edititemlist.EditItemViewModelDelegate" />
+            type="kort.uikit.component.edittextlist.EditItemDelegate" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
