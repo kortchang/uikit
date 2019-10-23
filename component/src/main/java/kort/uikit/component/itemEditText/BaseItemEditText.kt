@@ -13,14 +13,11 @@ import android.widget.TextView
 import androidx.annotation.*
 import androidx.constraintlayout.helper.widget.Flow
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.getColorOrThrow
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.view.keys
 import com.jakewharton.rxbinding3.widget.*
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import kort.tool.toolbox.view.obtainStyleAndRecycle
 import kort.tool.toolbox.view.privateGet
@@ -43,10 +40,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     protected abstract val twoText: List<TextView>
     protected abstract val itemAndTextFlow: Flow
     protected abstract val deleteButton: ImageButton
-
-    private var mOnWrapLineListener: EditItemListener.OnWrapLineListener? = null
-    private var mOnDeleteListener: EditItemListener.OnDeleteListener? = null
-    private var mOnTextChangeListener: EditItemListener.OnTextChange? = null
 
     private val disposable = CompositeDisposable()
 
@@ -93,7 +86,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     var hintTextColor: Int = -1
         get() = textEditText.hintTextColors.defaultColor
         set(@ColorInt value) {
-            if(value != -1) {
+            if (value != -1) {
                 textEditText.setHintTextColor(value)
                 field = value
             }
@@ -105,23 +98,9 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
 
     open var isActive: Boolean = false
 
-    var onWrapLineListener: EditItemListener.OnWrapLineListener?
-        @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
-        set(value) {
-            mOnWrapLineListener = value
-        }
-
-    var onDeleteListener: EditItemListener.OnDeleteListener?
-        @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
-        set(value) {
-            mOnDeleteListener = value
-        }
-
-    var onTextChangeListener: EditItemListener.OnTextChange?
-        @Deprecated(private_get_message, level = DeprecationLevel.ERROR) get() = privateGet()
-        set(value) {
-            mOnTextChangeListener = value
-        }
+    var onWrapLineListener: ItemEditTextListener.OnWrapLineListener? = null
+    var onDeleteListener: ItemEditTextListener.OnDeleteListener? = null
+    var onTextChangeListener: ItemEditTextListener.OnTextChange? = null
 
     fun focus() {
         textEditText.requestFocus()
@@ -184,7 +163,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
 
     private fun addOnDeleteButtonClickListener() {
         disposable.add(deleteButton.clicks().throttleFirst(100, TimeUnit.MILLISECONDS).subscribe {
-            mOnDeleteListener?.onDelete()
+            onDeleteListener?.onDelete()
         })
     }
 
@@ -206,7 +185,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
                             whenClickEnter()
                         }
                     } else {
-                        mOnTextChangeListener?.onTextChange(it.text.toString())
+                        onTextChangeListener?.onTextChange(it.text.toString())
                     }
                 }
         )
@@ -231,7 +210,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             if (it.action == KeyEvent.ACTION_DOWN) {
                 if (text.isBlank()) when {
                     it.keyCode == KeyEvent.KEYCODE_DEL -> {
-                        mOnDeleteListener?.onDelete()
+                        onDeleteListener?.onDelete()
                         true
                     }
                     else -> false
@@ -249,7 +228,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         val afterWrapLineText = text.substring((wrapLineIndexLast + 1)..text.lastIndex)
         Timber.d("beforeWrapLineText: $beforeWrapLineText")
         Timber.d("afterWrapLineText: $afterWrapLineText")
-        mOnWrapLineListener?.onWrapLine(beforeWrapLineText, afterWrapLineText)
+        onWrapLineListener?.onWrapLine(beforeWrapLineText, afterWrapLineText)
     }
 
     private fun clearListener() {

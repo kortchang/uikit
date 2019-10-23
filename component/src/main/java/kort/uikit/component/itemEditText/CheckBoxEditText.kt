@@ -51,6 +51,8 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
             field = value
         }
 
+    var onCheckedChangeListener: OnCheckedChangeListener? = null
+
     init {
         initView()
     }

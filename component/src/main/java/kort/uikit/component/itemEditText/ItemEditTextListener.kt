@@ -3,7 +3,7 @@ package kort.uikit.component.itemEditText
 /**
  * Created by Kort on 2019-09-12.
  */
-interface EditItemListener {
+interface ItemEditTextListener {
     interface OnDeleteListener {
         fun onDelete() {}
     }
@@ -17,3 +17,6 @@ interface EditItemListener {
     }
 }
 
+interface OnCheckedChangeListener {
+    fun onCheckedChange(checked: Boolean)
+}
