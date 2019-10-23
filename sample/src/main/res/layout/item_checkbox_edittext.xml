@@ -15,6 +15,10 @@
         <variable
             name="listener"
             type="kort.uikit.component.edittextlist.EditItemDelegate" />
+
+        <variable
+            name="checkListener"
+            type="kort.uikit.component.edittextlist.nested.NestedCheckableListStatusDelegateInterface" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +27,7 @@
 
         <kort.uikit.component.itemEditText.CheckBoxEditText
             android:id="@+id/checkboxEditText"
+            onCheckedChange="@{(checked) -> checkListener.onCheckedChange(position, checked)}"
             onDelete="@{()-> listener.onDelete(position)}"
             onTextChange="@{(changedText)-> listener.onTextChange(position, changedText, false)}"
             onWrapLine="@{(beforeWrapLineText,afterWrapLineText)-> listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"
