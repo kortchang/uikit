@@ -26,6 +26,7 @@ open class NestedCheckableListStatusDelegate<P : EditItemModel, C : CheckableChi
                 getChildPosition(item) { childPosition ->
                     whenCheckedChange(childMap, position, childPosition, item, checked)
                     _childMap.aware()
+                    sendChangeEventAt(position)
                 }
             }
         }
