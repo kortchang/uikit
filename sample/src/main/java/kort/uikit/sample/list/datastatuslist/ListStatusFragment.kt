@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kort.tool.toolbox.DataStatus
 import kort.uikit.component.edittextlist.EditItemAdapter
-import kort.uikit.component.edittextlist.EditItemDataStatusListFragment
+import kort.uikit.component.edittextlist.EditItemListStatusFragment
 import kort.uikit.component.edittextlist.EditItemModel
 import kort.uikit.component.edittextlist.ListEventObserverInterface
 import kort.uikit.sample.databinding.DataStatusListFragmentBinding
 import kort.uikit.sample.list.nestedlist.NestedAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class DataStatusListFragment : EditItemDataStatusListFragment<EditItemModel>() {
+class ListStatusFragment : EditItemListStatusFragment<EditItemModel>() {
     override val adapter: EditItemAdapter<EditItemModel, out RecyclerView.ViewHolder>
             by lazy { NestedAdapter(viewModel) }
     override val listObserver: ListEventObserverInterface

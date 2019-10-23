@@ -18,7 +18,7 @@ import timber.log.Timber
 /**
  * Created by Kort on 2019/9/24.
  */
-abstract class EditItemDataStatusListFragment<T : EditItemModel> : Fragment() {
+abstract class EditItemListStatusFragment<T : EditItemModel> : Fragment() {
     protected abstract val adapter: EditItemAdapter<T, out RecyclerView.ViewHolder>
     protected abstract val listObserver: ListEventObserverInterface
     protected abstract val recyclerView: RecyclerView
@@ -76,9 +76,6 @@ abstract class EditItemDataStatusListFragment<T : EditItemModel> : Fragment() {
         listObserver.changeItemAt.observe(this, EventObserver {
             Timber.d("changeItemAt: ${it.first} to ${it.last}")
             adapter.notifyItemRangeChanged(it.first, it.count())
-            if (isShowAddViewAtLast) {
-                adapter.notifyItemChanged(adapter.itemCount - 1)
-            }
         })
 
         listObserver.deleteItemAt.observe(this, EventObserver {

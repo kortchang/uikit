@@ -58,6 +58,6 @@
         />
     <fragment
         android:id="@+id/dataStatusListFragment"
-        android:name="kort.uikit.sample.list.datastatuslist.DataStatusListFragment"
+        android:name="kort.uikit.sample.list.datastatuslist.ListStatusFragment"
         android:label="DataStatusListFragment" />
 </navigation>
