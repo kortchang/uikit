@@ -39,6 +39,9 @@ open class NestedCheckableListStatusDelegate<P : EditItemModel, C : CheckableChi
         childItem: C,
         checked: Boolean
     ) {
-        childMap[childItem.parentId]?.get(childPosition)?.isChecked = checked
+        childMap[childItem.parentId]?.get(childPosition)?.let {
+            if(it.isChecked != checked)
+                childMap[childItem.parentId]?.get(childPosition)?.isChecked = checked
+        }
     }
 }
