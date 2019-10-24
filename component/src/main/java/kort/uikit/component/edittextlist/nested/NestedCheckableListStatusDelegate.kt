@@ -3,6 +3,7 @@ package kort.uikit.component.edittextlist.nested
 import kort.tool.toolbox.livedata.aware
 import kort.uikit.component.edittextlist.CheckableEditItemDelegate
 import kort.uikit.component.edittextlist.EditItemModel
+import kort.uikit.component.itemEditText.CheckBoxEditText
 import kort.uikit.component.itemEditText.CheckableChildEditItemModel
 import kotlin.reflect.KClass
 
@@ -20,12 +21,12 @@ open class NestedCheckableListStatusDelegate<P : EditItemModel, C : CheckableChi
     parentClass,
     childClass
 ), NestedCheckableListStatusDelegateInterface<P, C, TWO> {
-    override fun onCheckedChange(position: Int, checked: Boolean) {
+    override fun onCheckedChange(view: CheckBoxEditText, position: Int, checked: Boolean) {
         _childMap.value?.isSuccess { childMap ->
             getChildItem(position) { item ->
                 getChildPosition(item) { childPosition ->
                     if (item.isChecked != checked) {
-                        whenCheckedChange(childMap, position, childPosition, item, checked)
+                        whenCheckedChange(view, childMap, position, childPosition, item, checked)
                         _childMap.aware()
                         sendChangeEventAt(position)
                     }
@@ -35,6 +36,7 @@ open class NestedCheckableListStatusDelegate<P : EditItemModel, C : CheckableChi
     }
 
     open fun whenCheckedChange(
+        view: CheckBoxEditText,
         childMap: MutableMap<String, MutableList<C>>,
         position: Int,
         childPosition: Int,

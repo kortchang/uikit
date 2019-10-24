@@ -1,5 +1,7 @@
 package kort.uikit.component.edittextlist
 
+import kort.uikit.component.itemEditText.CheckBoxEditText
+
 /**
  * Created by Kort on 2019/9/29.
  */
@@ -11,5 +13,5 @@ interface EditItemDelegate {
 }
 
 interface CheckableEditItemDelegate : EditItemDelegate {
-    fun onCheckedChange(position: Int, checked: Boolean)
+    fun onCheckedChange(view:CheckBoxEditText, position: Int, checked: Boolean)
 }
