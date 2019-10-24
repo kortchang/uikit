@@ -18,5 +18,5 @@ interface ItemEditTextListener {
 }
 
 interface OnCheckedChangeListener {
-    fun onCheckedChange(checked: Boolean)
+    fun onCheckedChange(view: CheckBoxEditText, checked: Boolean)
 }

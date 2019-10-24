@@ -69,7 +69,7 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
     override fun setupListener() {
         super.setupListener()
         checkbox.setOnCheckedChangeListener { compoundButton, checked ->
-            onCheckedChangeListener?.onCheckedChange(checked)
+            onCheckedChangeListener?.onCheckedChange(this, checked)
         }
     }
 }
