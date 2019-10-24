@@ -24,9 +24,11 @@ open class NestedCheckableListStatusDelegate<P : EditItemModel, C : CheckableChi
         _childMap.value?.isSuccess { childMap ->
             getChildItem(position) { item ->
                 getChildPosition(item) { childPosition ->
-                    whenCheckedChange(childMap, position, childPosition, item, checked)
-                    _childMap.aware()
-                    sendChangeEventAt(position)
+                    if (item.isChecked != checked) {
+                        whenCheckedChange(childMap, position, childPosition, item, checked)
+                        _childMap.aware()
+                        sendChangeEventAt(position)
+                    }
                 }
             }
         }
@@ -39,9 +41,6 @@ open class NestedCheckableListStatusDelegate<P : EditItemModel, C : CheckableChi
         childItem: C,
         checked: Boolean
     ) {
-        childMap[childItem.parentId]?.get(childPosition)?.let {
-            if(it.isChecked != checked)
-                childMap[childItem.parentId]?.get(childPosition)?.isChecked = checked
-        }
+        childMap[childItem.parentId]?.get(childPosition)?.isChecked = checked
     }
 }
