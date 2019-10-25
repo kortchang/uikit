@@ -98,7 +98,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
 
     open var isChildCannotBeTouch: Boolean = false
 
-    open var isActive: Boolean = false
+    open var isActive: Boolean = true
 
     var onWrapLineListener: ItemEditTextListener.OnWrapLineListener? = null
     var onDeleteListener: ItemEditTextListener.OnDeleteListener? = null

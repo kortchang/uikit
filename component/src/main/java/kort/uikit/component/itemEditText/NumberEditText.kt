@@ -33,6 +33,13 @@ class NumberEditText(context: Context, attrs: AttributeSet) :
         initView()
     }
 
+    override var isChecked: Boolean
+        get() = super.isChecked
+        set(value) {
+            super.isChecked = value
+            isActive = !value
+        }
+
     var number: Int = 0
         set(value) {
             numberTextView.text = "${value}."
@@ -54,8 +61,9 @@ class NumberEditText(context: Context, attrs: AttributeSet) :
     override var isActive: Boolean
         get() = super.isActive
         set(value) {
-            val textAppearance = if (value) numberActiveTextAppearanceRes
-            else numberInactiveTextAppearanceRes
+            val textAppearance =
+                if (value) numberActiveTextAppearanceRes
+                else numberInactiveTextAppearanceRes
             if (textAppearance != 0)
                 numberTextView.setTextAppearance(textAppearance)
         }
