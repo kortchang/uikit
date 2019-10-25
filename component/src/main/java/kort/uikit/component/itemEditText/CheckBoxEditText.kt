@@ -63,7 +63,6 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) :
     override fun obtainStyle(attrs: AttributeSet) {
         super.obtainStyle(attrs)
         context.obtainStyleAndRecycle(attrs, R.styleable.CheckBoxEditText) {
-            isChecked = getBoolean(R.styleable.CheckBoxEditText_android_checked, false)
             buttonTint = getColor(R.styleable.CheckBoxEditText_android_buttonTint, -1)
             isCheckable = getBoolean(R.styleable.CheckBoxEditText_android_checkable, true)
         }

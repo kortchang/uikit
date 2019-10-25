@@ -10,6 +10,8 @@ import android.text.style.UnderlineSpan
 import android.util.AttributeSet
 import androidx.core.text.set
 import androidx.core.text.toSpannable
+import kort.tool.toolbox.view.obtainStyleAndRecycle
+import kort.uikit.component.R
 import timber.log.Timber
 
 /**
@@ -34,5 +36,12 @@ abstract class CheckableItemEditText(context: Context, attrs: AttributeSet) :
     override fun toggle(): Boolean {
         isChecked = !isChecked
         return isChecked
+    }
+
+    override fun obtainStyle(attrs: AttributeSet) {
+        super.obtainStyle(attrs)
+        context.obtainStyleAndRecycle(attrs, R.styleable.CheckableItemEditText) {
+            isChecked = getBoolean(R.styleable.CheckBoxEditText_android_checkable, false)
+        }
     }
 }

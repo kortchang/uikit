@@ -17,6 +17,10 @@
         <attr name="inactiveTextAppearance" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="CheckableItemEditText">
+        <attr name="android:checked" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="NumberEditText">
         <attr name="numberActiveTextAppearance" format="reference" />
         <attr name="numberInactiveTextAppearance" format="reference" />
@@ -24,7 +28,6 @@
     </declare-styleable>
 
     <declare-styleable name="CheckBoxEditText">
-        <attr name="android:checked" format="boolean" />
         <attr name="android:buttonTint" format="color" />
         <attr name="android:checkable" format="boolean" />
     </declare-styleable>
