@@ -62,6 +62,8 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             field = value
         }
 
+    var inactiveTextAppearanceRes: Int = 0
+
     var text: String
         get() = textEditText.text.toString()
         set(value) {
@@ -125,6 +127,8 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
             text = getString(R.styleable.BaseItemEditText_android_text) ?: ""
             textAppearanceRes =
                 getResourceId(R.styleable.BaseItemEditText_android_textAppearance, 0)
+            inactiveTextAppearanceRes =
+                getResourceId(R.styleable.BaseItemEditText_inactiveTextAppearance, 0)
             hint = getString(R.styleable.BaseItemEditText_android_hint) ?: ""
             hintTextColor = getColor(R.styleable.BaseItemEditText_android_textColorHint, -1)
             isShowDeleteButton = getBoolean(R.styleable.BaseItemEditText_showDeleteButton, true)

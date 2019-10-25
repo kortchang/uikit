@@ -7,9 +7,19 @@
 
     <style name="UIKit.Component.BaseItemEditText">
         <item name="itemAndTextGap">10dp</item>
+        <item name="android:textAppearance">@style/UIKit.TextAppearance</item>
+        <item name="inactiveTextAppearance">@style/UIKit.TextAppearance.Inactive</item>
     </style>
 
     <style name="UIKit.Component.NumberEditText">
         <item name="itemAndTextGap">10dp</item>
+    </style>
+
+    <style name="UIKit.TextAppearance">
+        <item name="android:textColor">@color/gray_90</item>
+    </style>
+
+    <style name="UIKit.TextAppearance.Inactive">
+        <item name="android:textColor">@color/gray_30</item>
     </style>
 </resources>

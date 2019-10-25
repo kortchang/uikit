@@ -92,11 +92,12 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
             if (childList.isNullOrEmpty()) {
                 childList = generateDefaultChildList(parent.id)
                 childMap[parent.id] = childList
-                _childMap.value?.map { it.put(parent.id, childList) }
+                _childMap.value?.isSuccess {
+                    it[parent.id] = childList
+                }
             }
             currentList.addAll(childList as Collection<TWO>)
         }
-
         return currentList
     }
 
@@ -130,7 +131,7 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         _childMap.postValue(DataStatus.Success(map))
     }
 
-    fun onDelete(
+    open fun onDelete(
         _childMap: MutableLiveData<DataStatus<MutableMap<String, MutableList<C>>>>,
         position: Int
     ) {
@@ -195,7 +196,7 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         sendChangeEventToLastIndex(newItemPosition + 1, listLastIndex)
     }
 
-    protected fun getChildItem(position: Int, block: (C) -> Unit) {
+    protected open fun getChildItem(position: Int, block: (C) -> Unit) {
         _list.value?.isSuccess {
             val item = it[position]
             if (childClass.isInstance(item)) {
@@ -204,7 +205,7 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         }
     }
 
-    protected fun getChildPosition(item: C, block: (Int) -> Unit) {
+    protected open fun getChildPosition(item: C, block: (Int) -> Unit) {
         _childMap.value?.isSuccess { childMap ->
             val childPosition = (childMap[item.parentId]
                 ?: throw Exception("Cannot fin the parentId:${item.parentId} in childMap"))
@@ -213,7 +214,7 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         }
     }
 
-    private fun addItemToChildList(
+    protected open fun addItemToChildList(
         parentId: String,
         item: C
     ) {
@@ -244,7 +245,9 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
                 }
             else if (parentClass.isInstance(onTextChangeItem)) {
                 onTextChangeItem as P
-                _parentList.value?.isSuccess { it[onTextChangeItem.order].title = changedText }
+                _parentList.value?.isSuccess {
+                    it[onTextChangeItem.order].title = changedText
+                }
                 if (aware) {
                     _parentList.aware()
                     sendChangeEventAt(position)

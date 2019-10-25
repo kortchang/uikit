@@ -19,7 +19,8 @@ import kort.uikit.component.databinding.CheckboxEdittextBinding
 /**
  * Created by Kort on 2019/9/25.
  */
-class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText(context, attrs) {
+class CheckBoxEditText(context: Context, attrs: AttributeSet) :
+    CheckableItemEditText(context, attrs) {
     private val binding = CheckboxEdittextBinding.inflate(inflater, this, true)
     override val textEditText: EditText get() = binding.editTextCheckboxEditText
     override val textTextView: TextView get() = binding.textViewCheckboxEditText
@@ -29,10 +30,12 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
 
     val checkbox: CheckBox get() = binding.checkBoxCheckboxEditText
 
-    var isChecked
-        get() = checkbox.isChecked
+    override var isChecked = false
         set(value) {
-            checkbox.isChecked = value
+            super.isChecked = value
+            if (checkbox.isChecked != value)
+                checkbox.isChecked = value
+            field = value
         }
 
     @ColorInt
@@ -69,6 +72,7 @@ class CheckBoxEditText(context: Context, attrs: AttributeSet) : BaseItemEditText
     override fun setupListener() {
         super.setupListener()
         checkbox.setOnCheckedChangeListener { compoundButton, checked ->
+            if (isChecked != checked) isChecked = checked
             onCheckedChangeListener?.onCheckedChange(this, checked)
         }
     }

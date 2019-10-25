@@ -16,7 +16,8 @@ import kort.uikit.component.databinding.NumberEdittextBinding
 /**
  * Created by Kort on 2019-09-09.
  */
-class NumberEditText(context: Context, attrs: AttributeSet) : BaseItemEditText(context, attrs) {
+class NumberEditText(context: Context, attrs: AttributeSet) :
+    CheckableItemEditText(context, attrs) {
     override val deleteButton: ImageButton
         get() = binding.imageButtonDeleteNumberEditText
     private val binding = NumberEdittextBinding.inflate(inflater, this, true)

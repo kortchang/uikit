@@ -27,6 +27,7 @@
 
         <kort.uikit.component.itemEditText.CheckBoxEditText
             android:id="@+id/checkboxEditText"
+            style="@style/UIKit.Component.BaseItemEditText"
             onCheckedChange="@{(view, checked) -> checkListener.onCheckedChange(view, position, checked)}"
             onDelete="@{()-> listener.onDelete(position)}"
             onTextChange="@{(changedText)-> listener.onTextChange(position, changedText, false)}"
