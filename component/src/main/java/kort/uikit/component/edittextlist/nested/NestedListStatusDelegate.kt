@@ -67,28 +67,19 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         MediatorLiveData<DataStatus<MutableList<TWO>>>().apply {
             addSource(_parentList) {
                 _childMap.value?.let { child ->
-                    //                    parent = it
-                    value = it.combine(child) { p, c ->
-                        val list = combineList(p, c)
-                        Timber.d("parent: $it, child: $child")
-                        Timber.d("parent combineList: $list")
-                        return@combine list
-                    }
+                    value = it.combine(child) { p, c -> combineList(p, c) }
                 }
             }
 
             addSource(_childMap) {
                 _parentList.value?.let { parent ->
-                    //                    child = it
-                    value = it.combine(parent) { c, p ->
-                        combineList(p, c)
-                    }
+                    value = it.combine(parent) { c, p -> combineList(p, c) }
                 }
             }
         }
     }
 
-    override val list: LiveData<DataStatus<MutableList<TWO>>> by lazy { _list }
+    override val list: LiveData<DataStatus<MutableList<TWO>>> get() = _list
 
     private fun combineList(
         parentList: MutableList<P>,
@@ -143,11 +134,10 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         _childMap: MutableLiveData<DataStatus<MutableMap<String, MutableList<C>>>>,
         position: Int
     ) {
-        Timber.d("onDelete at $position")
         val childMap = _childMap.value
         if (childMap is DataStatus.Success)
             getChildItem(position) { item ->
-                Timber.d("onDelete item is childItem")
+                Timber.d("onDelete at $position")
                 val childList = childMap.result[item.parentId] ?: mutableListOf()
                 if (childList.size > 1) {
                     getChildPosition(item) { childPosition ->
@@ -156,23 +146,19 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
                         val focusAt = if (childPosition == 0) position else position - 1
                         sendFocusEventAt(focusAt)
                     }
-                } else
-                    Timber.d("Rest of one item in childList")
+                }
             }
     }
 
     override fun onDelete(position: Int) = onDelete(_childMap, position)
 
     override fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String) {
-        Timber.d("list: ${_list.value}")
-        Timber.d("position: $position")
         val listValue = _list.value
         if (listValue is DataStatus.Success) {
             val onWrapLineItem = listValue.result[position]
-            Timber.d("wrapLineItem: $onWrapLineItem")
-
             val newItemPosition = position + 1
             if (childClass.isInstance(onWrapLineItem)) {
+                Timber.d("child onWrapLine position: $position")
                 onWrapLineOnChildItem(
                     position,
                     newItemPosition,
@@ -180,9 +166,8 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
                     afterWrapLineText
                 )
             } else if (parentClass.isInstance(onWrapLineItem)) {
-                Timber.d("onWrapLineItem title: ${onWrapLineItem.title}")
+                Timber.d("parent onWrapLine position: $position")
                 onTextChange(position, onWrapLineItem.title, true)
-                Timber.d("onWrapLineOnParentItem()")
             }
             sendFocusEventAt(newItemPosition)
         }
@@ -194,7 +179,6 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         beforeWrapLineText: String,
         afterWrapLineText: String
     ) {
-        Timber.d("onWrapLineOnChildItem()")
         onTextChange(position, beforeWrapLineText, true)
         getChildItem(position) { item ->
             getChildPosition(item) { childPosition ->
@@ -222,8 +206,6 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
 
     protected fun getChildPosition(item: C, block: (Int) -> Unit) {
         _childMap.value?.isSuccess { childMap ->
-            Timber.d("getChildPosition childMap: $childMap")
-            Timber.d("item: $item")
             val childPosition = (childMap[item.parentId]
                 ?: throw Exception("Cannot fin the parentId:${item.parentId} in childMap"))
                 .indexOfFirst { it.id == item.id }
@@ -237,7 +219,6 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
     ) {
         _childMap.value?.isSuccess {
             it[parentId]?.add(item)
-            Timber.d("_childMap: $_childMap")
             _childMap.aware()
         }
     }
@@ -275,8 +256,8 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
     override fun addNewItemAtLast() {
         _parentList.value?.isSuccess {
             _list.value?.isSuccess { listValue ->
+                Timber.d("addNewItemAtLast")
                 val newPositionInList = listValue.size
-                Timber.d("newPositionInList is $newPositionInList")
                 val parent = generateParentItem(generateParentId, "", it.size)
                 it.add(parent)
                 _parentList.aware()
