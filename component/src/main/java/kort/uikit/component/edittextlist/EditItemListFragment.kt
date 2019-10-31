@@ -72,7 +72,7 @@ abstract class EditItemListFragment<T : EditItemModel> : Fragment() {
 
         listObserver.deleteItemAt.observe(this, EventObserver {
             Timber.d("deleteItemAt $it")
-            adapter.notifyItemRemoved(it)
+            adapter.notifyItemRangeRemoved(it.first, it.count())
         })
 
         listObserver.focusItemAt.observe(this, EventObserver {
