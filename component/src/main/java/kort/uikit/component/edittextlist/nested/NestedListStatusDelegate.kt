@@ -162,11 +162,12 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
             }
             _parentList.aware()
             if ((position - 1) > 0) sendFocusEventAt(position - 1)
-            whenParentOnDelete(deletedParentItem, deletedChildList)
+            whenParentOnDelete(position, deletedParentItem, deletedChildList)
         }
     }
 
     protected open fun whenParentOnDelete(
+        position: Int,
         deletedParentItem: P,
         deletedChildList: MutableList<C>?
     ) {

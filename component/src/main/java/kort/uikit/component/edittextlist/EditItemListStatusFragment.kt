@@ -70,7 +70,7 @@ abstract class EditItemListStatusFragment<T : EditItemModel> : Fragment() {
 
     protected open fun bindListObserver(listObserver: ListEventObserverInterface) {
         listObserver.addItemAt.observe(this, EventObserver {
-            adapter.notifyItemInserted(it)
+            adapter.notifyItemRangeInserted(it.first, it.count())
             Timber.d("addItemAt $it")
         })
 
