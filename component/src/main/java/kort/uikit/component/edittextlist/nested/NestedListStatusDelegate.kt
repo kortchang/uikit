@@ -9,6 +9,8 @@ import kort.uikit.component.edittextlist.*
 import kort.uikit.component.itemEditText.ChildEditItemModel
 import timber.log.Timber
 import java.lang.Exception
+import java.text.FieldPosition
+import kotlin.math.max
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
@@ -132,26 +134,49 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
     }
 
     open fun onDelete(
+        _parentList: MutableLiveData<DataStatus<MutableList<P>>>,
         _childMap: MutableLiveData<DataStatus<MutableMap<String, MutableList<C>>>>,
         position: Int
     ) {
-        val childMap = _childMap.value
-        if (childMap is DataStatus.Success)
-            getChildItem(position) { item ->
-                Timber.d("onDelete at $position")
-                val childList = childMap.result[item.parentId] ?: mutableListOf()
-                if (childList.size > 1) {
-                    getChildPosition(item) { childPosition ->
-                        childList.remove(item)
-                        _childMap.aware()
-                        val focusAt = if (childPosition == 0) position else position - 1
-                        sendFocusEventAt(focusAt)
-                    }
+        _list.value?.isSuccess {
+            val item = it[position]
+            when {
+                parentClass.isInstance(item) -> parentOnDelete(item as P, position, item.order)
+                childClass.isInstance(item) -> getChildPosition(item as C) { childPosition ->
+                    childOnDelete(item, position, childPosition)
                 }
             }
+        }
     }
 
-    override fun onDelete(position: Int) = onDelete(_childMap, position)
+    private fun parentOnDelete(item: P, position: Int, parentPosition: Int) {
+        _parentList.value?.isSuccess { parentList ->
+            parentList.removeAt(parentPosition)
+            _childMap.value?.isSuccess {
+                val deleteChildList = it.remove(item.id)
+                if (deleteChildList != null) {
+                    sendDeleteEventAt(position, position + deleteChildList.size)
+                } else {
+                    sendDeleteEventAt(position)
+                }
+                if ((position - 1) > 0) sendFocusEventAt(position - 1)
+            }
+        }
+    }
+
+    private fun childOnDelete(item: C, position: Int, childPosition: Int) {
+        _childMap.value?.isSuccess { childMap ->
+            val childList = childMap[item.parentId] ?: mutableListOf()
+            if (childList.size > 1) {
+                childList.remove(item)
+                _childMap.aware()
+                val focusAt = if (childPosition == 0) position else position - 1
+                sendFocusEventAt(focusAt)
+            }
+        }
+    }
+
+    override fun onDelete(position: Int) = onDelete(_parentList, _childMap, position)
 
     override fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String) {
         val listValue = _list.value
