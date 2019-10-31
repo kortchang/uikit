@@ -32,8 +32,8 @@
             onWrapLine="@{(beforeWrapLineText,afterWrapLineText)->listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{item.title ?? ""}'
             android:hint="輸入行動清單"
+            android:text='@{item.title ?? ""}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
