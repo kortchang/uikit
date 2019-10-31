@@ -66,6 +66,6 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.5.2"
 
     // Kort Library
-    implementation 'com.github.KortChang:toolbox:0cc5b0d862'
-    testImplementation 'com.github.KortChang:android-unit-test-extension:0045ddd4fc'
+    implementation 'com.github.KortChang:toolbox:1.0.0'
+    testImplementation 'com.github.KortChang:android-unit-test-extension:1.0.2'
 }
