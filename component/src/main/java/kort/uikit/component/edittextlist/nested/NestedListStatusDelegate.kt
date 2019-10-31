@@ -9,8 +9,6 @@ import kort.uikit.component.edittextlist.*
 import kort.uikit.component.itemEditText.ChildEditItemModel
 import timber.log.Timber
 import java.lang.Exception
-import java.text.FieldPosition
-import kotlin.math.max
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
@@ -151,19 +149,27 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
 
     private fun parentOnDelete(item: P, position: Int, parentPosition: Int) {
         _parentList.value?.isSuccess { parentList ->
-            parentList.removeAt(parentPosition)
+            val deletedParentItem = parentList.removeAt(parentPosition)
+            var deletedChildList: MutableList<C>? = null
             _childMap.value?.isSuccess {
-                val deleteChildList = it.remove(item.id)
-                if (deleteChildList != null) {
-                    sendDeleteEventAt(position, position + deleteChildList.size)
+                deletedChildList = it.remove(item.id)
+                deletedChildList?.let {
+                    sendDeleteEventAt(position, position + it.size)
                     _childMap.aware()
-                } else {
+                } ?: run {
                     sendDeleteEventAt(position)
                 }
-                _parentList.aware()
-                if ((position - 1) > 0) sendFocusEventAt(position - 1)
             }
+            _parentList.aware()
+            if ((position - 1) > 0) sendFocusEventAt(position - 1)
+            whenParentOnDelete(deletedParentItem, deletedChildList)
         }
+    }
+
+    protected open fun whenParentOnDelete(
+        deletedParentItem: P,
+        deletedChildList: MutableList<C>?
+    ) {
     }
 
     private fun childOnDelete(item: C, position: Int, childPosition: Int) {
