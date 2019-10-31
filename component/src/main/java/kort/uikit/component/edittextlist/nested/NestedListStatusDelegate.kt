@@ -156,9 +156,11 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
                 val deleteChildList = it.remove(item.id)
                 if (deleteChildList != null) {
                     sendDeleteEventAt(position, position + deleteChildList.size)
+                    _childMap.aware()
                 } else {
                     sendDeleteEventAt(position)
                 }
+                _parentList.aware()
                 if ((position - 1) > 0) sendFocusEventAt(position - 1)
             }
         }
