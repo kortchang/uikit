@@ -24,7 +24,7 @@ abstract class EditItemListStatusFragment<T : EditItemModel> : Fragment() {
     protected abstract val recyclerView: RecyclerView
     protected abstract val listLiveData: LiveData<DataStatus<MutableList<T>>>
     protected open val isShowAddViewAtLast: Boolean = true
-    private var showKeyboardWhenEnterPage = true
+    protected var showKeyboardWhenEnterPage = true
     protected val inputMethodManager: InputMethodManager by lazy {
         requireContext().getSystemService(InputMethodManager::class.java)
     }
