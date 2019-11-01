@@ -101,14 +101,14 @@ open class NestedListStatusDelegate<P : EditItemModel, C : ChildEditItemModel, T
         return currentList
     }
 
-    protected fun generateParentItem(id: String, title: String, order: Int = 0): P =
+    protected open fun generateParentItem(id: String, title: String, order: Int = 0): P =
         parentClass.createInstance().apply {
             this.id = id
             this.title = title
             this.order = order
         }
 
-    protected fun generateChildItem(
+    protected open fun generateChildItem(
         id: String,
         parentId: String,
         title: String = "",
