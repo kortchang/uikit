@@ -175,7 +175,7 @@ open class NestedListDelegate<P : EditItemModel, C : ChildEditItemModel, TWO : E
                     generateChildId,
                     item.parentId,
                     afterWrapLineText,
-                    childPosition
+                    childPosition + 1
                 )
                 addItemToChildList(item.parentId, newItem)
             }
@@ -195,8 +195,7 @@ open class NestedListDelegate<P : EditItemModel, C : ChildEditItemModel, TWO : E
 
     protected fun getChildPosition(item: C, block: (Int) -> Unit) {
         _childMap.value?.let { childMap ->
-            Timber.d("getChildPosition childMap: $childMap")
-            val childPosition = childMap[item.parentId]?.indexOfFirst { it.id == item.id }
+            val childPosition = childMap[item.parentId]?.indexOf(item)
                 ?: throw Exception("Cannot find the item in childList")
             block(childPosition)
         }
@@ -207,8 +206,7 @@ open class NestedListDelegate<P : EditItemModel, C : ChildEditItemModel, TWO : E
         item: C
     ) {
         _childMap.value?.let {
-            it[parentId]?.add(item)
-            Timber.d("_childMap: $_childMap")
+            it[parentId]?.add(item.order, item)
         }
         _childMap.aware()
     }
