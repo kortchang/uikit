@@ -2,24 +2,43 @@ package kort.uikit.sample.list.nestedlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kort.tool.toolbox.databinding.executeAfter
 import kort.uikit.component.edittextlist.EditItemDelegate
 import kort.uikit.component.edittextlist.EditItemModel
 import kort.uikit.component.edittextlist.EditItemViewHolder
 import kort.uikit.component.edittextlist.nested.NestedListWithAddAdapter
+import kort.uikit.component.itemEditText.ChildEditItemModel
 import kort.uikit.sample.databinding.ItemAddTextViewBinding
 import kort.uikit.sample.databinding.ItemCheckboxEdittextBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
 import kort.uikit.sample.list.addtextview.AddTextViewHolder
+import kotlin.reflect.KClass
 
 /**
  * Created by Kort on 2019/9/25.
  */
+@Suppress("UNCHECKED_CAST")
+class NestedDiffUtil : DiffUtil.ItemCallback<EditItemModel>() {
+    override fun areItemsTheSame(oldItem: EditItemModel, newItem: EditItemModel): Boolean =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: EditItemModel, newItem: EditItemModel): Boolean =
+        if (oldItem is ParentEditItem && newItem is ParentEditItem) {
+            oldItem as ParentEditItem == newItem as ParentEditItem
+        } else if (oldItem is ChildEditItem && newItem is ChildEditItem) {
+            oldItem as ChildEditItem == newItem as ChildEditItem
+        } else {
+            false
+        }
+}
+
 class NestedAdapter(private val viewModel: EditItemDelegate) :
     NestedListWithAddAdapter<ParentEditItem, ChildEditItem, EditItemModel, RecyclerView.ViewHolder>(
         ParentEditItem::class,
-        ChildEditItem::class
+        ChildEditItem::class,
+        NestedDiffUtil()
     ) {
     override fun createParentViewHolder(
         inflater: LayoutInflater,

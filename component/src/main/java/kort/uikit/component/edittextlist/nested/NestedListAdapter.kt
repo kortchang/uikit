@@ -2,6 +2,7 @@ package kort.uikit.component.edittextlist.nested
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kort.uikit.component.edittextlist.EditItemAdapter
 import kort.uikit.component.edittextlist.EditItemModel
@@ -19,8 +20,9 @@ import kotlin.reflect.KClass
  */
 abstract class NestedListAdapter<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel, TWOVH : RecyclerView.ViewHolder>(
     protected open val parentClass: KClass<P>,
-    protected open val childClass: KClass<C>
-) : EditItemAdapter<TWO, TWOVH>() {
+    protected open val childClass: KClass<C>,
+    protected open val diffUtil: DiffUtil.ItemCallback<TWO>
+) : EditItemAdapter<TWO, TWOVH>(diffUtil) {
     protected val parentViewType = 1
     protected val childViewType = 2
     override fun getItemViewType(position: Int): Int {
@@ -51,8 +53,9 @@ abstract class NestedListAdapter<P : EditItemModel, C : ChildEditItemModel, TWO 
 
 abstract class NestedListWithAddAdapter<P : EditItemModel, C : ChildEditItemModel, TWO : EditItemModel, TWOVH : RecyclerView.ViewHolder>(
     override val parentClass: KClass<P>,
-    override val childClass: KClass<C>
-) : NestedListAdapter<P, C, TWO, TWOVH>(parentClass, childClass) {
+    override val childClass: KClass<C>,
+    override val diffUtil: DiffUtil.ItemCallback<TWO>
+) : NestedListAdapter<P, C, TWO, TWOVH>(parentClass, childClass, diffUtil) {
     protected val addViewType = 3
     override fun getItemCount(): Int = super.getItemCount() + 1
     override fun getItemViewType(position: Int): Int {

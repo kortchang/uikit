@@ -25,6 +25,7 @@ import kort.tool.toolbox.view.private_get_message
 import kort.uikit.component.R
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
+import kotlin.math.max
 
 
 /**
@@ -80,7 +81,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     var hint: String
         get() = textEditText.hint.toString()
         set(value) {
-            Timber.d("setHint() :$value")
             textEditText.hint = value
         }
 
@@ -107,7 +107,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     fun focus() {
         textEditText.requestFocus()
         val length = text.length
-        Timber.d("focus length: $length")
         textEditText.setSelection(length)
         val imm = context.getSystemService(InputMethodManager::class.java)
         if (imm?.isActive(textEditText) == false) {
@@ -160,9 +159,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
 
     private fun setupHint(isOnFocus: Boolean) {
         textEditText.hint = if (isOnFocus) hint else "onFocus"
-        Timber.d("text:$text isOnFocus: $isOnFocus")
-        Timber.d("hint: $hint")
-        Timber.d("editText hint:${textEditText.hint}")
     }
 
     private fun addOnDeleteButtonClickListener() {
@@ -185,7 +181,6 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
                             100
                         ) {
                             onWrapLineEventTime = System.currentTimeMillis()
-                            Timber.d("text contain wrapline mark")
                             whenClickEnter()
                         }
                     } else {
@@ -201,9 +196,7 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
         range: Int,
         block: () -> Unit
     ): Boolean = kotlin.run {
-        Timber.d("eventTime: $eventTime start: ${newEventTime - range} end: ${newEventTime + range}")
         if (eventTime !in (newEventTime - range)..(newEventTime + range)) {
-            Timber.d("filter: block()")
             block()
             true
         } else false
@@ -227,12 +220,16 @@ abstract class BaseItemEditText(context: Context, private val attrs: AttributeSe
     private fun whenClickEnter() {
         Timber.d("clickEnter")
         val wrapLineIndexFirst = text.indexOfFirst { it == '\n' }
-        val wrapLineIndexLast = text.indexOfLast { it == '\n' }
-        val beforeWrapLineText = text.substring(0 until wrapLineIndexFirst)
-        val afterWrapLineText = text.substring((wrapLineIndexLast + 1)..text.lastIndex)
+        val wrapLineIndexLast = text.indexOfFirst { it == '\n' }
+        val beforeWrapLineText =
+            if (wrapLineIndexFirst == -1) text else text.substring(0 until wrapLineIndexFirst)
+        val afterWrapLineText =
+            if (text.isEmpty()) "" else text.substring((wrapLineIndexLast + 1)..text.lastIndex)
+
         Timber.d("beforeWrapLineText: $beforeWrapLineText")
         Timber.d("afterWrapLineText: $afterWrapLineText")
         onWrapLineListener?.onWrapLine(beforeWrapLineText, afterWrapLineText)
+        text = beforeWrapLineText
     }
 
     private fun clearListener() {

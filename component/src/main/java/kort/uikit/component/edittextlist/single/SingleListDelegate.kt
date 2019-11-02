@@ -32,10 +32,7 @@ open class SingleListDelegate<T : EditItemModel>(
 
     @CallSuper
     override fun onWrapLine(position: Int, beforeWrapLineText: String, afterWrapLineText: String) =
-        kotlin.run {
-            Timber.d("Delegate onWrapLine()")
-            listOnWrapLine(_list, this, position, beforeWrapLineText, afterWrapLineText, generateId)
-        }
+        listOnWrapLine(_list, this, position, beforeWrapLineText, afterWrapLineText, generateId)
 
     @CallSuper
     override fun onTextChange(position: Int, changedText: String, aware: Boolean) =

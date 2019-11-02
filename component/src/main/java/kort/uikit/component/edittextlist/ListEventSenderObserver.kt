@@ -22,7 +22,7 @@ interface ListEventSenderInterface {
     val _deleteItemAt: MutableLiveData<Event<IntRange>>
 
     fun sendFocusEventAt(_focusItemAt: MutableLiveData<Event<Int>>, position: Int) {
-        _focusItemAt.value = Event(position)
+        _focusItemAt.postValue(Event(position))
     }
 
     fun sendAddEventAt(_addItemAt: MutableLiveData<Event<IntRange>>, position: Int) {

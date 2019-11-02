@@ -10,6 +10,7 @@ import kort.uikit.component.itemEditText.BaseItemEditText
 import kort.uikit.sample.databinding.ItemAddTextViewBinding
 import kort.uikit.sample.databinding.ItemNumberEdittextBinding
 import kort.uikit.sample.list.addtextview.AddTextViewHolder
+import timber.log.Timber
 
 /**
  * Created by Kort on 2019/9/16.
@@ -17,7 +18,7 @@ import kort.uikit.sample.list.addtextview.AddTextViewHolder
 class NumberListAdapter(
     private val viewModel: EditItemDelegate
 ) : SingleListWithAddAdapter<NumberEditItem, NumberListAdapter.NumberListViewHolder, AddTextViewHolder>(
-    NumberListViewHolder::class, AddTextViewHolder::class
+    NumberListViewHolder::class, AddTextViewHolder::class, NumberEditItem.Diff
 ) {
     override fun createNormalViewHolder(
         inflater: LayoutInflater,
@@ -43,6 +44,7 @@ class NumberListAdapter(
         SingleListViewHolder<NumberEditItem>(binding.root) {
         override val itemEditText: BaseItemEditText = binding.numberEditText
         override fun bind(item: NumberEditItem) {
+            Timber.d("bind position: $adapterPosition, title: ${item.title}")
             binding.executeAfter {
                 number = adapterPosition + 1
                 position = adapterPosition

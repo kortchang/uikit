@@ -17,7 +17,7 @@ import kort.uikit.sample.list.nestedlist.ParentEditItem
  */
 class FirstAdapter(private val viewModel: EditItemDelegate) :
     SingleListWithAddAdapter<ParentEditItem, FirstAdapter.ParentListViewHolder, AddTextViewHolder>(
-        ParentListViewHolder::class, AddTextViewHolder::class
+        ParentListViewHolder::class, AddTextViewHolder::class, ParentEditItem.Diff
     ) {
     override fun createNormalViewHolder(
         inflater: LayoutInflater,

@@ -1,5 +1,8 @@
 package kort.uikit.component.edittextlist
 
+import androidx.recyclerview.widget.DiffUtil
+
+
 /**
  * Created by Kort on 2019/9/13.
  */

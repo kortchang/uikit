@@ -7,8 +7,7 @@ import kort.tool.test.extension.TimberConverter
 import kort.tool.test.testValue
 import kort.uikit.sample.list.nestedlist.NestedListDelegateImp
 import kort.uikit.sample.list.nestedlist.ParentEditItem
-import kort.uikit.sample.nestedlist.NestedListViewModelDelegateImp
-import kort.uikit.sample.nestedlist.ParentEditItem
+import kort.uikit.sample.list.numberlist.NumberEditItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -77,5 +76,12 @@ internal class NestedListViewModelDelegateImpTest {
 
 
         childMap?.values?.size shouldBe 2
+    }
+
+    @Test
+    internal fun `test string`() {
+        val old = NumberEditItem(title = "12")
+        val new = NumberEditItem(title = "12\n")
+        NumberEditItem.Diff.areContentsTheSame(old,new) shouldBe true
     }
 }

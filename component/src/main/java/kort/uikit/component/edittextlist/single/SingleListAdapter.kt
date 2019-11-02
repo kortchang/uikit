@@ -3,6 +3,7 @@ package kort.uikit.component.edittextlist.single
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kort.uikit.component.edittextlist.EditItemAdapter
 import kort.uikit.component.edittextlist.EditItemModel
@@ -13,8 +14,8 @@ import kotlin.reflect.KClass
 /**
  * Created by Kort on 2019/9/23.
  */
-abstract class SingleListAdapter<T : EditItemModel, VH : SingleListViewHolder<T>> :
-    EditItemAdapter<T, VH>() {
+abstract class SingleListAdapter<T : EditItemModel, VH : SingleListViewHolder<T>>(diffUtil: DiffUtil.ItemCallback<T>) :
+    EditItemAdapter<T, VH>(diffUtil) {
     override fun onBindViewHolder(holder: VH, position: Int) {
         bindEditItem(position, holder)
     }
@@ -35,8 +36,9 @@ abstract class SingleListViewHolder<T : EditItemModel>(view: View) : EditItemVie
 
 abstract class SingleListWithAddAdapter<T : EditItemModel, VH : SingleListViewHolder<T>, ADDVH : RecyclerView.ViewHolder>(
     private val viewHolderClass: KClass<VH>,
-    private val addViewHolderClass: KClass<ADDVH>
-) : EditItemAdapter<T, RecyclerView.ViewHolder>() {
+    private val addViewHolderClass: KClass<ADDVH>,
+    private val diffUtil: DiffUtil.ItemCallback<T>
+) : EditItemAdapter<T, RecyclerView.ViewHolder>(diffUtil) {
     companion object {
         const val NORMAL_VIEW_TYPE = 0
         const val ADD_VIEW_TYPE = 1

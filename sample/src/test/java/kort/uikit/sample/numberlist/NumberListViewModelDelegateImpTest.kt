@@ -4,6 +4,7 @@ import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
 import kort.tool.test.extension.TestArchExtension
 import kort.tool.test.testValue
+import kort.uikit.sample.list.numberlist.EditItemListDelegateImp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.extension.Extensions
 @ExperimentalCoroutinesApi
 @Extensions(ExtendWith(TestArchExtension::class))
 internal class NumberListViewModelDelegateImpTest {
-    private val delegateImp = EditItemListViewModelDelegateImp()
+    private val delegateImp = EditItemListDelegateImp()
     private val listInitSize get() = delegateImp.list.value?.size ?: 0
 
     @Nested

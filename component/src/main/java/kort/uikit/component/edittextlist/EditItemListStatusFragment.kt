@@ -59,9 +59,7 @@ abstract class EditItemListStatusFragment<T : EditItemModel> : Fragment() {
                 is DataStatus.Loading -> loadingDialog.show()
                 is DataStatus.Success -> {
                     Timber.d("currentList: ${it.result}")
-                    val originListSize = adapter.currentList.size
-                    adapter.currentList = it.result
-                    if (originListSize == 0) adapter.notifyDataSetChanged()
+                    adapter.submitList(it.result)
                     loadingDialog.dismiss()
                 }
             }
@@ -69,20 +67,20 @@ abstract class EditItemListStatusFragment<T : EditItemModel> : Fragment() {
     }
 
     protected open fun bindListObserver(listObserver: ListEventObserverInterface) {
-        listObserver.addItemAt.observe(this, EventObserver {
-            adapter.notifyItemRangeInserted(it.first, it.count())
-            Timber.d("addItemAt $it")
-        })
+//        listObserver.addItemAt.observe(this, EventObserver {
+//            adapter.notifyItemRangeInserted(it.first, it.count())
+//            Timber.d("addItemAt $it")
+//        })
 
         listObserver.changeItemAt.observe(this, EventObserver {
             Timber.d("changeItemAt: ${it.first} to ${it.last}")
             adapter.notifyItemRangeChanged(it.first, it.count())
         })
-
-        listObserver.deleteItemAt.observe(this, EventObserver {
-            Timber.d("deleteItemAt $it")
-            adapter.notifyItemRangeRemoved(it.first, it.count())
-        })
+//
+//        listObserver.deleteItemAt.observe(this, EventObserver {
+//            Timber.d("deleteItemAt $it")
+//            adapter.notifyItemRangeRemoved(it.first, it.count())
+//        })
 
         listObserver.focusItemAt.observe(this, EventObserver {
             Timber.d("focusItemAt $it")

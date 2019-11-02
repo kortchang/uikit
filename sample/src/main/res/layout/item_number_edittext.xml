@@ -28,7 +28,7 @@
             android:id="@+id/numberEditText"
             style="@style/UIKit.Component.NumberEditText"
             onDelete="@{() -> listener.onDelete(position)}"
-            onTextChange="@{(changedText)-> listener.onTextChange(position, changedText, false)}"
+            onTextChange="@{(changedText)-> listener.onTextChange(position, changedText, true)}"
             onWrapLine="@{(beforeWrapLineText,afterWrapLineText)->listener.onWrapLine(position,beforeWrapLineText,afterWrapLineText)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

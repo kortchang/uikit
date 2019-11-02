@@ -60,15 +60,13 @@ interface SingleEditItemListListener<T : EditItemModel> {
     ) {
         _list.value?.let { list ->
             Timber.d("wrapLine at $position")
-            listOnTextChange(_list, listEventSender, position, beforeWrapLineText, true)
+//            listOnTextChange(_list, listEventSender, position, beforeWrapLineText, true)
             val newItemPosition = position + 1
             val newItem = generateNewItem(newItemPosition, afterWrapLineText, newItemId)
             list.add(newItemPosition, newItem)
             reOrderList(list, newItemPosition + 1)
-
-            _list.aware()
-            Timber.d("afterWrapLine list: ${_list.value}")
-
+            _list.postValue(list)
+//            _list.aware()
             listEventSender.run {
                 sendAddEventAt(newItemPosition)
                 sendChangeEventToLastIndex(newItemPosition + 1, list.lastIndex)

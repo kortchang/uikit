@@ -16,7 +16,7 @@ import kort.uikit.sample.list.addtextview.AddTextViewHolder
  */
 class CheckBoxListAdapter(private val viewModel: EditItemDelegate) :
     SingleListWithAddAdapter<CheckBoxEditItem, CheckBoxListAdapter.CheckBoxListViewHolder, AddTextViewHolder>(
-        CheckBoxListViewHolder::class, AddTextViewHolder::class
+        CheckBoxListViewHolder::class, AddTextViewHolder::class, CheckBoxEditItem.Diff
     ) {
     override fun createNormalViewHolder(
         inflater: LayoutInflater,
